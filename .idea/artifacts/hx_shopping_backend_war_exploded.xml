@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="hx_shopping_backend:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/hx_shopping_backend_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="hx_shopping_backend" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="lib" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="hx_shopping_backend/web/Web" />
+    </root>
+  </artifact>
+</component>

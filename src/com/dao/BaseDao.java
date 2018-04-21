@@ -24,8 +24,7 @@ public class BaseDao<T> {
 
     public BaseDao() {
         // 使用反射技术得到T的真实类型
-        ParameterizedType pt = (ParameterizedType) this.getClass()
-                .getGenericSuperclass();
+        ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
         this.clazz = (Class<T>) pt.getActualTypeArguments()[0];
     }
 
@@ -44,19 +43,42 @@ public class BaseDao<T> {
             e.printStackTrace();
         }
     }
-
-    // get加载数据：记录不存在返回null
-    protected T get(Serializable id) {
-        T entity = null;
+    // 添加数据
+    protected int add(List list) {
+        Transaction tran = null;
         Session session = HibernateSessionFactory.getSession();
         try {
-            entity = (T) session.get(clazz, id);
+            tran = session.beginTransaction();
+            for (int i = 0; i <list.size() ; i++) {
+                session.save(list.get(i));
+            }
+            tran.commit();
         } catch (Exception e) {
+            if (tran != null) {
+                tran.rollback();
+            }
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // get加载数据：记录不存在返回null
+    protected Object get(Class cla,Serializable id) {
+        Object entity = null;
+        Transaction tran = null;
+        Session session = HibernateSessionFactory.getSession();
+        try {
+            tran = session.beginTransaction();
+            entity = session.get(cla, id);
+            tran.commit();
+        } catch (Exception e) {
+            if (tran != null) {
+                tran.rollback();
+            }
             e.printStackTrace();
         }
         return entity;
     }
-
     // load加载数据:要求数据必须存在，否则抛出ObjectNotFoundException
     protected T load(Serializable id) {
         T entity = null;
@@ -91,7 +113,7 @@ public class BaseDao<T> {
         Session session = HibernateSessionFactory.getSession();
         try {
             tran = session.beginTransaction();
-            T entity = get(id);
+            T entity = load(id);
             session.delete(entity);
             tran.commit();
         } catch (Exception e) {
@@ -169,13 +191,35 @@ public class BaseDao<T> {
         return (Long) query.uniqueResult();// 返回唯一的结果
     }
     // 用hql查询
-    protected List<T> search(String hql) {
+//    protected List<T> search(String hql) {
+//        Transaction tran = null;
+//        Session session = HibernateSessionFactory.getSession();
+//        Query query = null;
+//        try {
+//            tran = session.beginTransaction();
+//            query = session.createQuery(hql);
+//            tran.commit();
+//        } catch (Exception e) {
+//            if (tran != null) {
+//                tran.rollback();
+//            }
+//            e.printStackTrace();
+//        }
+//        return query.list();
+//    }
+    // 用hql和object[]查询
+    protected List<T> search(String hql,Object[] conditions) {
         Transaction tran = null;
         Session session = HibernateSessionFactory.getSession();
         Query query = null;
         try {
             tran = session.beginTransaction();
             query = session.createQuery(hql);
+            if (conditions != null && conditions.length > 0) {
+                for (int i = 0; i < conditions.length; i++) {
+                    query.setParameter(i, conditions[i]);
+                }
+            }
             tran.commit();
         } catch (Exception e) {
             if (tran != null) {
@@ -222,16 +266,5 @@ public class BaseDao<T> {
         }
         return query.list();
     }
-    // 修改数据
-    // protected List<T> search(T conditions) {
-    // Session session = HibernateSessionFactory.getSession();
-    // List<T> list = new ArrayList<T>();
-    // try {
-    // list = session.createCriteria(clazz)
-    // .add(Example.create(conditions)).list();
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
-    // return list;
-    // }
+
 }

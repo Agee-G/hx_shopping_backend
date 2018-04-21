@@ -4,24 +4,20 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url"/>
-        <property name="connection.driver_class">
-            com.mysql.jdbc.Driver
-        </property>
-        <property name="connection.username">
-
-        </property>
-        <property name="connection.password">
-
-        </property>
-        <!-- Session由当前执行的线程来跟踪管理 -->
-        <property name="current_session_context_class">
-            thread
-        </property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/hxtaobaocom</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <!-- 输出所有的SQL语句到控制台 -->
         <property name="show_sql">
             true
         </property>
+        <mapping class="com.entity.OrdersEntity"/>
+        <mapping class="com.entity.AddressEntity"/>
+        <mapping class="com.entity.GoodsEntity"/>
+        <mapping class="com.entity.OrdergoodsEntity"/>
+        <mapping class="com.entity.ShoppingcartEntity"/>
+        <mapping class="com.entity.UserEntity"/>
+        <mapping class="com.entity.StoreEntity"/>
+
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->

@@ -4,26 +4,28 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url"/>
-        <property name="connection.driver_class">
-            com.mysql.jdbc.Driver
-        </property>
-        <property name="connection.username">
+        <!-- 数据库URL -->
+        <property name="connection.url">jdbc:mysql://localhost:3306/hxtaobaocom</property>
+        <!-- 数据库JDBC驱动  -->
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <!-- 用户名 -->
+        <!-- 密码 -->
 
-        </property>
-        <property name="connection.password">
+        <!-- 每个数据库都有对应的方言（Dialect）以匹配其平台特性 -->
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <!-- 输出sql语句到控制台 -->
+        <property name="show_sql">true</property>
+        <!-- 格式化sql语句 -->
+        <property name="format_sql">true</property>
 
-        </property>
-        <!-- Session由当前执行的线程来跟踪管理 -->
-        <property name="current_session_context_class">
-            thread
-        </property>
-        <!-- 输出所有的SQL语句到控制台 -->
-        <property name="show_sql">
-            true
-        </property>
+        <mapping class="com.entity.OrdersEntity"/>
+        <mapping class="com.entity.AddressEntity"/>
+        <mapping class="com.entity.GoodsEntity"/>
+        <mapping class="com.entity.OrdergoodsEntity"/>
+        <mapping class="com.entity.ShoppingcartEntity"/>
+        <mapping class="com.entity.UserEntity"/>
+        <mapping class="com.entity.GoodstypeEntity"/>
+        <mapping class="com.entity.StoreEntity"/>
 
-        <!-- DB schema will be updated if needed -->
-        <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
 </hibernate-configuration>

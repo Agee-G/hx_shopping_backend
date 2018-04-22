@@ -3,7 +3,9 @@ package com.test;
 import com.dao.OrderDao;
 import com.entity.OrderConditions;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * @author:lily
@@ -14,7 +16,7 @@ public class Test {
     public static void main(String args[]){
         OrderDao orderDao = new OrderDao();
         //测试一下直接购买生成订单
-        orderDao.addOrder("2","1",3,"red",23,"1");
+//        orderDao.addOrder("2","1",3,"red",23,"1");
 
         //hehe
         //测试一下从购物车生成订单

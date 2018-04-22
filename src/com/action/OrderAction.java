@@ -5,6 +5,7 @@ package com.action;
  * @description
  */
 
+import com.biz.OrderBiz;
 import com.dao.OrderDao;
 import com.entity.Order;
 import com.entity.OrderConditions;
@@ -26,7 +27,15 @@ public class OrderAction extends ActionSupport{
     private String message;//用户看的错误信息
     private HashMap data = new HashMap();//返回的数据
 
-    private OrderDao orderDao= new OrderDao();
+    private OrderBiz orderBiz= new OrderBiz();
+
+    public OrderBiz getOrderBiz() {
+        return orderBiz;
+    }
+
+    public void setOrderBiz(OrderBiz orderBiz) {
+        this.orderBiz = orderBiz;
+    }
 
     private String orderId;
     private String orderUserid;
@@ -88,8 +97,6 @@ public class OrderAction extends ActionSupport{
     @JSON(serialize=false)
     public String getOrderAddressId() { return orderAddressId; }
     public void setOrderAddressId(String orderAddressId) { this.orderAddressId = orderAddressId; }
-    public OrderDao getOrderDao() { return orderDao; }
-    public void setOrderDao(OrderDao orderDao) { this.orderDao = orderDao; }
     @JSON(serialize=false)
     public HashMap<String, String[]> getOrderData() { return orderData; }
     public void setOrderData(HashMap<String, String[]> orderData) { this.orderData = orderData; }
@@ -107,8 +114,12 @@ public class OrderAction extends ActionSupport{
             })
     })
     public String addOrder(){
-        orderDao.addOrder(orderStoreid,goodsId,goodsNum,goodType,orderTotalprice,orderAddressId);
-        code = orderDao.getCode();
+        if(orderStoreid == null || goodsId == null || goodsNum == null || goodType == null || orderTotalprice == null || orderAddressId == null){
+            code = 220;
+        }else {
+            orderBiz.addOrder(orderStoreid,goodsId,goodsNum,goodType,orderTotalprice,orderAddressId);
+            code = orderBiz.getCode();
+        }
         switch(code) {
             case 0:
                 message = "订单添加成功！";
@@ -118,6 +129,9 @@ public class OrderAction extends ActionSupport{
                 break;
             case 202:
                 message = "地址id不存在";
+                break;
+            case 220:
+                message = "传来的参数有空的";
                 break;
             default:
                 message = "出现未知错误，请联系管理员解决此问题。";
@@ -135,10 +149,13 @@ public class OrderAction extends ActionSupport{
             })
     })
     public String addOrders(){
+        if (orderData == null || orderAddressId == null){
+            code = 220;
+        }else{
+            orderBiz.addOrders(orderData,orderAddressId);
+            code = orderBiz.getCode();
+        }
 
-        orderDao.addOrders(orderData,orderAddressId);
-
-        code = orderDao.getCode();
         switch(code) {
             case 0:
                 message = "订单信息添加成功！";
@@ -158,6 +175,9 @@ public class OrderAction extends ActionSupport{
             case 212:
                 message = "没有传来用户所购买的商家订单的购物车id。";
                 break;
+            case 220:
+                message = "传来的参数有空的";
+                break;
             default:
                 message = "出现未知错误，请联系管理员解决此问题。";
                 break;
@@ -175,9 +195,9 @@ public class OrderAction extends ActionSupport{
     })
     public String searchOrders(){
         OrderConditions orderConditions = new OrderConditions(orderUserid,orderStoreid,orderNum,orderGoodname,orderStatus);
-        List<Order> orderList = orderDao.searchOrders(orderConditions);
+        List<Order> orderList = orderBiz.searchOrders(orderConditions);
         data.put("orderList",orderList);
-        code = orderDao.getCode();
+        code = orderBiz.getCode();
         switch(code) {
             case 0:
                 message = "订单查询成功！";
@@ -207,15 +227,22 @@ public class OrderAction extends ActionSupport{
             })
     })
     public String deleteOrder(){
-        orderDao.deleteOrder(orderId);
+        if (orderId == null){
+            code = 220;
+        }else{
+            orderBiz.deleteOrder(orderId);
+            code = orderBiz.getCode();
+        }
 
-        code = orderDao.getCode();
         switch(code) {
             case 0:
                 message = "订单删除成功！";
                 break;
             case 207:
                 message = "订单ID不存在。";
+                break;
+            case 220:
+                message = "传来的参数有空的";
                 break;
             default:
                 message = "出现未知错误，请联系管理员解决此问题。";
@@ -233,14 +260,22 @@ public class OrderAction extends ActionSupport{
             })
     })
     public String updateOrder(){
-        orderDao.updateOrder(orderId,orderStatus);
-        code = orderDao.getCode();
+        if(orderId == null || orderStatus == null){
+            code = 220;
+        }else{
+            orderBiz.updateOrder(orderId,orderStatus);
+            code = orderBiz.getCode();
+        }
+
         switch(code) {
             case 0:
                 message = "订单更新成功！";
                 break;
             case 207:
                 message = "订单ID不存在。";
+                break;
+            case 220:
+                message = "传来的参数有空的";
                 break;
             default:
                 message = "出现未知错误，请联系管理员解决此问题。";

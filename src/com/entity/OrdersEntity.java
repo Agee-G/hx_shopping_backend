@@ -1,6 +1,7 @@
 package com.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "orders", schema = "hxtaobaocom")
-public class OrdersEntity {
+public class OrdersEntity implements Serializable{
     private String orderId;
     private String orderUserid;
     private String orderStoreid;

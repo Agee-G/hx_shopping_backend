@@ -6,7 +6,9 @@ package com.action;
  */
 
 import com.dao.OrderDao;
+import com.entity.Order;
 import com.entity.OrderConditions;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -14,6 +16,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @ParentPackage("json-default")
 public class OrderAction extends ActionSupport{
@@ -23,6 +27,8 @@ public class OrderAction extends ActionSupport{
     private HashMap data = new HashMap();//返回的数据
 
     private OrderDao orderDao= new OrderDao();
+    Map<String, Object> dataSession = ActionContext.getContext().getSession();
+
 
     private String orderId;
     private String orderUserid;
@@ -103,9 +109,9 @@ public class OrderAction extends ActionSupport{
             })
     })
     public String addOrder(){
-        int result = orderDao.addOrder(orderStoreid,goodsId,goodsNum,goodType,orderTotalprice,orderAddressId);
-        code = result;
-        switch(result) {
+        orderDao.addOrder(orderStoreid,goodsId,goodsNum,goodType,orderTotalprice,orderAddressId);
+        code = (int)dataSession.get("code");
+        switch(code) {
             case 0:
                 message = "订单添加成功！";
                 break;
@@ -132,10 +138,10 @@ public class OrderAction extends ActionSupport{
     })
     public String addOrders(){
 
-        int result = orderDao.addOrders(orderData,orderAddressId);
+        orderDao.addOrders(orderData,orderAddressId);
 
-        code = result;
-        switch(result) {
+        code = (int)dataSession.get("code");
+        switch(code) {
             case 0:
                 message = "订单信息添加成功！";
                 break;
@@ -171,10 +177,10 @@ public class OrderAction extends ActionSupport{
     })
     public String searchOrders(){
         OrderConditions orderConditions = new OrderConditions(orderUserid,orderStoreid,orderNum,orderGoodname,orderStatus);
-        int result = orderDao.searchOrders(orderConditions);
-
-        code = result;
-        switch(result) {
+        List<Order> orderList = orderDao.searchOrders(orderConditions);
+        data.put("orderList",orderList);
+        code = (int)dataSession.get("code");
+        switch(code) {
             case 0:
                 message = "订单查询成功！";
                 break;
@@ -203,10 +209,10 @@ public class OrderAction extends ActionSupport{
             })
     })
     public String deleteOrder(){
-        int result = orderDao.deleteOrder(orderId);
+        orderDao.deleteOrder(orderId);
 
-        code = result;
-        switch(result) {
+        code = (int)dataSession.get("code");
+        switch(code) {
             case 0:
                 message = "订单删除成功！";
                 break;
@@ -229,9 +235,9 @@ public class OrderAction extends ActionSupport{
             })
     })
     public String updateOrder(){
-        int result = orderDao.updateOrder(orderId,orderStatus);
-        code = result;
-        switch(result) {
+        orderDao.updateOrder(orderId,orderStatus);
+        code = (int)dataSession.get("code");
+        switch(code) {
             case 0:
                 message = "订单更新成功！";
                 break;

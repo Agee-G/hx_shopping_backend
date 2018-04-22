@@ -1,5 +1,6 @@
 package com.dao;
 import com.entity.*;
+import com.opensymphony.xwork2.ActionContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,9 +13,11 @@ import java.util.*;
  * orderStatus - 0:待付款 1:待发货 2:待收货 3:已收获 4:以评价 5:仅退款 6:退货退款
  */
 public class OrderDao extends BaseDao<OrdersEntity>{
-    //Map<String, Object> dataSession = ActionContext.getContext().getSession();
+    Map<String, Object> dataSession = ActionContext.getContext().getSession();
+    private int code = 0;
+
     //直接购买
-    public int addOrder(String storeid,String goodsId,Integer goodsNum,String goodType,Integer orderTotalprice,String orderAddressId){
+    public void addOrder(String storeid,String goodsId,Integer goodsNum,String goodType,Integer orderTotalprice,String orderAddressId){
         Transaction tran = null;
         Session session = HibernateSessionFactory.getSession();
         try {
@@ -24,7 +27,7 @@ public class OrderDao extends BaseDao<OrdersEntity>{
             String orderNumber = "订单编号aaa";
             GoodsEntity goodsEntity = session.get(GoodsEntity.class,goodsId);
             if(goodsEntity == null){
-                return 201;//商品id不存在
+                code = 201;//商品id不存在
             }
             OrdergoodsEntity ordergoodsEntity = new OrdergoodsEntity();
             ordergoodsEntity.setOrdergoodsId(UUID.randomUUID().toString());
@@ -39,7 +42,7 @@ public class OrderDao extends BaseDao<OrdersEntity>{
 
             AddressEntity addressEntity = session.get(AddressEntity.class,orderAddressId);
             if(addressEntity == null){
-                return 202;//地址id不存在
+                code = 202;//地址id不存在
             }
             OrdersEntity ordersEntity= new OrdersEntity();
             ordersEntity.setOrderId(UUID.randomUUID().toString());
@@ -61,10 +64,10 @@ public class OrderDao extends BaseDao<OrdersEntity>{
             }
             e.printStackTrace();
         }
-        return 0;
+         dataSession.put("code",code);
     }
     //购物车购买
-    public int addOrders(HashMap<String,String[]> orderData,String orderAddressId) {
+    public void addOrders(HashMap<String,String[]> orderData,String orderAddressId) {
         Transaction tran = null;
         Session session = HibernateSessionFactory.getSession();
         try {
@@ -73,24 +76,24 @@ public class OrderDao extends BaseDao<OrdersEntity>{
             //String userid = (String)dataSession.get("userid");
             String userid = "1";
             if (orderData == null){
-                return 211;//没有传来购物车结算订单和商品信息
+                code =  211;//没有传来购物车结算订单和商品信息
             }
             for (String store_id:orderData.keySet()) {
                 //待解决：订单编号
                 String orderNumber = "订单编号9999";
                 String[] ids = orderData.get(store_id);
                 if (ids.length == 0){
-                    return 212;//没有传来用户所购买的商家订单的购物车id
+                    code =  212;//没有传来用户所购买的商家订单的购物车id
                 }
                 int totalPrice = 0;
                 for (String shoppingcart_id:ids) {
                     ShoppingcartEntity shoppingcartEntity = session.get(ShoppingcartEntity.class,shoppingcart_id);
                     if (shoppingcartEntity == null){
-                        return 203;//购物车id不存在；
+                        code =  203;//购物车id不存在；
                     }
                     GoodsEntity goodsEntity = session.get(GoodsEntity.class,shoppingcartEntity.getShoppingcartGoodsid());
                     if (goodsEntity == null){
-                        return 204;//购物车对应的商品ID不存在；
+                        code =  204;//购物车对应的商品ID不存在；
                     }
                     OrdergoodsEntity ordergoodsEntity = new OrdergoodsEntity();
                     ordergoodsEntity.setOrdergoodsId(UUID.randomUUID().toString());
@@ -106,7 +109,7 @@ public class OrderDao extends BaseDao<OrdersEntity>{
                 }
                 AddressEntity addressEntity = session.get(AddressEntity.class,orderAddressId);
                 if(addressEntity == null){
-                    return 202;//地址id不存在
+                    code =  202;//地址id不存在
                 }
                 OrdersEntity ordersEntity= new OrdersEntity();
                 ordersEntity.setOrderId(UUID.randomUUID().toString());
@@ -128,11 +131,10 @@ public class OrderDao extends BaseDao<OrdersEntity>{
             }
             e.printStackTrace();
         }
-        return 0;
+        dataSession.put("code",code);
     }
     //查询订单
-    public int searchOrders(OrderConditions orderConditions){
-        int res = 0;
+    public List<Order> searchOrders(OrderConditions orderConditions){
         Transaction tran = null;
         Session session = HibernateSessionFactory.getSession();
         List<Order> orderList = new ArrayList<>();
@@ -164,7 +166,7 @@ public class OrderDao extends BaseDao<OrdersEntity>{
             query.setProperties(orderConditions);
             List<Order> orders = query.list();
             if(orders.size() == 0){
-                res=205;//没有该查询条件下的订单
+                code = 205;//没有该查询条件下的订单
             }
 
             for (Order o :orders){
@@ -173,7 +175,7 @@ public class OrderDao extends BaseDao<OrdersEntity>{
                 //查询订单商家的名字
                 StoreEntity storeEntity = session.get(StoreEntity.class,oid);
                 if(storeEntity == null){
-                    res=206;//订单没有对应的商店
+                    code = 206;//订单没有对应的商店
                 }
 
                 //查询订单商品
@@ -182,7 +184,7 @@ public class OrderDao extends BaseDao<OrdersEntity>{
                 query3.setParameter("orderNum",o.getOrderNum());
                 List<OrdergoodsEntity> ordergoodsEntityList = query3.list();
                 if(ordergoodsEntityList.size() == 0){
-                    res=201;//该订单没有商品
+                    code = 201;//该订单没有商品
                 }
 
                 //添加到order数据实体中
@@ -205,32 +207,32 @@ public class OrderDao extends BaseDao<OrdersEntity>{
         }
         e.printStackTrace();
     }
-        return res;
+        dataSession.put("code",code);
+        return orderList;
     }
 
     //更新订单状态
-    public int updateOrder(String orderId,Integer orderStatus){
+    public void updateOrder(String orderId,Integer orderStatus){
         OrdersEntity ordersEntity = (OrdersEntity)super.get(OrdersEntity.class,orderId);
         if(ordersEntity == null){
-           return 207;//订单id不存在
+           code = 207;//订单id不存在
         }else{
             ordersEntity.setOrderStatus(orderStatus);
             super.merge(ordersEntity);
         }
-        return 0;
+        dataSession.put("code",code);
     }
 
     //删除订单
-    public int deleteOrder(String orderId){
+    public void deleteOrder(String orderId){
         OrdersEntity ordersEntity = (OrdersEntity)super.get(OrdersEntity.class,orderId);
         if (ordersEntity == null){
-            return 207;//订单id不存在
+            code = 207;//订单id不存在
         }else {
             super.delete(ordersEntity);
         }
-        return 0;
+        dataSession.put("code",code);
     }
-
 
 
 

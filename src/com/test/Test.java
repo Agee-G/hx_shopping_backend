@@ -14,8 +14,9 @@ public class Test {
     public static void main(String args[]){
         OrderDao orderDao = new OrderDao();
         //测试一下直接购买生成订单
-//        int res = orderDao.addOrder("2",4,"red",23,"1");
-//gzwhahah
+        orderDao.addOrder("2","1",3,"red",23,"1");
+
+        //hehe
         //测试一下从购物车生成订单
 //        HashMap<String,String[]> orderData = new HashMap<>();
 //        String[] strings = {"1","2"};

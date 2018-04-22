@@ -27,8 +27,6 @@ public class OrderAction extends ActionSupport{
     private HashMap data = new HashMap();//返回的数据
 
     private OrderDao orderDao= new OrderDao();
-    Map<String, Object> dataSession = ActionContext.getContext().getSession();
-
 
     private String orderId;
     private String orderUserid;
@@ -110,7 +108,7 @@ public class OrderAction extends ActionSupport{
     })
     public String addOrder(){
         orderDao.addOrder(orderStoreid,goodsId,goodsNum,goodType,orderTotalprice,orderAddressId);
-        code = (int)dataSession.get("code");
+        code = orderDao.getCode();
         switch(code) {
             case 0:
                 message = "订单添加成功！";
@@ -140,7 +138,7 @@ public class OrderAction extends ActionSupport{
 
         orderDao.addOrders(orderData,orderAddressId);
 
-        code = (int)dataSession.get("code");
+        code = orderDao.getCode();
         switch(code) {
             case 0:
                 message = "订单信息添加成功！";
@@ -179,7 +177,7 @@ public class OrderAction extends ActionSupport{
         OrderConditions orderConditions = new OrderConditions(orderUserid,orderStoreid,orderNum,orderGoodname,orderStatus);
         List<Order> orderList = orderDao.searchOrders(orderConditions);
         data.put("orderList",orderList);
-        code = (int)dataSession.get("code");
+        code = orderDao.getCode();
         switch(code) {
             case 0:
                 message = "订单查询成功！";
@@ -211,7 +209,7 @@ public class OrderAction extends ActionSupport{
     public String deleteOrder(){
         orderDao.deleteOrder(orderId);
 
-        code = (int)dataSession.get("code");
+        code = orderDao.getCode();
         switch(code) {
             case 0:
                 message = "订单删除成功！";
@@ -236,7 +234,7 @@ public class OrderAction extends ActionSupport{
     })
     public String updateOrder(){
         orderDao.updateOrder(orderId,orderStatus);
-        code = (int)dataSession.get("code");
+        code = orderDao.getCode();
         switch(code) {
             case 0:
                 message = "订单更新成功！";

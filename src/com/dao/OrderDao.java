@@ -13,8 +13,16 @@ import java.util.*;
  * orderStatus - 0:待付款 1:待发货 2:待收货 3:已收获 4:以评价 5:仅退款 6:退货退款
  */
 public class OrderDao extends BaseDao<OrdersEntity>{
-    Map<String, Object> dataSession = ActionContext.getContext().getSession();
+
     private int code = 0;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
 
     //直接购买
     public void addOrder(String storeid,String goodsId,Integer goodsNum,String goodType,Integer orderTotalprice,String orderAddressId){
@@ -64,7 +72,7 @@ public class OrderDao extends BaseDao<OrdersEntity>{
             }
             e.printStackTrace();
         }
-         dataSession.put("code",code);
+        setCode(code);
     }
     //购物车购买
     public void addOrders(HashMap<String,String[]> orderData,String orderAddressId) {
@@ -131,7 +139,7 @@ public class OrderDao extends BaseDao<OrdersEntity>{
             }
             e.printStackTrace();
         }
-        dataSession.put("code",code);
+        setCode(code);
     }
     //查询订单
     public List<Order> searchOrders(OrderConditions orderConditions){
@@ -207,7 +215,7 @@ public class OrderDao extends BaseDao<OrdersEntity>{
         }
         e.printStackTrace();
     }
-        dataSession.put("code",code);
+        ActionContext.getContext().getSession().put("code",code);
         return orderList;
     }
 
@@ -220,7 +228,7 @@ public class OrderDao extends BaseDao<OrdersEntity>{
             ordersEntity.setOrderStatus(orderStatus);
             super.merge(ordersEntity);
         }
-        dataSession.put("code",code);
+        setCode(code);
     }
 
     //删除订单
@@ -231,7 +239,7 @@ public class OrderDao extends BaseDao<OrdersEntity>{
         }else {
             super.delete(ordersEntity);
         }
-        dataSession.put("code",code);
+        setCode(code);
     }
 
 

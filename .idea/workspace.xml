@@ -4,9 +4,6 @@
     <list default="true" id="d4c63d99-b64e-4fde-98ff-3a8271a1523b" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/hx_shopping_backend" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/com/action/OrderAction.java" afterPath="$PROJECT_DIR$/src/com/action/OrderAction.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/dao/OrderDao.java" afterPath="$PROJECT_DIR$/src/com/dao/OrderDao.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -55,13 +52,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OrderDao.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="OrderDao.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/dao/OrderDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
-              <caret line="133" column="37" lean-forward="false" selection-start-line="133" selection-start-column="37" selection-end-line="133" selection-end-column="37" />
+            <state relative-caret-position="849">
+              <caret line="237" column="0" lean-forward="false" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrderConditions.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/entity/OrderConditions.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="7" column="28" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="28" />
+              <folding>
+                <element signature="e#648#649#0" expanded="true" />
+                <element signature="e#677#678#0" expanded="true" />
+                <element signature="e#721#722#0" expanded="true" />
+                <element signature="e#757#758#0" expanded="true" />
+                <element signature="e#791#792#0" expanded="true" />
+                <element signature="e#821#822#0" expanded="true" />
+                <element signature="e#867#868#0" expanded="true" />
+                <element signature="e#905#906#0" expanded="true" />
+                <element signature="e#940#941#0" expanded="true" />
+                <element signature="e#971#972#0" expanded="true" />
+                <element signature="e#1019#1020#0" expanded="true" />
+                <element signature="e#1059#1060#0" expanded="true" />
+                <element signature="e#1099#1100#0" expanded="true" />
+                <element signature="e#1135#1136#0" expanded="true" />
+                <element signature="e#1193#1194#0" expanded="true" />
+                <element signature="e#1243#1244#0" expanded="true" />
+                <element signature="e#1282#1283#0" expanded="true" />
+                <element signature="e#1316#1317#0" expanded="true" />
+                <element signature="e#1371#1372#0" expanded="true" />
+                <element signature="e#1417#1418#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -70,8 +98,28 @@
       <file leaf-file-name="OrderAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/action/OrderAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="111" column="19" lean-forward="false" selection-start-line="111" selection-start-column="19" selection-end-line="111" selection-end-column="19" />
+            <state relative-caret-position="3539">
+              <caret line="180" column="27" lean-forward="false" selection-start-line="180" selection-start-column="27" selection-end-line="180" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="46">
+              <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hx_shopping_backend.iml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hx_shopping_backend.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -148,9 +196,9 @@
         <option value="$PROJECT_DIR$/out/artifacts/hx_shopping_backend_war_exploded/WEB-INF/classes/hibernate.cfg.xml" />
         <option value="$PROJECT_DIR$/src/com/entity/Order.java" />
         <option value="$PROJECT_DIR$/src/com/test/Test.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/com/action/OrderAction.java" />
         <option value="$PROJECT_DIR$/src/com/dao/OrderDao.java" />
+        <option value="$PROJECT_DIR$/src/com/action/OrderAction.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -209,6 +257,17 @@
             <path>
               <item name="hx_shopping" type="b2602c69:ProjectViewProjectNode" />
               <item name="hx_shopping" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hx_shopping" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hx_shopping" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hx_shopping" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hx_shopping" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -415,12 +474,12 @@
       <workItem from="1524187526602" duration="21633000" />
       <workItem from="1524233011945" duration="6655000" />
       <workItem from="1524270229316" duration="20961000" />
-      <workItem from="1524295234736" duration="2025000" />
+      <workItem from="1524295234736" duration="2929000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55821000" />
+    <option name="totallyTimeSpent" value="56725000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -445,7 +504,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6565901" sideWeight="0.49713877" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14752117" sideWeight="0.49570817" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39782345" sideWeight="0.49570817" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17238913" sideWeight="0.45833334" order="2" side_tool="true" content_ui="tabs" x="558" y="205" width="324" height="490" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -520,23 +579,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/t.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/action/sss.java" />
     <entry file="das://src:table:/35599b3d/1d3ed401-540d-4379-8236-445937f4d26d/hxtaobaocom.user">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
@@ -727,13 +769,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/entity/OrderConditions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="28" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/out/production/hx_shopping_backend/hibernate.cfg.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -826,29 +861,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/src/com/entity/OrderConditions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state relative-caret-position="161">
+          <caret line="7" column="28" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="28" />
+          <folding>
+            <element signature="e#648#649#0" expanded="true" />
+            <element signature="e#677#678#0" expanded="true" />
+            <element signature="e#721#722#0" expanded="true" />
+            <element signature="e#757#758#0" expanded="true" />
+            <element signature="e#791#792#0" expanded="true" />
+            <element signature="e#821#822#0" expanded="true" />
+            <element signature="e#867#868#0" expanded="true" />
+            <element signature="e#905#906#0" expanded="true" />
+            <element signature="e#940#941#0" expanded="true" />
+            <element signature="e#971#972#0" expanded="true" />
+            <element signature="e#1019#1020#0" expanded="true" />
+            <element signature="e#1059#1060#0" expanded="true" />
+            <element signature="e#1099#1100#0" expanded="true" />
+            <element signature="e#1135#1136#0" expanded="true" />
+            <element signature="e#1193#1194#0" expanded="true" />
+            <element signature="e#1243#1244#0" expanded="true" />
+            <element signature="e#1282#1283#0" expanded="true" />
+            <element signature="e#1316#1317#0" expanded="true" />
+            <element signature="e#1371#1372#0" expanded="true" />
+            <element signature="e#1417#1418#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/dao/OrderDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="849">
+          <caret line="237" column="0" lean-forward="false" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hx_shopping_backend.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hx_shopping.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/action/OrderAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="111" column="19" lean-forward="false" selection-start-line="111" selection-start-column="19" selection-end-line="111" selection-end-column="19" />
+        <state relative-caret-position="3539">
+          <caret line="180" column="27" lean-forward="false" selection-start-line="180" selection-start-column="27" selection-end-line="180" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/dao/OrderDao.java">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="133" column="37" lean-forward="false" selection-start-line="133" selection-start-column="37" selection-end-line="133" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="46">
+          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

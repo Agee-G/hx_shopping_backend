@@ -1,13 +1,8 @@
 package com.test;
-
 import com.Utils.Page;
 import com.biz.OrderBiz;
-import com.dao.OrderDao;
 import com.entity.OrderConditions;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Random;
 
 /**
  * @author:lily
@@ -23,7 +18,6 @@ public class Test {
         page.setCurrentPage(2);
         OrderConditions orderConditions = new OrderConditions("1","1",null,null,null);
         orderBiz.searchOrders(page,orderConditions);
-
 
         //测试一下直接购买生成订单
 //        orderBiz.addOrder("2","1",3,"red",23,"1");

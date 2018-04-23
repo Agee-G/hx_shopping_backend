@@ -132,4 +132,15 @@ public class RemarkEntity {
         result = 31 * result + (updateAt != null ? updateAt.hashCode() : 0);
         return result;
     }
+
+    public RemarkEntity() {
+    }
+
+    public RemarkEntity(Integer remarkLevel, String remarkDetail, String remarkGoodsid, Integer remarkStatus, String remarkUserid) {
+        this.remarkLevel = remarkLevel;
+        this.remarkDetail = remarkDetail;
+        this.remarkGoodsid = remarkGoodsid;
+        this.remarkStatus = remarkStatus;
+        this.remarkUserid = remarkUserid;
+    }
 }

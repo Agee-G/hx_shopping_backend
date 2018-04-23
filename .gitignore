@@ -3,3 +3,4 @@
 src/hibernate.cfg.xml
 lib/*
 src/struts.xml
+src/com/test/*

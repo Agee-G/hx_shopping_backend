@@ -26,6 +26,54 @@ public class GoodsEntity{
     private Timestamp createAt;
     private Timestamp updateAt;
 
+
+    private String storeName;
+
+    public GoodsEntity() {
+
+    }
+
+    public GoodsEntity(String goodsName, Integer goodsType, String goodsDetails, Integer goodsPrice, String goodsStoreid, Integer goodsKucun, String goodsStyle) {
+        this.goodsName = goodsName;
+        this.goodsType = goodsType;
+        this.goodsDetails = goodsDetails;
+        this.goodsPrice = goodsPrice;
+        this.goodsStoreid = goodsStoreid;
+        this.goodsKucun = goodsKucun;
+        this.goodsStyle = goodsStyle;
+    }
+
+    public GoodsEntity(String goodsName, Integer goodsType, String goodsDetails, Integer goodsPrice, String goodsStoreid, Integer goodsKucun, Integer goodsSell, String goodsPicture, String goodsStyle) {
+        this.goodsName = goodsName;
+        this.goodsType = goodsType;
+        this.goodsDetails = goodsDetails;
+        this.goodsPrice = goodsPrice;
+        this.goodsStoreid = goodsStoreid;
+        this.goodsKucun = goodsKucun;
+        this.goodsSell = goodsSell;
+        this.goodsPicture = goodsPicture;
+        this.goodsStyle = goodsStyle;
+    }
+
+    public GoodsEntity(String storeName,String goodsName, String goodsDetails, Integer goodsPrice, Integer goodsKucun, Integer goodsSell, String goodsPicture, String goodsStyle) {
+        this.storeName = storeName;
+        this.goodsName = goodsName;
+        this.goodsDetails = goodsDetails;
+        this.goodsPrice = goodsPrice;
+        this.goodsKucun = goodsKucun;
+        this.goodsSell = goodsSell;
+        this.goodsPicture = goodsPicture;
+        this.goodsStyle = goodsStyle;
+    }
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+
     @Id
     @Column(name = "goods_id", nullable = false, length = 128)
     public String getGoodsId() {

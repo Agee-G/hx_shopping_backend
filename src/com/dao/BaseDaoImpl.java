@@ -100,8 +100,8 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
     public List search(Page page, String hql, Object conditions) {
         Query query = HibernateSessionFactory.getSession().createQuery(hql);
         query.setProperties(conditions);
-        query.setFirstResult((page.getCurrentPage()-1)*page.PAGESIZE);
-        query.setMaxResults(page.PAGESIZE);
+        query.setFirstResult((page.getCurrentPage()-1)*page.getPageSize());
+        query.setMaxResults(page.getPageSize());
         return query.list();
     }
 

@@ -28,7 +28,7 @@ public class OrderAction extends ActionSupport{
     //注入biz
     private OrderBiz orderBiz= new OrderBiz();
 
-    //分页信息
+    //分页信息:规定如果传来 currentPage:0,pageSize:0  则查询所有记录
     private Page<Order> orderPage = new Page<>();
     private Integer currentPage;
     private Integer pageSize;
@@ -168,7 +168,6 @@ public class OrderAction extends ActionSupport{
             orderBiz.addOrder(orderStoreid,goodsId,goodsNum,goodType,orderTotalprice,orderAddressId);
             code = orderBiz.getCode();
         }
-        setCode(code);
         return SUCCESS;
     }
 
@@ -188,7 +187,6 @@ public class OrderAction extends ActionSupport{
             orderBiz.addOrders(orderData,orderAddressId);
             code = orderBiz.getCode();
         }
-        setCode(code);
         return SUCCESS;
     }
 
@@ -202,13 +200,10 @@ public class OrderAction extends ActionSupport{
             })
     })
     public String searchOrders(){
-        //如果传来的pageSize为空，则查询所有记录
-        if(pageSize == null){
-            pageSize = 100000;
-        }
-        //如果传来的当前页数为空，则从第一条记录开始查
-        int curPage = orderPage.getCurPage(currentPage);
-        orderPage.setCurrentPage(curPage);
+        //如果传来的pageSize为0，则查询所有记录
+        orderPage.setPageSize(pageSize);
+        //如果传来的当前页数为0，则从第一条记录开始查
+        orderPage.setCurrentPage(currentPage);
         //设置查询条件
         OrderConditions orderConditions = new OrderConditions(orderUserid,orderStoreid,orderNum,orderGoodname,orderStatus);
         //调接口，执行查询操作
@@ -216,7 +211,6 @@ public class OrderAction extends ActionSupport{
         //将数据返回给前端
         data.put("orderList",orderPage.getPageList());
         code = orderBiz.getCode();
-        setCode(code);
         return SUCCESS;
     }
 
@@ -236,7 +230,6 @@ public class OrderAction extends ActionSupport{
             orderBiz.deleteOrder(orderId);
             code = orderBiz.getCode();
         }
-        setCode(code);
         return SUCCESS;
     }
 
@@ -256,7 +249,6 @@ public class OrderAction extends ActionSupport{
             orderBiz.updateOrder(orderId,orderStatus);
             code = orderBiz.getCode();
         }
-        setCode(code);
         return SUCCESS;
     }
 

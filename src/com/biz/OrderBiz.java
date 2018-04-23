@@ -1,13 +1,13 @@
 package com.biz;
 
 import com.Utils.Page;
-import com.dao.HibernateSessionFactory;
+import com.Utils.Tool;
 import com.dao.OrderDao;
 import com.entity.*;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import java.util.*;
 
 /**
@@ -43,7 +43,7 @@ public class OrderBiz {
             tran = session.beginTransaction();
             //String userid = (String)dataSession.get("userid");
             String userid = "1";
-            String orderNumber = "订单编号aaa";
+            String orderNumber = Tool.orderNumber();
             GoodsEntity goodsEntity = session.get(GoodsEntity.class,goodsId);
             if(goodsEntity == null){
                 code = 201;//商品id不存在
@@ -83,7 +83,6 @@ public class OrderBiz {
             }
             e.printStackTrace();
         }
-        setCode(code);
     }
     //购物车购买
     public void addOrders(HashMap<String,String[]> orderData, String orderAddressId) {
@@ -99,7 +98,7 @@ public class OrderBiz {
             }
             for (String store_id:orderData.keySet()) {
                 //待解决：订单编号
-                String orderNumber = "订单编号9999";
+                String orderNumber = Tool.orderNumber();
                 String[] ids = orderData.get(store_id);
                 if (ids.length == 0){
                     code =  212;//没有传来用户所购买的商家订单的购物车id
@@ -150,7 +149,6 @@ public class OrderBiz {
             }
             e.printStackTrace();
         }
-        setCode(code);
     }
     //查询订单
     public void searchOrders(Page<Order> orderPage,OrderConditions orderConditions){
@@ -220,22 +218,31 @@ public class OrderBiz {
             }
             e.printStackTrace();
         }
-        setCode(code);
         orderPage.setPageList(orderList);
     }
 
     //更新订单状态
-    public void updateOrder(String orderId,Integer orderStatus){
-        OrdersEntity ordersEntity = (OrdersEntity)orderDao.get(orderId);
-        if(ordersEntity == null){
-            code = 207;//订单id不存在
-        }else{
-            ordersEntity.setOrderStatus(orderStatus);
-            orderDao.merge(ordersEntity);
+    public void updateOrder(String orderId,Integer orderStatus) {
+        Transaction tran = null;
+        Session session = orderDao.currentSession();
+        try {
+            tran = session.beginTransaction();
+            OrdersEntity ordersEntity = orderDao.get(orderId);
+            if (ordersEntity == null) {
+                code = 207;//订单id不存在
+            } else {
+                ordersEntity.setOrderStatus(orderStatus);
+                ordersEntity.setUpdateAt(Tool.currentTimestamp());
+                orderDao.merge(ordersEntity);
+            }
+            tran.commit();
+        } catch (HibernateException e) {
+            if (tran != null) {
+                tran.rollback();
+            }
+            e.printStackTrace();
         }
-        setCode(code);
     }
-
     //删除订单
     public void deleteOrder(String orderId){
 
@@ -261,7 +268,6 @@ public class OrderBiz {
             }
             e.printStackTrace();
         }
-        setCode(code);
     }
 
 
@@ -275,8 +281,6 @@ public class OrderBiz {
             tran = session.beginTransaction();
             //StringBuffer hql=new StringBuffer("select new com.entity.Order(o.orderNumber,o.orderStoreid,o.orderTotalprice,o.orderStatus,o.orderAddress,o.orderAddressphone,o.orderAddressusername)from OrdersEntity o where 1=1 ");
             //query = session.createQuery(hql.toString());
-
-
             query = session.createQuery("from OrdersEntity");
             Iterator iterable = query.list().iterator();
             if(iterable.hasNext()){

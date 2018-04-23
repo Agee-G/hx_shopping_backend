@@ -3,6 +3,8 @@ import com.Utils.Page;
 import com.biz.OrderBiz;
 import com.entity.OrderConditions;
 
+import java.util.HashMap;
+
 
 /**
  * @author:lily
@@ -13,14 +15,14 @@ public class Test {
     public static void main(String args[]){
         OrderBiz orderBiz = new OrderBiz();
         //测试一下查询订单
-        Page page = new Page();
-        page.PAGESIZE = 1;
-        page.setCurrentPage(2);
-        OrderConditions orderConditions = new OrderConditions("1","1",null,null,null);
-        orderBiz.searchOrders(page,orderConditions);
+//        Page page = new Page();
+//        page.PAGESIZE = 1;
+//        page.setCurrentPage(2);
+//        OrderConditions orderConditions = new OrderConditions("1","1",null,null,null);
+//        orderBiz.searchOrders(page,orderConditions);
 
         //测试一下直接购买生成订单
-//        orderBiz.addOrder("2","1",3,"red",23,"1");
+ //      orderBiz.addOrder("2","1",3,"red",23,"1");
 
         //hehe
         //测试一下从购物车生成订单
@@ -31,9 +33,9 @@ public class Test {
 
 
         //测试一下改变订单状态
-//        orderBiz.updateOrder("3",4);
+        orderBiz.updateOrder("1",3);
         //测试一下删除订单
-//        orderBiz.deleteOrder("3");
+//        orderBiz.deleteOrder("8ebe88b3-46af-43a5-a8be-0e44ea33e662");
 
         //随便测试一下
 //        orderBiz.test2();

@@ -1,9 +1,6 @@
 package com.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -20,7 +17,7 @@ public class FavouriteEntity {
     private Timestamp createAt;
     private Timestamp updateAt;
 
-    @Basic
+    @Id
     @Column(name = "favourite_id", nullable = false, length = 128)
     public String getFavouriteId() {
         return favouriteId;

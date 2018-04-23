@@ -1,7 +1,9 @@
 package com.test;
 
+import com.biz.RemarkBiz;
 import com.dao.OrderDao;
 import com.entity.OrderConditions;
+import com.entity.RemarkEntity;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -15,6 +17,8 @@ import java.util.Random;
 public class Test {
     public static void main(String args[]){
         OrderDao orderDao = new OrderDao();
+        RemarkBiz remarkBiz = new RemarkBiz();
+        remarkBiz.addRemark(new RemarkEntity(5,"好txmgay","1",1,"1"));
         //测试一下直接购买生成订单
 //        orderDao.addOrder("2","1",3,"red",23,"1");
 

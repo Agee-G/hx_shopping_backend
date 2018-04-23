@@ -53,6 +53,46 @@ public class OrderAction extends ActionSupport{
     }
     public void setCode(int code) {
         this.code = code;
+
+        switch(code) {
+            case 0:
+                message = "订单添加成功！";
+                break;
+            case 201:
+                message = "商品id不存在";
+                break;
+            case 202:
+                message = "地址id不存在。";
+                break;
+            case 203:
+                message = "购物车id不存在。";
+                break;
+            case 204:
+                message = "购物车对应的商品ID不存在。";
+                break;
+            case 205:
+                message = "没有该查询条件下的订单。";
+                break;
+            case 206:
+                message = "订单没有对应的商店。";
+                break;
+            case 207:
+                message = "订单ID不存在。";
+                break;
+            case 211:
+                message = "没有传来购物车结算订单和商品信息。";
+                break;
+            case 212:
+                message = "没有传来用户所购买的商家订单的购物车id。";
+                break;
+            case 220:
+                message = "传来的参数有空的";
+                break;
+            default:
+                message = "出现未知错误，请联系管理员解决此问题。";
+                break;
+        }
+
     }
     public String getMessage() {
         return message;
@@ -128,23 +168,7 @@ public class OrderAction extends ActionSupport{
             orderBiz.addOrder(orderStoreid,goodsId,goodsNum,goodType,orderTotalprice,orderAddressId);
             code = orderBiz.getCode();
         }
-        switch(code) {
-            case 0:
-                message = "订单添加成功！";
-                break;
-            case 201:
-                message = "商品id不存在";
-                break;
-            case 202:
-                message = "地址id不存在";
-                break;
-            case 220:
-                message = "传来的参数有空的";
-                break;
-            default:
-                message = "出现未知错误，请联系管理员解决此问题。";
-                break;
-        }
+        setCode(code);
         return SUCCESS;
     }
 
@@ -164,33 +188,7 @@ public class OrderAction extends ActionSupport{
             orderBiz.addOrders(orderData,orderAddressId);
             code = orderBiz.getCode();
         }
-
-        switch(code) {
-            case 0:
-                message = "订单信息添加成功！";
-                break;
-            case 202:
-                message = "地址id不存在。";
-                break;
-            case 203:
-                message = "购物车id不存在。";
-                break;
-            case 204:
-                message = "购物车对应的商品ID不存在。";
-                break;
-            case 211:
-                message = "没有传来购物车结算订单和商品信息。";
-                break;
-            case 212:
-                message = "没有传来用户所购买的商家订单的购物车id。";
-                break;
-            case 220:
-                message = "传来的参数有空的";
-                break;
-            default:
-                message = "出现未知错误，请联系管理员解决此问题。";
-                break;
-        }
+        setCode(code);
         return SUCCESS;
     }
 
@@ -218,23 +216,7 @@ public class OrderAction extends ActionSupport{
         //将数据返回给前端
         data.put("orderList",orderPage.getPageList());
         code = orderBiz.getCode();
-        switch(code) {
-            case 0:
-                message = "订单查询成功！";
-                break;
-            case 201:
-                message = "商品id不存在。";
-                break;
-            case 205:
-                message = "没有该查询条件下的订单。";
-                break;
-            case 206:
-                message = "订单没有对应的商店。";
-                break;
-            default:
-                message = "出现未知错误，请联系管理员解决此问题。";
-                break;
-        }
+        setCode(code);
         return SUCCESS;
     }
 
@@ -254,21 +236,7 @@ public class OrderAction extends ActionSupport{
             orderBiz.deleteOrder(orderId);
             code = orderBiz.getCode();
         }
-
-        switch(code) {
-            case 0:
-                message = "订单删除成功！";
-                break;
-            case 207:
-                message = "订单ID不存在。";
-                break;
-            case 220:
-                message = "传来的参数有空的";
-                break;
-            default:
-                message = "出现未知错误，请联系管理员解决此问题。";
-                break;
-        }
+        setCode(code);
         return SUCCESS;
     }
 
@@ -288,21 +256,7 @@ public class OrderAction extends ActionSupport{
             orderBiz.updateOrder(orderId,orderStatus);
             code = orderBiz.getCode();
         }
-
-        switch(code) {
-            case 0:
-                message = "订单更新成功！";
-                break;
-            case 207:
-                message = "订单ID不存在。";
-                break;
-            case 220:
-                message = "传来的参数有空的";
-                break;
-            default:
-                message = "出现未知错误，请联系管理员解决此问题。";
-                break;
-        }
+        setCode(code);
         return SUCCESS;
     }
 

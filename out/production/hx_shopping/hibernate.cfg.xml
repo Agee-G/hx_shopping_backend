@@ -29,6 +29,10 @@
         <mapping class="com.entity.ShoppingcartEntity"/>
         <mapping class="com.entity.UserEntity"/>
         <mapping class="com.entity.StoreEntity"/>
+        <mapping class="com.entity.FavouriteEntity"/>
+        <mapping class="com.entity.LotteryEntity"/>
+        <mapping class="com.entity.RemarkEntity"/>
+        <mapping class="com.entity.StoreapplyEntity"/>
 
     </session-factory>
 </hibernate-configuration>

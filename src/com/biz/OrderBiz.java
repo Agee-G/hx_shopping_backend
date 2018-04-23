@@ -38,7 +38,7 @@ public class OrderBiz {
     //直接购买
     public void addOrder(String storeid,String goodsId,Integer goodsNum,String goodType,Integer orderTotalprice,String orderAddressId){
         Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
+        Session session = orderDao.currentSession();
         try {
             tran = session.beginTransaction();
             //String userid = (String)dataSession.get("userid");
@@ -88,7 +88,7 @@ public class OrderBiz {
     //购物车购买
     public void addOrders(HashMap<String,String[]> orderData, String orderAddressId) {
         Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
+        Session session = orderDao.currentSession();
         try {
             tran = session.beginTransaction();
             //待解决：登录的时候把用户id存入session中
@@ -155,48 +155,39 @@ public class OrderBiz {
     //查询订单
     public void searchOrders(Page<Order> orderPage,OrderConditions orderConditions){
         Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
+        Session session = orderDao.currentSession();
         List<Order> orderList = new ArrayList<>();
         try {
             tran = session.beginTransaction();
             //查询符合条件的订单
-            StringBuffer hql=new StringBuffer("select new com.entity.Order(o.orderNumber,o.orderStoreid,o.orderTotalprice,o.orderStatus,o.orderAddress,o.orderAddressphone,o.orderAddressusername)from OrdersEntity o where 1=1 ");
-            StringBuffer hql2=new StringBuffer("select count(orderId) from OrdersEntity o where 1=1 ");
-System.out.println("------------a");
+            StringBuffer hql=new StringBuffer("from OrdersEntity o where 1=1 ");
             //待解决：查不到createAt
-            //StringBuffer hql=new StringBuffer("select new com.entity.Order( o.createAt,o.orderNumber,o.orderStoreid,o.orderTotalprice,o.orderStatus,o.orderAddress,o.orderAddressphone,o.orderAddressusername)from OrdersEntity o where 1=1 ");
+            //StringBuffer hql=new StringBuffer("select new com.entity.Order( o.createAt,o.orderNumber,o.orderStoreid,o.orderTotalprice,o.orderStatus,o.orderAddress,o.orderAddressphone,o.orderAddressusername)");
             if(orderConditions.getUserid() != null && orderConditions.getUserid().length()>0){
                 hql.append(" and o.orderUserid = :userid ");
-                hql2.append(" and o.orderUserid = :userid ");
             }
             if(orderConditions.getStoreid() != null && orderConditions.getStoreid().length()>0){
                 hql.append(" and o.orderStoreid = :storeid ");
-                hql2.append(" and o.orderStoreid = :storeid ");
             }
             if(orderConditions.getOrderStatus() != null){
                 hql.append(" and o.orderStatus = :orderStatus ");
-                hql2.append(" and o.orderStatus = :orderStatus ");
             }
             //待解决：根据商品的名字查找
 //            if(orderConditions.getOrderGoodname() != null && orderConditions.getOrderGoodname().length()>0){
 //                orderConditions.setOrderGoodname("%"+orderConditions.getOrderGoodname()+"%");
-//                hql.append(" and o.title like :title ");
+//                hql2.append(" and o.title like :title ");
 //            }
             if(orderConditions.getOrderNum() != null && orderConditions.getOrderNum().length()>0){
                 orderConditions.setOrderNum("%"+orderConditions.getOrderNum()+"%");
                 hql.append(" and o.orderNumber like :orderNum ");
-                hql2.append(" and o.orderNumber like :orderNum ");
             }
-            System.out.println("------------b");
-            orderPage.setCount(orderDao.obtainCount(hql2.toString(), orderConditions).intValue());
-            System.out.println("------------c");
+            //设置总页数
+            orderPage.setCount(orderDao.obtainCount(hql.toString(), orderConditions).intValue());
             List<Order> orders = orderDao.search(orderPage,hql.toString(),orderConditions);
-            System.out.println("------------d");
-            if(orders.size() == 0){
+            if(orders == null){
                 code = 205;//没有该查询条件下的订单
             }else {
                 for (Order  order :orders){
-                    //Order order = new Order();
                     String oid = order.getStoreId();
                     //查询订单商家的名字
                     StoreEntity storeEntity = session.get(StoreEntity.class,oid);
@@ -204,20 +195,16 @@ System.out.println("------------a");
                         code = 206;//订单没有对应的商店
                     }
                     //查询订单商品
-                    String hql3="from OrdergoodsEntity o where o.ordergoodsOrdernum = :orderNum";
-                    Query query3 = session.createQuery(hql3);
-                    query3.setParameter("orderNum",order.getOrderNum());
-                    List<OrdergoodsEntity> ordergoodsEntityList = query3.list();
-                    if(ordergoodsEntityList.size() == 0){
+                    List<OrdergoodsEntity> ordergoodsEntityList = orderDao.searchOrderGoods(order.getOrderNum());
+                    if(ordergoodsEntityList == null){
                         code = 201;//该订单没有商品
                     }
-
                     //添加到order数据实体中
                     order.setStoreName(storeEntity.getStoreName());
                     order.getOrderGoodList().addAll(ordergoodsEntityList);
                     orderList.add(order);
                 }
-
+                //打印一下结果
                 for (int i = 0; i < orderList.size(); i++) {
                     System.out.println("orderMsg:___"+orderList.get(i).toString());
                     for (int j = 0; j <orderList.get(i).getOrderGoodList().size() ; j++) {
@@ -226,7 +213,6 @@ System.out.println("------------a");
                     }
                 }
             }
-
             tran.commit();
         } catch (Exception e) {
             if (tran != null) {
@@ -234,7 +220,6 @@ System.out.println("------------a");
             }
             e.printStackTrace();
         }
-
         setCode(code);
         orderPage.setPageList(orderList);
     }
@@ -255,24 +240,20 @@ System.out.println("------------a");
     public void deleteOrder(String orderId){
 
         Transaction tran = null;
-        Query query = null;
-        Session session = HibernateSessionFactory.getSession();
+        Session session = orderDao.currentSession();
         try {
             tran = session.beginTransaction();
+            //获取订单实体
             OrdersEntity ordersEntity = session.get(OrdersEntity.class,orderId);
+            //判断订单实体是否存在
             if (ordersEntity == null){
-                code = 207;//订单id不存在
+                code = 207;
             }else {
-                String hql = "delete from OrdergoodsEntity g where g.ordergoodsOrdernum = ?";
-                query = session.createQuery(hql);
-                query.setString(0,ordersEntity.getOrderNumber());
-                Iterator iterator = query.list().iterator();
-                while (iterator.hasNext()){
-                    session.delete(iterator.next());
-                }
+                //删除订单
                 session.delete(ordersEntity);
+                //删除订单商品
+                orderDao.deleteOrderGoods(ordersEntity.getOrderNumber());
             }
-
             tran.commit();
         } catch (Exception e) {
             if (tran !=  null) {
@@ -288,7 +269,7 @@ System.out.println("------------a");
     //随便测试一下
     public void test2(){
         Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
+        Session session = orderDao.currentSession();
         Query query = null;
         try {
             tran = session.beginTransaction();

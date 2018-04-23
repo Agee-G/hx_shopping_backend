@@ -3,10 +3,13 @@ package com.action;
 import com.biz.RemarkBiz;
 import com.entity.RemarkEntity;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Description:
@@ -21,7 +24,7 @@ public class RemarkAction extends ActionSupport{
     private String remarkGoodsid;
     private Integer remarkStatus;
     private String remarkUserid;
-    private int code;//code=0 :成功 ；code=xxx :错误码
+    private int code = 0;//code=0 :成功 ；code=xxx :错误码
     private String message;//用户看的错误信息
     private HashMap data = new HashMap();//返回的数据
 
@@ -101,17 +104,90 @@ public class RemarkAction extends ActionSupport{
         this.remarkUserid = remarkUserid;
     }
 
+    public void setMessageByCode(){
+        switch (code){
+            case 0:
+                message = "添加成功";
+            case 420:
+                message = "您好，徐先生，您的传参有缺失哦~";
+            case 401:
+                message = "未查询出相应数据，请您换个条件试试呢O(∩_∩)O";
+            default:
+                message = "出现了未知错误咩~哭兮兮o(╥﹏╥)o";
+        }
+    }
+    //添加评论
+    @Action(value = "addRemark",results = {
+            @Result(
+                    type = "json" , params = {
+                    "code","code",
+                    "message","message",
+                    "data","data"
+            })
+    })
+    public String addRemark(){
+        RemarkBiz remarkBiz = new RemarkBiz();
+        if(remarkLevel == null || remarkDetail == null || remarkGoodsid == null || remarkStatus == null || remarkUserid == null){
+            code = 420;
+        }else{
+            RemarkEntity remarkEntity = new RemarkEntity(remarkLevel,remarkDetail,remarkGoodsid,remarkStatus,remarkUserid);
+            remarkBiz.addRemark(remarkEntity);
+        }
+        setMessageByCode();
+        return SUCCESS;
 
-//    public String addRemark(){
-//        RemarkBiz remarkBiz = new RemarkBiz();
-//        if(remarkLevel == null || remarkDetail == null || remarkGoodsid == null || remarkStatus == null || remarkUserid == null){
-//            code = 420;
-//        }else{
-//            RemarkEntity remarkEntity = new RemarkEntity(remarkLevel,remarkDetail,remarkGoodsid,remarkStatus,remarkUserid);
-//            remarkBiz.addRemark(remarkEntity);
-//        }
-//        return
-//
-//    }
+    }
+    //根据评论等级查询某商品的评论
+    @Action(value = "selectRemarkByLevel",results = {
+            @Result(
+                    type = "json" , params = {
+                    "code","code",
+                    "message","message",
+                    "data","data"
+            })
+    })
+    public String selectRemarkByLevel(){
+        RemarkBiz remarkBiz = new RemarkBiz();
+        if(remarkGoodsid == null || remarkGoodsid == "" || remarkLevel == null){
+            code = 420;
+        }else{
+            List list = null;
+            list = remarkBiz.selectRemarkByLevel(remarkGoodsid,remarkLevel);
+            if(list == null){
+                code = 401;
+            }else{
+                data.put("remarklist",list);
+
+            }
+        }
+        setMessageByCode();
+        return SUCCESS;
+    }
+    //查询某商品的所有评论
+    @Action(value = "selectRemarkByGoodsId",results = {
+            @Result(
+                    type = "json" , params = {
+                    "code","code",
+                    "message","message",
+                    "data","data"
+            })
+    })
+    public String selectRemarkByGoodsId(){
+        RemarkBiz remarkBiz = new RemarkBiz();
+        if(remarkGoodsid == null || remarkGoodsid == ""){
+            code = 420;
+        }else{
+            List list = null;
+            list = remarkBiz.selectRemarkByGoodsId(remarkGoodsid);
+            if(list == null){
+                code = 401;
+            }else{
+                data.put("remarklist",list);
+
+            }
+        }
+        setMessageByCode();
+        return SUCCESS;
+    }
 
 }

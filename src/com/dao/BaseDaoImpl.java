@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.Utils.Page;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -21,243 +22,89 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
         ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
         this.clazz = (Class<T>) pt.getActualTypeArguments()[0];
     }
+    @Override
+    public Session currentSession(){
+        return HibernateSessionFactory.getSession();
+    }
 
-    // 添加数据
+    @Override
     public void add(T entity) {
-        Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
-        try {
-            tran = session.beginTransaction();
-            session.save(entity);
-            tran.commit();
-        } catch (Exception e) {
-            if (tran !=  null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
-    // 添加数据
-    public int add(List list) {
-        Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
-        try {
-            tran = session.beginTransaction();
-            for (int i = 0; i <list.size() ; i++) {
-                session.save(list.get(i));
-            }
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
-        }
-        return 0;
+        currentSession().save(entity);
     }
 
-    // get加载数据：记录不存在返回null
-    public Object get(Class cla,Serializable id) {
-        Object entity = null;
-        Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
-        try {
-            tran = session.beginTransaction();
-            entity = session.get(cla, id);
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
+    @Override
+    public void add(List list) {
+        for (Object o:list) {
+            currentSession().save(o);
         }
-        return entity;
-    }
-    // load加载数据:要求数据必须存在，否则抛出ObjectNotFoundException
-    public T load(Serializable id) {
-        T entity = null;
-        Session session = HibernateSessionFactory.getSession();
-        try {
-            entity = (T) session.load(clazz, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return entity;
     }
 
-    // 删除数据
+    @Override
+    public T get(String id) {
+        return currentSession().get(clazz,id);
+    }
+
+    @Override
+    public T load(String id) {
+        return currentSession().load(clazz,id);
+    }
+
+    @Override
     public void delete(T entity) {
-        Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
-        try {
-            tran = session.beginTransaction();
-            session.delete(entity);
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
-        }
+        currentSession().delete(entity);
     }
 
-    // 删除数据2
-    public void delete2(Serializable id) {
-        Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
-        try {
-            tran = session.beginTransaction();
-            T entity = load(id);
-            session.delete(entity);
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
-        }
+    @Override
+    public void delete2(String id) {
+        T entity = currentSession().get(clazz, id);
+        currentSession().delete(entity);
     }
 
-    // 更新数据
+    @Override
     public void saveOrUpdate(T entity) {
-        Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
-        try {
-            tran = session.beginTransaction();
-            session.saveOrUpdate(entity);
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
-        }
+        currentSession().saveOrUpdate(entity);
     }
 
-    // 更新数据
+    @Override
     public void merge(T entity) {
-        Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
-        try {
-            tran = session.beginTransaction();
-            session.merge(entity);
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
-        }
+        currentSession().merge(entity);
     }
 
-    // 更新数据
+    @Override
     public void update(T entity) {
-        Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
-        try {
-            tran = session.beginTransaction();
-            session.update(entity);
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
-        }
+        currentSession().update(entity);
     }
-    // 使用uniqueResult获取唯一结果，计算查询条件下的记录数
+    @Override
     public Long obtainCount(String hql, Object conditions) {
-        Transaction tran = null;
         Session session = HibernateSessionFactory.getSession();
-        Query query = null;
-        try {
-            tran = session.beginTransaction();
-            query = session.createQuery(hql).setProperties(conditions);
-            query.setProperties(conditions);
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
-        }
-
+        Query query = session.createQuery(hql).setProperties(conditions);
+        query.setProperties(conditions);
         return (Long) query.uniqueResult();// 返回唯一的结果
     }
-    // 用hql查询
-//    public List<T> search(String hql) {
-//        Transaction tran = null;
-//        Session session = HibernateSessionFactory.getSession();
-//        Query query = null;
-//        try {
-//            tran = session.beginTransaction();
-//            query = session.createQuery(hql);
-//            tran.commit();
-//        } catch (Exception e) {
-//            if (tran != null) {
-//                tran.rollback();
-//            }
-//            e.printStackTrace();
-//        }
-//        return query.list();
-//    }
-    // 用hql和object[]查询
-    public List<T> search(String hql,Object[] conditions) {
-        Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
-        Query query = null;
-        try {
-            tran = session.beginTransaction();
-            query = session.createQuery(hql);
+    @Override
+    public List search(String hql, Object[] conditions) {
+        Query query = currentSession().createQuery(hql);
             if (conditions != null && conditions.length > 0) {
                 for (int i = 0; i < conditions.length; i++) {
                     query.setParameter(i, conditions[i]);
                 }
             }
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
-        }
-        return query.list();
-    }
-    // 用hql和conditions查询
-    public List<T> search(String hql,Object conditions) {
-        Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
-        Query query = null;
-        try {
-            tran = session.beginTransaction();
-            query = session.createQuery(hql).setProperties(conditions);
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
-        }
+
         return query.list();
     }
 
-    // 用hql和conditions查询+分页
-    public List<T> search(int currentIndex, int pageSize,String hql,Object conditions) {
-        Transaction tran = null;
-        Session session = HibernateSessionFactory.getSession();
-        Query query = null;
-        try {
-            tran = session.beginTransaction();
-            query = session.createQuery(hql).setProperties(conditions);
-            query.setFirstResult((currentIndex-1)*pageSize);
-            query.setMaxResults(pageSize);
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
-            }
-            e.printStackTrace();
-        }
+    @Override
+    public List search(String hql, Object conditions) {
+        Query query = currentSession().createQuery(hql).setProperties(conditions);
+        return query.list();
+    }
+
+    @Override
+    public List search(Page page, String hql, Object conditions) {
+        Query query = HibernateSessionFactory.getSession().createQuery(hql);
+        query.setProperties(conditions);
+        query.setFirstResult((page.getCurrentPage()-1)*page.PAGESIZE);
+        query.setMaxResults(page.PAGESIZE);
         return query.list();
     }
 

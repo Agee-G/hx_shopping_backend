@@ -21,12 +21,10 @@ public class Order {
     private String addressUserName;
 
     private String storeName;
-
     private List orderGoodList = new ArrayList();
 
     public Order() {
     }
-    //o.createAt,o.orderNumber,o.orderStoreid,o.orderTotalprice,o.orderStatus,o.orderAddress,o.orderAddressphone,o.orderAddressusername)from OrdersEntity o where 1=1 ");
     public Order( String orderNum, String storeId, Integer totalPrice, Integer orderStatus, String address, String addressPhone, String addressUserName) {
         this.orderNum = orderNum;
         this.storeId = storeId;

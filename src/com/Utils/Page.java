@@ -31,21 +31,25 @@ public class Page<T> {
 
     public Integer getCount() {
         return count;
-
     }
+
     public void setCount(Integer count) {
         this.count = count;
     }
+
     public Integer getTotalPages() {
         totalPages = count%PAGESIZE == 0 ? count/PAGESIZE:count/PAGESIZE+1;
         return totalPages;
     }
+
     public List<T> getPageList() {
         return pageList;
     }
+
     public void setPageList(List<T> pageList) {
         this.pageList = pageList;
     }
+
     public int getCurPage(int page) {
         int currentIndex = (page == 0)? 1: page;
         return currentIndex;

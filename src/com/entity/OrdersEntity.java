@@ -3,6 +3,8 @@ package com.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -26,8 +28,6 @@ public class OrdersEntity implements Serializable{
     private String orderAddressphone;
     private String orderAddressusername;
     private Integer orderStatus;
-
-
 
     @Id
     @Column(name = "order_id", nullable = false, length = 128)

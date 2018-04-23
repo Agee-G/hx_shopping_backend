@@ -1,9 +1,9 @@
 package com.biz;
 
+import com.Utils.Page;
 import com.dao.HibernateSessionFactory;
 import com.dao.OrderDao;
 import com.entity.*;
-import com.opensymphony.xwork2.ActionContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -153,7 +153,7 @@ public class OrderBiz {
         setCode(code);
     }
     //查询订单
-    public List<Order> searchOrders(OrderConditions orderConditions){
+    public void searchOrders(Page<Order> orderPage,OrderConditions orderConditions){
         Transaction tran = null;
         Session session = HibernateSessionFactory.getSession();
         List<Order> orderList = new ArrayList<>();
@@ -161,16 +161,21 @@ public class OrderBiz {
             tran = session.beginTransaction();
             //查询符合条件的订单
             StringBuffer hql=new StringBuffer("select new com.entity.Order(o.orderNumber,o.orderStoreid,o.orderTotalprice,o.orderStatus,o.orderAddress,o.orderAddressphone,o.orderAddressusername)from OrdersEntity o where 1=1 ");
+            StringBuffer hql2=new StringBuffer("select count(orderId) from OrdersEntity o where 1=1 ");
+System.out.println("------------a");
             //待解决：查不到createAt
             //StringBuffer hql=new StringBuffer("select new com.entity.Order( o.createAt,o.orderNumber,o.orderStoreid,o.orderTotalprice,o.orderStatus,o.orderAddress,o.orderAddressphone,o.orderAddressusername)from OrdersEntity o where 1=1 ");
             if(orderConditions.getUserid() != null && orderConditions.getUserid().length()>0){
                 hql.append(" and o.orderUserid = :userid ");
+                hql2.append(" and o.orderUserid = :userid ");
             }
             if(orderConditions.getStoreid() != null && orderConditions.getStoreid().length()>0){
                 hql.append(" and o.orderStoreid = :storeid ");
+                hql2.append(" and o.orderStoreid = :storeid ");
             }
             if(orderConditions.getOrderStatus() != null){
                 hql.append(" and o.orderStatus = :orderStatus ");
+                hql2.append(" and o.orderStatus = :orderStatus ");
             }
             //待解决：根据商品的名字查找
 //            if(orderConditions.getOrderGoodname() != null && orderConditions.getOrderGoodname().length()>0){
@@ -180,42 +185,45 @@ public class OrderBiz {
             if(orderConditions.getOrderNum() != null && orderConditions.getOrderNum().length()>0){
                 orderConditions.setOrderNum("%"+orderConditions.getOrderNum()+"%");
                 hql.append(" and o.orderNumber like :orderNum ");
+                hql2.append(" and o.orderNumber like :orderNum ");
             }
-            Query query = session.createQuery(hql.toString());
-            query.setProperties(orderConditions);
-            List<Order> orders = query.list();
+            System.out.println("------------b");
+            orderPage.setCount(orderDao.obtainCount(hql2.toString(), orderConditions).intValue());
+            System.out.println("------------c");
+            List<Order> orders = orderDao.search(orderPage,hql.toString(),orderConditions);
+            System.out.println("------------d");
             if(orders.size() == 0){
                 code = 205;//没有该查询条件下的订单
-            }
+            }else {
+                for (Order  order :orders){
+                    //Order order = new Order();
+                    String oid = order.getStoreId();
+                    //查询订单商家的名字
+                    StoreEntity storeEntity = session.get(StoreEntity.class,oid);
+                    if(storeEntity == null){
+                        code = 206;//订单没有对应的商店
+                    }
+                    //查询订单商品
+                    String hql3="from OrdergoodsEntity o where o.ordergoodsOrdernum = :orderNum";
+                    Query query3 = session.createQuery(hql3);
+                    query3.setParameter("orderNum",order.getOrderNum());
+                    List<OrdergoodsEntity> ordergoodsEntityList = query3.list();
+                    if(ordergoodsEntityList.size() == 0){
+                        code = 201;//该订单没有商品
+                    }
 
-            for (Order o :orders){
-                //Order order = new Order();
-                String oid = o.getStoreId();
-                //查询订单商家的名字
-                StoreEntity storeEntity = session.get(StoreEntity.class,oid);
-                if(storeEntity == null){
-                    code = 206;//订单没有对应的商店
+                    //添加到order数据实体中
+                    order.setStoreName(storeEntity.getStoreName());
+                    order.getOrderGoodList().addAll(ordergoodsEntityList);
+                    orderList.add(order);
                 }
 
-                //查询订单商品
-                String hql3="from OrdergoodsEntity o where o.ordergoodsOrdernum= :orderNum";
-                Query query3 = session.createQuery(hql3);
-                query3.setParameter("orderNum",o.getOrderNum());
-                List<OrdergoodsEntity> ordergoodsEntityList = query3.list();
-                if(ordergoodsEntityList.size() == 0){
-                    code = 201;//该订单没有商品
-                }
+                for (int i = 0; i < orderList.size(); i++) {
+                    System.out.println("orderMsg:___"+orderList.get(i).toString());
+                    for (int j = 0; j <orderList.get(i).getOrderGoodList().size() ; j++) {
+                        System.out.println("orderGoodMsg:____"+orderList.get(i).getOrderGoodList().get(j).toString());
 
-                //添加到order数据实体中
-                o.setStoreName(storeEntity.getStoreName());
-                o.getOrderGoodList().addAll(ordergoodsEntityList);
-                orderList.add(o);
-            }
-            for (int i = 0; i < orderList.size(); i++) {
-                System.out.println("orderMsg:___"+orderList.get(i).toString());
-                for (int j = 0; j <orderList.get(i).getOrderGoodList().size() ; j++) {
-                    System.out.println("orderGoodMsg:____"+orderList.get(i).getOrderGoodList().get(j).toString());
-
+                    }
                 }
             }
 
@@ -226,13 +234,14 @@ public class OrderBiz {
             }
             e.printStackTrace();
         }
-        ActionContext.getContext().getSession().put("code",code);
-        return orderList;
+
+        setCode(code);
+        orderPage.setPageList(orderList);
     }
 
     //更新订单状态
     public void updateOrder(String orderId,Integer orderStatus){
-        OrdersEntity ordersEntity = (OrdersEntity)orderDao.get(OrdersEntity.class,orderId);
+        OrdersEntity ordersEntity = (OrdersEntity)orderDao.get(orderId);
         if(ordersEntity == null){
             code = 207;//订单id不存在
         }else{
@@ -244,32 +253,38 @@ public class OrderBiz {
 
     //删除订单
     public void deleteOrder(String orderId){
-        OrdersEntity ordersEntity = (OrdersEntity)orderDao.get(OrdersEntity.class,orderId);
-        if (ordersEntity == null){
-            code = 207;//订单id不存在
-        }else {
-            orderDao.delete(ordersEntity);
+
+        Transaction tran = null;
+        Query query = null;
+        Session session = HibernateSessionFactory.getSession();
+        try {
+            tran = session.beginTransaction();
+            OrdersEntity ordersEntity = session.get(OrdersEntity.class,orderId);
+            if (ordersEntity == null){
+                code = 207;//订单id不存在
+            }else {
+                String hql = "delete from OrdergoodsEntity g where g.ordergoodsOrdernum = ?";
+                query = session.createQuery(hql);
+                query.setString(0,ordersEntity.getOrderNumber());
+                Iterator iterator = query.list().iterator();
+                while (iterator.hasNext()){
+                    session.delete(iterator.next());
+                }
+                session.delete(ordersEntity);
+            }
+
+            tran.commit();
+        } catch (Exception e) {
+            if (tran !=  null) {
+                tran.rollback();
+            }
+            e.printStackTrace();
         }
         setCode(code);
     }
 
 
 
-    //随便测试一下
-    public void test(){
-        UserEntity userEntity = (UserEntity)orderDao.get(UserEntity.class,"1");
-
-        //GoodsEntity goodsEntity = (GoodsEntity)super.get(GoodsEntity.class,"1");
-        //OrdersEntity ordersEntity =  (OrdersEntity)super.get(OrdersEntity.class,"1");
-        if (userEntity != null){
-            //System.out.println("id"+ordersEntity.getOrderId());
-            System.out.println("name "+userEntity.getUserNickname());
-
-        }else {
-            System.out.println("id  null");
-
-        }
-    }
     //随便测试一下
     public void test2(){
         Transaction tran = null;

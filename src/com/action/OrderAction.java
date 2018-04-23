@@ -5,11 +5,10 @@ package com.action;
  * @description
  */
 
+import com.Utils.Page;
 import com.biz.OrderBiz;
-import com.dao.OrderDao;
 import com.entity.Order;
 import com.entity.OrderConditions;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -18,7 +17,6 @@ import org.apache.struts2.json.annotations.JSON;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @ParentPackage("json-default")
 public class OrderAction extends ActionSupport{
@@ -27,16 +25,15 @@ public class OrderAction extends ActionSupport{
     private String message;//用户看的错误信息
     private HashMap data = new HashMap();//返回的数据
 
+    //注入biz
     private OrderBiz orderBiz= new OrderBiz();
 
-    public OrderBiz getOrderBiz() {
-        return orderBiz;
-    }
+    //分页信息
+    private Page<Order> orderPage = new Page<>();
+    private Integer currentPage;
+    private Integer pageSize;
 
-    public void setOrderBiz(OrderBiz orderBiz) {
-        this.orderBiz = orderBiz;
-    }
-
+    //订单信息
     private String orderId;
     private String orderUserid;
     private String orderStoreid;
@@ -50,6 +47,7 @@ public class OrderAction extends ActionSupport{
     private Integer orderStatus;
     private HashMap<String,String[]> orderData = new HashMap<>();//返回的数据
 
+    //setter、getter
     public int getCode() {
         return code;
     }
@@ -68,6 +66,16 @@ public class OrderAction extends ActionSupport{
     public void setData(HashMap data) {
         this.data = data;
     }
+    public OrderBiz getOrderBiz() { return orderBiz; }
+    public void setOrderBiz(OrderBiz orderBiz) { this.orderBiz = orderBiz; }
+    public Page<Order> getOrderPage() { return orderPage; }
+    public void setOrderPage(Page<Order> orderPage) { this.orderPage = orderPage; }
+    @JSON(serialize=false)
+    public Integer getCurrentPage() { return currentPage; }
+    public void setCurrentPage(Integer currentPage) { this.currentPage = currentPage; }
+    @JSON(serialize=false)
+    public Integer getPageSize() { return pageSize; }
+    public void setPageSize(Integer pageSize) { this.pageSize = pageSize; }
     @JSON(serialize=false)
     public String getOrderId() { return orderId; }
     public void setOrderId(String orderId) { this.orderId = orderId; }
@@ -139,6 +147,7 @@ public class OrderAction extends ActionSupport{
         }
         return SUCCESS;
     }
+
     //购物车购买－－根据商家不同生成多个订单和多个订单商品
     @Action(value = "addOrders", results={
             @Result(
@@ -184,6 +193,7 @@ public class OrderAction extends ActionSupport{
         }
         return SUCCESS;
     }
+
     //订单查询－－任意条件或组合条件都可以：订单状态、订单用户ID、订单商家ID、订单号、商品标题
     @Action(value = "searchOrders", results={
             @Result(
@@ -194,9 +204,19 @@ public class OrderAction extends ActionSupport{
             })
     })
     public String searchOrders(){
+        //如果传来的pageSize为空，则查询所有记录
+        if(pageSize == null){
+            pageSize = 100000;
+        }
+        //如果传来的当前页数为空，则从第一条记录开始查
+        int curPage = orderPage.getCurPage(currentPage);
+        orderPage.setCurrentPage(curPage);
+        //设置查询条件
         OrderConditions orderConditions = new OrderConditions(orderUserid,orderStoreid,orderNum,orderGoodname,orderStatus);
-        List<Order> orderList = orderBiz.searchOrders(orderConditions);
-        data.put("orderList",orderList);
+        //调接口，执行查询操作
+        orderBiz.searchOrders(orderPage,orderConditions);
+        //将数据返回给前端
+        data.put("orderList",orderPage.getPageList());
         code = orderBiz.getCode();
         switch(code) {
             case 0:
@@ -217,6 +237,7 @@ public class OrderAction extends ActionSupport{
         }
         return SUCCESS;
     }
+
     //删除订单－－根据订单id
     @Action(value = "deleteOrder", results={
             @Result(
@@ -250,6 +271,7 @@ public class OrderAction extends ActionSupport{
         }
         return SUCCESS;
     }
+
     //更新订单状态－－根据订单id
     @Action(value = "updateOrder", results={
             @Result(

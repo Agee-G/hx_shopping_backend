@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import javax.servlet.ServletContext;
@@ -21,6 +22,7 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
  * @date:18/4/23 15 22
  * @description
  */
+@ParentPackage("json-default")
 public class GoodsAction {
     // 返回JSON数据
     private int code;//code=0 :成功 ；code=xxx :错误码
@@ -55,6 +57,7 @@ public class GoodsAction {
     private Integer sell;//1:销量降序 0:销量升序
 
     //setter、getter
+    @JSON(serialize=false)
     public int getCode() {
         return code;
     }
@@ -89,21 +92,24 @@ public class GoodsAction {
         }
 
     }
-
+    @JSON
     public String getMessage() {
         return message;
     }
     public void setMessage(String message) {
         this.message = message;
     }
+    @JSON
     public HashMap getData() {
         return data;
     }
     public void setData(HashMap data) {
         this.data = data;
     }
+    @JSON
     public GoodsBiz getGoodsBiz() { return goodsBiz; }
     public void setGoodsBiz(GoodsBiz goodsBiz) { this.goodsBiz = goodsBiz; }
+    @JSON
     public Page<GoodsEntity> getPage() { return page; }
     public void setPage(Page<GoodsEntity> page) { this.page = page; }
     @JSON

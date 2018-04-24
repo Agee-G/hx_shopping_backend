@@ -1,17 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
         <!-- 数据库URL -->
-        <property name="connection.url">jdbc:mysql://localhost:3306/hxtaobaocom</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/hxtaobaocom?useUnicode=true&amp;characterEncoding=UTF-8</property>
         <!-- 数据库JDBC驱动  -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <!-- 用户名 -->
+        <property name="connection.username">root</property>
         <!-- 密码 -->
-
+        <property name="connection.password"></property>
         <!-- 每个数据库都有对应的方言（Dialect）以匹配其平台特性 -->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <!-- Session由当前执行的线程来跟踪管理 -->
+        <property name="current_session_context_class">thread</property>
         <!-- 输出sql语句到控制台 -->
         <property name="show_sql">true</property>
         <!-- 格式化sql语句 -->
@@ -23,8 +27,11 @@
         <mapping class="com.entity.OrdergoodsEntity"/>
         <mapping class="com.entity.ShoppingcartEntity"/>
         <mapping class="com.entity.UserEntity"/>
-        <mapping class="com.entity.GoodstypeEntity"/>
         <mapping class="com.entity.StoreEntity"/>
+        <mapping class="com.entity.FavouriteEntity"/>
+        <mapping class="com.entity.LotteryEntity"/>
+        <mapping class="com.entity.RemarkEntity"/>
+        <mapping class="com.entity.StoreapplyEntity"/>
 
     </session-factory>
 </hibernate-configuration>

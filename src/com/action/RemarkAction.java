@@ -3,11 +3,14 @@ package com.action;
 import com.biz.RemarkBiz;
 import com.entity.RemarkEntity;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,6 +21,7 @@ import java.util.List;
  */
 @ParentPackage("json-default")
 public class RemarkAction extends ActionSupport{
+
     private String remarkId;
     private Integer remarkLevel;
     private String remarkDetail;
@@ -27,6 +31,9 @@ public class RemarkAction extends ActionSupport{
     private int code = 0;//code=0 :成功 ；code=xxx :错误码
     private String message;//用户看的错误信息
     private HashMap data = new HashMap();//返回的数据
+
+    private HttpServletRequest request = ServletActionContext.getRequest();
+
 
     @JSON
     public int getCode() {
@@ -55,7 +62,7 @@ public class RemarkAction extends ActionSupport{
         this.data = data;
     }
 
-    @JSON
+    @JSON(serialize=false)
     public String getRemarkId() {
         return remarkId;
     }
@@ -63,7 +70,7 @@ public class RemarkAction extends ActionSupport{
     public void setRemarkId(String remarkId) {
         this.remarkId = remarkId;
     }
-    @JSON
+    @JSON(serialize=false)
     public Integer getRemarkLevel() {
         return remarkLevel;
     }
@@ -71,7 +78,7 @@ public class RemarkAction extends ActionSupport{
     public void setRemarkLevel(Integer remarkLevel) {
         this.remarkLevel = remarkLevel;
     }
-    @JSON
+    @JSON(serialize=false)
     public String getRemarkDetail() {
         return remarkDetail;
     }
@@ -79,7 +86,7 @@ public class RemarkAction extends ActionSupport{
     public void setRemarkDetail(String remarkDetail) {
         this.remarkDetail = remarkDetail;
     }
-    @JSON
+    @JSON(serialize=false)
     public String getRemarkGoodsid() {
         return remarkGoodsid;
     }
@@ -87,7 +94,7 @@ public class RemarkAction extends ActionSupport{
     public void setRemarkGoodsid(String remarkGoodsid) {
         this.remarkGoodsid = remarkGoodsid;
     }
-    @JSON
+    @JSON(serialize=false)
     public Integer getRemarkStatus() {
         return remarkStatus;
     }
@@ -95,7 +102,7 @@ public class RemarkAction extends ActionSupport{
     public void setRemarkStatus(Integer remarkStatus) {
         this.remarkStatus = remarkStatus;
     }
-    @JSON
+    @JSON(serialize=false)
     public String getRemarkUserid() {
         return remarkUserid;
     }
@@ -104,16 +111,21 @@ public class RemarkAction extends ActionSupport{
         this.remarkUserid = remarkUserid;
     }
 
-    public void setMessageByCode(){
+    public void setMessageByCode(int code){
+
         switch (code){
             case 0:
                 message = "添加成功";
+                break;
             case 420:
                 message = "您好，徐先生，您的传参有缺失哦~";
+                break;
             case 401:
                 message = "未查询出相应数据，请您换个条件试试呢O(∩_∩)O";
+                break;
             default:
                 message = "出现了未知错误咩~哭兮兮o(╥﹏╥)o";
+                break;
         }
     }
     //添加评论
@@ -125,15 +137,20 @@ public class RemarkAction extends ActionSupport{
                     "data","data"
             })
     })
-    public String addRemark(){
+    public String addRemark() throws Exception{
+        request.setCharacterEncoding("utf-8");
+        System.out.println(remarkDetail);
+
         RemarkBiz remarkBiz = new RemarkBiz();
+
         if(remarkLevel == null || remarkDetail == null || remarkGoodsid == null || remarkStatus == null || remarkUserid == null){
             code = 420;
         }else{
             RemarkEntity remarkEntity = new RemarkEntity(remarkLevel,remarkDetail,remarkGoodsid,remarkStatus,remarkUserid);
             remarkBiz.addRemark(remarkEntity);
         }
-        setMessageByCode();
+        System.out.println(code);
+        setMessageByCode(code);
         return SUCCESS;
 
     }
@@ -160,7 +177,7 @@ public class RemarkAction extends ActionSupport{
 
             }
         }
-        setMessageByCode();
+        setMessageByCode(code);
         return SUCCESS;
     }
     //查询某商品的所有评论
@@ -186,7 +203,7 @@ public class RemarkAction extends ActionSupport{
 
             }
         }
-        setMessageByCode();
+        setMessageByCode(code);
         return SUCCESS;
     }
 

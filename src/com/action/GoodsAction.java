@@ -2,6 +2,7 @@ package com.action;
 import java.io.File;
 import com.Utils.Page;
 import com.biz.GoodsBiz;
+import com.entity.Goods;
 import com.entity.GoodsConditions;
 import com.entity.GoodsEntity;
 import com.opensymphony.xwork2.ActionContext;
@@ -11,11 +12,12 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.util.HashMap;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
 /**
- * @author:lily
+ * @author:李连芸
  * @date:18/4/23 15 22
  * @description
  */
@@ -181,7 +183,6 @@ public class GoodsAction {
             })
     })
     public String addGoods()throws Exception{
-        //没判断图片
         if(upfileFileName != null && goodsName != null && goodsType != null && goodsDetails != null && goodsPrice != null && goodsStoreid != null && goodsKucun != null && goodsStyle != null){
             GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
 
@@ -219,11 +220,10 @@ public class GoodsAction {
             })
     })
     public String selectGoodsdetial() {
-        GoodsEntity goodsEntity = new GoodsEntity();
         if (goodsId != null) {
-            goodsEntity = goodsBiz.selectGoodsdetial(goodsId);
-            if(goodsEntity != null){
-                data.put("goods",goodsEntity);
+            Goods goods= goodsBiz.selectGoodsdetial(goodsId);
+            if(goods != null){
+                data.put("goods",goods);
             }else {
                 code = 210;//无查询结果
             }
@@ -236,7 +236,7 @@ public class GoodsAction {
     }
 
     //查询商品－－根据条件查询
-    @Action(value = "selectGoodsdetial", results={
+    @Action(value = "selectGoods", results={
             @Result(
                     type = "json", params = {
                     "code", "code",
@@ -257,8 +257,8 @@ public class GoodsAction {
         }
         return SUCCESS;
     }
-    //查询商品－－根据条件查询
-    @Action(value = "selectGoodsdetial", results={
+    //删除商品－－根据商品id删除
+    @Action(value = "deleteGoods", results={
             @Result(
                     type = "json", params = {
                     "code", "code",
@@ -273,6 +273,42 @@ public class GoodsAction {
         }else{
             code = 220;//传来的参数有空
         }
+        return SUCCESS;
+    }
+
+    //编辑商品
+    @Action(value = "editGoods", results={
+            @Result(
+                    type = "json", params = {
+                    "code", "code",
+                    "message", "message",
+                    "data", "data"
+            })
+    })
+    public String editGoods() throws IOException{
+        if(goodsId != null && upfileFileName != null && goodsName != null && goodsType != null && goodsDetails != null && goodsPrice != null && goodsStoreid != null && goodsKucun != null && goodsStyle != null){
+            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
+
+            //确定文件存放的路径
+            //1.获取当前web程序在容器中的物理路径
+            ServletContext sctx = ServletActionContext.getServletContext();
+            String absSavePath=sctx.getRealPath("/upload");
+            //2.判断路径是否存在
+            File realpath=new File(absSavePath);
+            if(!realpath.exists()){
+                realpath.mkdir();//创建上传文件夹
+            }
+            FileUtils.copyFile(upfile, new File(absSavePath+"/"+upfileFileName));
+            String url = "upload/"+upfileFileName;
+            ActionContext.getContext().getSession().put("file", "/upload/"+upfileFileName);
+
+            goodsEntity.setGoodsPicture(url);
+            goodsBiz.editGoods(goodsEntity);
+            code = goodsBiz.getCode();
+        }else{
+            code = 220;
+        }
+        setCode(code);
         return SUCCESS;
     }
 

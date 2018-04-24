@@ -25,14 +25,10 @@ public class GoodsEntity{
     private String goodsStyle;
     private Timestamp createAt;
     private Timestamp updateAt;
-
-
-    private String storeName;
-
     public GoodsEntity() {
 
     }
-
+    //上传商品时用的构造方法，没有图片
     public GoodsEntity(String goodsName, Integer goodsType, String goodsDetails, Integer goodsPrice, String goodsStoreid, Integer goodsKucun, String goodsStyle) {
         this.goodsName = goodsName;
         this.goodsType = goodsType;
@@ -43,36 +39,16 @@ public class GoodsEntity{
         this.goodsStyle = goodsStyle;
     }
 
-    public GoodsEntity(String goodsName, Integer goodsType, String goodsDetails, Integer goodsPrice, String goodsStoreid, Integer goodsKucun, Integer goodsSell, String goodsPicture, String goodsStyle) {
+    //商品简要信息的构造方法，条件查询时使用
+    public GoodsEntity(String goodsId, String goodsName, Integer goodsType, Integer goodsPrice,Integer goodsKucun, Integer goodsSell, String goodsPicture) {
+        this.goodsId = goodsId;
         this.goodsName = goodsName;
         this.goodsType = goodsType;
-        this.goodsDetails = goodsDetails;
-        this.goodsPrice = goodsPrice;
-        this.goodsStoreid = goodsStoreid;
-        this.goodsKucun = goodsKucun;
-        this.goodsSell = goodsSell;
-        this.goodsPicture = goodsPicture;
-        this.goodsStyle = goodsStyle;
-    }
-
-    public GoodsEntity(String storeName,String goodsName, String goodsDetails, Integer goodsPrice, Integer goodsKucun, Integer goodsSell, String goodsPicture, String goodsStyle) {
-        this.storeName = storeName;
-        this.goodsName = goodsName;
-        this.goodsDetails = goodsDetails;
         this.goodsPrice = goodsPrice;
         this.goodsKucun = goodsKucun;
         this.goodsSell = goodsSell;
         this.goodsPicture = goodsPicture;
-        this.goodsStyle = goodsStyle;
     }
-    public String getStoreName() {
-        return storeName;
-    }
-
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
-    }
-
 
     @Id
     @Column(name = "goods_id", nullable = false, length = 128)
@@ -217,5 +193,23 @@ public class GoodsEntity{
     public int hashCode() {
 
         return Objects.hash(goodsId, goodsName, goodsType, goodsDetails, goodsPrice, goodsStoreid, goodsKucun, goodsSell, goodsPicture, goodsStyle, createAt, updateAt);
+    }
+
+    @Override
+    public String toString() {
+        return "GoodsEntity{" +
+                "goodsId='" + goodsId + '\'' +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsType=" + goodsType +
+                ", goodsDetails='" + goodsDetails + '\'' +
+                ", goodsPrice=" + goodsPrice +
+                ", goodsStoreid='" + goodsStoreid + '\'' +
+                ", goodsKucun=" + goodsKucun +
+                ", goodsSell=" + goodsSell +
+                ", goodsPicture='" + goodsPicture + '\'' +
+                ", goodsStyle='" + goodsStyle + '\'' +
+                ", createAt=" + createAt +
+                ", updateAt=" + updateAt +
+                '}';
     }
 }

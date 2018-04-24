@@ -16,9 +16,8 @@ public class HibernateSessionFactory {
 		}
 	}
 
-	public HibernateSessionFactory() {
+	public HibernateSessionFactory() { }
 
-	}
 	public static Session getSession(){
 		return sessionFactory.getCurrentSession();
 	}

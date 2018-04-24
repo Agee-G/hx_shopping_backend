@@ -1,6 +1,4 @@
 package com.entity;
-
-import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -24,8 +22,6 @@ public class AddressEntity {
 
     @Id
     @Column(name = "address_id", nullable = false, length = 128)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name="uuid",strategy = "uuid")
     public String getAddressId() {
         return addressId;
     }

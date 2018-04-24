@@ -7,7 +7,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
- * @author:lily
+ * @author:李连芸
  * @date:18/4/22 20 03
  * @description
  */
@@ -73,8 +73,7 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
     }
     @Override
     public Long obtainCount(String hql, Object conditions) {
-        Session session = HibernateSessionFactory.getSession();
-        Query query = session.createQuery(hql).setProperties(conditions);
+        Query query = currentSession().createQuery(hql).setProperties(conditions);
         query.setProperties(conditions);
         return (Long) query.uniqueResult();// 返回唯一的结果
     }
@@ -98,7 +97,7 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
 
     @Override
     public List search(Page page, String hql, Object conditions) {
-        Query query = HibernateSessionFactory.getSession().createQuery(hql);
+        Query query = currentSession().createQuery(hql);
         query.setProperties(conditions);
         query.setFirstResult((page.getCurrentPage()-1)*page.getPageSize());
         query.setMaxResults(page.getPageSize());

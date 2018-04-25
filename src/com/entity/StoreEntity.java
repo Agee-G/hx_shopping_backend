@@ -17,8 +17,8 @@ public class StoreEntity {
     private String storePassword;
     private String storeName;
     private String storePicture;
-    private Integer storeBalance;
-    private Integer storeStatus;
+    private Integer storeBalance = 0;
+    private Integer storeStatus = 1;
     private Timestamp createAt;
     private Timestamp updateAt;
 

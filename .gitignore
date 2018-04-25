@@ -5,3 +5,4 @@ src/struts.xml
 src/com/test/*
 hx_shopping_backend.iml
 hx_shopping.iml
+lib/*

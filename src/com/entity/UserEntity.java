@@ -16,12 +16,12 @@ public class UserEntity {
     private String userAccount;
     private String userPassword;
     private String userNickname;
-    private Integer userTotalscore;
-    private Integer userScore;
-    private Integer userBalance;
+    private Integer userTotalscore = 0;
+    private Integer userScore = 0;
+    private Integer userBalance = 0;
     private String userBankcard;
-    private Integer userLevel;
-    private Integer userStatus;
+    private Integer userLevel = 2;
+    private Integer userStatus = 1;
     private Timestamp createAt;
     private Timestamp updateAt;
 

@@ -38,4 +38,8 @@ public class RemarkDao extends BaseDaoImpl<RemarkEntity>{
         return list;
     }
 
+    public void deleteRemark(String remarkId){
+        super.delete2(remarkId);
+    }
+
 }

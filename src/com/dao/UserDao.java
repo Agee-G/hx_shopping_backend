@@ -30,10 +30,11 @@ public class UserDao extends BaseDaoImpl<UserEntity>{
     @Override
     public List search(Page page, String hql, Object conditions) {
 
-
         return super.search(page, hql, conditions);
     }
-
-
+    @Override
+    public void add(UserEntity entity) {
+        super.add(entity);
+    }
 
 }

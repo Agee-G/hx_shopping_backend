@@ -58,8 +58,11 @@ public class RemarkBiz {
     public List<RemarkEntity> selectRemarkByLevel(String remarkGoodsid,Integer remarkLevel){
         List<RemarkEntity> list = null;
         Transaction tran = null;
+        Session session = remarkDao.currentSession();
         try{
+            tran = session.beginTransaction();
             list = remarkDao.selectRemarkByLevel(remarkGoodsid,remarkLevel);
+            tran.commit();
         }catch (HibernateException e){
             if(tran != null){
                 tran.rollback();
@@ -71,8 +74,11 @@ public class RemarkBiz {
     public List<RemarkEntity>selectRemarkByGoodsId(String remarkGoodsid){
         List<RemarkEntity> list = null;
         Transaction tran = null;
+        Session session = remarkDao.currentSession();
         try{
+            tran = session.beginTransaction();
             list = remarkDao.selectRemarkByGoodsId(remarkGoodsid);
+            tran.commit();
         }catch (HibernateException e){
             if(tran != null){
                 tran.rollback();
@@ -80,5 +86,22 @@ public class RemarkBiz {
             e.printStackTrace();
         }
         return list;
+    }
+    public void deleteRemark(String remarkId){
+        //事务初始化
+        Transaction tran = null;
+        Session session = remarkDao.currentSession();
+        try {
+            //开启事务
+            tran = session.beginTransaction();
+            remarkDao.deleteRemark(remarkId);
+            //提交事务
+            tran.commit();
+        }catch (HibernateException e){
+            if(tran != null){
+                tran.rollback();
+            }
+            e.printStackTrace();
+        }
     }
 }

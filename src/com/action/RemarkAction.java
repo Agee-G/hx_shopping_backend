@@ -114,8 +114,17 @@ public class RemarkAction extends ActionSupport{
     public void setMessageByCode(int code){
 
         switch (code){
-            case 0:
+            case 1:
                 message = "添加成功";
+                this.code = 0;
+                break;
+            case 2:
+                message = "查询成功";
+                this.code = 0;
+                break;
+            case 3:
+                message = "删除成功";
+                this.code = 0;
                 break;
             case 420:
                 message = "您好，徐先生，您的传参有缺失哦~";
@@ -148,8 +157,8 @@ public class RemarkAction extends ActionSupport{
         }else{
             RemarkEntity remarkEntity = new RemarkEntity(remarkLevel,remarkDetail,remarkGoodsid,remarkStatus,remarkUserid);
             remarkBiz.addRemark(remarkEntity);
+            code = 1;
         }
-        System.out.println(code);
         setMessageByCode(code);
         return SUCCESS;
 
@@ -170,11 +179,12 @@ public class RemarkAction extends ActionSupport{
         }else{
             List list = null;
             list = remarkBiz.selectRemarkByLevel(remarkGoodsid,remarkLevel);
-            if(list == null){
+            System.out.println(list.size());
+            if(list == null || list.size() == 0){
                 code = 401;
             }else{
                 data.put("remarklist",list);
-
+                code = 2;
             }
         }
         setMessageByCode(code);
@@ -196,15 +206,39 @@ public class RemarkAction extends ActionSupport{
         }else{
             List list = null;
             list = remarkBiz.selectRemarkByGoodsId(remarkGoodsid);
-            if(list == null){
+            if(list == null || list.size() == 0){
                 code = 401;
             }else{
                 data.put("remarklist",list);
-
+                code = 2;
             }
         }
         setMessageByCode(code);
         return SUCCESS;
+    }
+
+    //添加评论
+    @Action(value = "deleteRemark",results = {
+            @Result(
+                    type = "json" , params = {
+                    "code","code",
+                    "message","message",
+                    "data","data"
+            })
+    })
+    public String deleteRemark() throws Exception{
+        request.setCharacterEncoding("utf-8");
+
+        if(remarkId == null || remarkId == ""){
+            code = 420;
+        }else{
+            RemarkBiz remarkBiz = new RemarkBiz();
+            remarkBiz.deleteRemark(remarkId);
+            code = 3;
+        }
+        setMessageByCode(code);
+        return SUCCESS;
+
     }
 
 }

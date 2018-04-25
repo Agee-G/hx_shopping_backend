@@ -1,7 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/*
 src/hibernate.cfg.xml
-lib/*
 src/struts.xml
 src/com/test/*
 hx_shopping_backend.iml

@@ -13,7 +13,7 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+
 *.war
 *.ear
 *.zip
@@ -24,4 +24,10 @@
 hs_err_pid*
 
 .idea
+hibernate.cfg.xml
+hx_shopping_backend.iml
+hx_shopping.iml
+*.jar
+src/com/test/*
+
 

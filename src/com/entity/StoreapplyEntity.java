@@ -16,7 +16,7 @@ public class StoreapplyEntity {
     private String storeapplyDetail;
     private Timestamp createAt;
     private Timestamp updateAt;
-    private Integer storeapplyStatus;
+    private Integer storeapplyStatus = 2;
 
     @Id
     @Column(name = "storeapply_id", nullable = false, length = 128)

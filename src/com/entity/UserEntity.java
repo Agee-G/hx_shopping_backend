@@ -16,12 +16,12 @@ public class UserEntity {
     private String userAccount;
     private String userPassword;
     private String userNickname;
-    private Integer userTotalscore;
-    private Integer userScore;
-    private Integer userBalance;
+    private Integer userTotalscore = 0;
+    private Integer userScore = 0;
+    private Integer userBalance = 0;
     private String userBankcard;
-    private Integer userLevel;
-    private Integer userStatus;
+    private Integer userLevel = 2;
+    private String userStatus;
     private Timestamp createAt;
     private Timestamp updateAt;
 
@@ -117,11 +117,11 @@ public class UserEntity {
 
     @Basic
     @Column(name = "user_status", nullable = true)
-    public Integer getUserStatus() {
+    public String getUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(Integer userStatus) {
+    public void setUserStatus(String userStatus) {
         this.userStatus = userStatus;
     }
 

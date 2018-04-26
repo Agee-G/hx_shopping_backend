@@ -21,7 +21,7 @@ public class UserEntity {
     private Integer userBalance = 0;
     private String userBankcard;
     private Integer userLevel = 2;
-    private Integer userStatus = 1;
+    private String userStatus;
     private Timestamp createAt;
     private Timestamp updateAt;
 
@@ -117,11 +117,11 @@ public class UserEntity {
 
     @Basic
     @Column(name = "user_status", nullable = true)
-    public Integer getUserStatus() {
+    public String getUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(Integer userStatus) {
+    public void setUserStatus(String userStatus) {
         this.userStatus = userStatus;
     }
 

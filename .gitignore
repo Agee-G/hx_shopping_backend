@@ -27,6 +27,5 @@ hs_err_pid*
 .idea
 hx_shopping.iml
 hx_shopping_backend.iml
-src/hibernate.cfg.xml
 
 

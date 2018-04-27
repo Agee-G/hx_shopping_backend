@@ -4,6 +4,7 @@ import com.dao.UserDao;
 import com.entity.RemarkEntity;
 import com.entity.UserEntity;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -43,9 +44,14 @@ public class UserBiz {
             //开启事务
             tran = session.beginTransaction();
             userEntity.setUserId(UUID.randomUUID().toString());
-            userDao.add(userEntity);
+            String sql = "insert into user (user_id,user_account,user_password,user_nickname)  values(?,?,?,?)";
+            Query query= session.createSQLQuery(sql);
+            query.setString(1, userEntity.getUserId());
+            query.setString(2, userEntity.getUserAccount());
+            query.setString(3, userEntity.getUserPassword());
+            query.setString(4, userEntity.getUserNickname());
+            query.executeUpdate();
             //提交事务
-            tran.commit();
         }catch (HibernateException e){
             if(tran != null){
                 tran.rollback();

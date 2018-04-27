@@ -4,9 +4,9 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * @author 汤新苗-20155864
- * @Description:${todo}
- * @date 22/04/201820:24
+ * @Description:
+ * @author:20155852郭志伟
+ * @date： 2018/4/26 上午11:26
  */
 @Entity
 @Table(name = "lottery", schema = "hxtaobaocom", catalog = "")
@@ -18,7 +18,7 @@ public class LotteryEntity {
     private Timestamp updateAt;
 
     @Id
-    @Column(name = "lottery_id", nullable = false, length = 128)
+    @Column(name = "lottery_id")
     public String getLotteryId() {
         return lotteryId;
     }
@@ -28,7 +28,7 @@ public class LotteryEntity {
     }
 
     @Basic
-    @Column(name = "lottery_detail", nullable = true, length = 128)
+    @Column(name = "lottery_detail")
     public String getLotteryDetail() {
         return lotteryDetail;
     }
@@ -38,7 +38,7 @@ public class LotteryEntity {
     }
 
     @Basic
-    @Column(name = "createAt", nullable = true)
+    @Column(name = "createAt")
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -48,7 +48,7 @@ public class LotteryEntity {
     }
 
     @Basic
-    @Column(name = "lottery_user", nullable = true, length = 128)
+    @Column(name = "lottery_user")
     public String getLotteryUser() {
         return lotteryUser;
     }
@@ -58,7 +58,7 @@ public class LotteryEntity {
     }
 
     @Basic
-    @Column(name = "updateAt", nullable = true)
+    @Column(name = "updateAt")
     public Timestamp getUpdateAt() {
         return updateAt;
     }

@@ -5,13 +5,21 @@
 <hibernate-configuration>
     <session-factory>
         <!-- 数据库URL -->
-        <property name="connection.url">jdbc:mysql://localhost:3306/hxtaobaocom?useUnicode=true&amp;characterEncoding=UTF-8</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/hxtaobaocom?useUnicode=true&amp;characterEncoding=utf-8</property>
         <!-- 数据库JDBC驱动  -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <!-- 用户名 -->
-        <property name="connection.username">root</property>
+        <property name="connection.username">
+            root
+        </property>
         <!-- 密码 -->
+<<<<<<< HEAD
         <property name="connection.password">1984</property>
+=======
+        <property name="connection.password">
+
+        </property>
+>>>>>>> origin/dev
         <!-- 每个数据库都有对应的方言（Dialect）以匹配其平台特性 -->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <!-- Session由当前执行的线程来跟踪管理 -->
@@ -20,18 +28,19 @@
         <property name="show_sql">true</property>
         <!-- 格式化sql语句 -->
         <property name="format_sql">true</property>
-
-        <mapping class="com.entity.OrdersEntity"/>
         <mapping class="com.entity.AddressEntity"/>
-        <mapping class="com.entity.GoodsEntity"/>
-        <mapping class="com.entity.OrdergoodsEntity"/>
-        <mapping class="com.entity.ShoppingcartEntity"/>
-        <mapping class="com.entity.UserEntity"/>
-        <mapping class="com.entity.StoreEntity"/>
         <mapping class="com.entity.FavouriteEntity"/>
+        <mapping class="com.entity.GoodsEntity"/>
+        <mapping class="com.entity.GoodstypeEntity"/>
         <mapping class="com.entity.LotteryEntity"/>
+        <mapping class="com.entity.OrdergoodsEntity"/>
+        <mapping class="com.entity.OrdersEntity"/>
         <mapping class="com.entity.RemarkEntity"/>
+        <mapping class="com.entity.ShoppingcartEntity"/>
+        <mapping class="com.entity.StoreEntity"/>
         <mapping class="com.entity.StoreapplyEntity"/>
+        <mapping class="com.entity.UserEntity"/>
+
 
     </session-factory>
 </hibernate-configuration>

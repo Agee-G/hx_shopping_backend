@@ -184,7 +184,7 @@ public class GoodsAction {
     })
     public String addGoods()throws Exception{
         if(upfileFileName != null && goodsName != null && goodsType != null && goodsDetails != null && goodsPrice != null && goodsStoreid != null && goodsKucun != null && goodsStyle != null){
-            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
+//            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
 
 
             //确定文件存放的路径
@@ -200,8 +200,8 @@ public class GoodsAction {
             String url = "upload/"+upfileFileName;
             ActionContext.getContext().getSession().put("file", "/upload/"+upfileFileName);
 
-            goodsEntity.setGoodsPicture(url);
-            goodsBiz.addGoods(goodsEntity);
+//            goodsEntity.setGoodsPicture(url);
+//            goodsBiz.addGoods(goodsEntity);
             code = goodsBiz.getCode();
         }else{
             code = 220;
@@ -287,7 +287,7 @@ public class GoodsAction {
     })
     public String editGoods() throws IOException{
         if(goodsId != null && upfileFileName != null && goodsName != null && goodsType != null && goodsDetails != null && goodsPrice != null && goodsStoreid != null && goodsKucun != null && goodsStyle != null){
-            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
+//            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
 
             //确定文件存放的路径
             //1.获取当前web程序在容器中的物理路径
@@ -302,8 +302,8 @@ public class GoodsAction {
             String url = "upload/"+upfileFileName;
             ActionContext.getContext().getSession().put("file", "/upload/"+upfileFileName);
 
-            goodsEntity.setGoodsPicture(url);
-            goodsBiz.editGoods(goodsEntity);
+//            goodsEntity.setGoodsPicture(url);
+//            goodsBiz.editGoods(goodsEntity);
             code = goodsBiz.getCode();
         }else{
             code = 220;

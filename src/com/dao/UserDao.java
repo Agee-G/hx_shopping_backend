@@ -1,7 +1,9 @@
 package com.dao;
 
 import com.Utils.Page;
+import com.entity.RemarkEntity;
 import com.entity.UserEntity;
+import org.hibernate.Query;
 
 import java.util.List;
 
@@ -32,9 +34,6 @@ public class UserDao extends BaseDaoImpl<UserEntity>{
 
         return super.search(page, hql, conditions);
     }
-    @Override
-    public void add(UserEntity entity) {
-        super.add(entity);
-    }
+
 
 }

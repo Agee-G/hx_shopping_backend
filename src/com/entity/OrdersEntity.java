@@ -1,20 +1,16 @@
 package com.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 /**
- * @author:李连芸
- * @date:18/4/20 22 04
- * @description
+ * @Description:
+ * @author:20155852郭志伟
+ * @date： 2018/4/26 上午11:26
  */
 @Entity
-@Table(name = "orders", schema = "hxtaobaocom")
-public class OrdersEntity implements Serializable{
+@Table(name = "orders", schema = "hxtaobaocom", catalog = "")
+public class OrdersEntity {
     private String orderId;
     private String orderUserid;
     private String orderStoreid;
@@ -30,7 +26,7 @@ public class OrdersEntity implements Serializable{
     private Integer orderStatus;
 
     @Id
-    @Column(name = "order_id", nullable = false, length = 128)
+    @Column(name = "order_id")
     public String getOrderId() {
         return orderId;
     }
@@ -40,7 +36,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "order_userid", nullable = true, length = 128)
+    @Column(name = "order_userid")
     public String getOrderUserid() {
         return orderUserid;
     }
@@ -50,7 +46,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "order_storeid", nullable = true, length = 128)
+    @Column(name = "order_storeid")
     public String getOrderStoreid() {
         return orderStoreid;
     }
@@ -60,7 +56,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "order_totalprice", nullable = true)
+    @Column(name = "order_totalprice")
     public Integer getOrderTotalprice() {
         return orderTotalprice;
     }
@@ -70,7 +66,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "order_number", nullable = true, length = 128)
+    @Column(name = "order_number")
     public String getOrderNumber() {
         return orderNumber;
     }
@@ -80,7 +76,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "order_lasttime", nullable = true)
+    @Column(name = "order_lasttime")
     public Timestamp getOrderLasttime() {
         return orderLasttime;
     }
@@ -90,7 +86,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "order_delay", nullable = true)
+    @Column(name = "order_delay")
     public Integer getOrderDelay() {
         return orderDelay;
     }
@@ -100,7 +96,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "createAt", nullable = true)
+    @Column(name = "createAt")
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -110,7 +106,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "updateAt", nullable = true)
+    @Column(name = "updateAt")
     public Timestamp getUpdateAt() {
         return updateAt;
     }
@@ -120,7 +116,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "order_address", nullable = true, length = 128)
+    @Column(name = "order_address")
     public String getOrderAddress() {
         return orderAddress;
     }
@@ -130,7 +126,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "order_addressphone", nullable = true, length = 15)
+    @Column(name = "order_addressphone")
     public String getOrderAddressphone() {
         return orderAddressphone;
     }
@@ -140,7 +136,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "order_addressusername", nullable = true, length = 15)
+    @Column(name = "order_addressusername")
     public String getOrderAddressusername() {
         return orderAddressusername;
     }
@@ -150,7 +146,7 @@ public class OrdersEntity implements Serializable{
     }
 
     @Basic
-    @Column(name = "order_status", nullable = true)
+    @Column(name = "order_status")
     public Integer getOrderStatus() {
         return orderStatus;
     }
@@ -163,24 +159,45 @@ public class OrdersEntity implements Serializable{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         OrdersEntity that = (OrdersEntity) o;
-        return Objects.equals(orderId, that.orderId) &&
-                Objects.equals(orderUserid, that.orderUserid) &&
-                Objects.equals(orderTotalprice, that.orderTotalprice) &&
-                Objects.equals(orderNumber, that.orderNumber) &&
-                Objects.equals(orderLasttime, that.orderLasttime) &&
-                Objects.equals(orderDelay, that.orderDelay) &&
-                Objects.equals(createAt, that.createAt) &&
-                Objects.equals(updateAt, that.updateAt) &&
-                Objects.equals(orderAddress, that.orderAddress) &&
-                Objects.equals(orderAddressphone, that.orderAddressphone) &&
-                Objects.equals(orderAddressusername, that.orderAddressusername) &&
-                Objects.equals(orderStatus, that.orderStatus);
+
+        if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
+        if (orderUserid != null ? !orderUserid.equals(that.orderUserid) : that.orderUserid != null) return false;
+        if (orderStoreid != null ? !orderStoreid.equals(that.orderStoreid) : that.orderStoreid != null) return false;
+        if (orderTotalprice != null ? !orderTotalprice.equals(that.orderTotalprice) : that.orderTotalprice != null)
+            return false;
+        if (orderNumber != null ? !orderNumber.equals(that.orderNumber) : that.orderNumber != null) return false;
+        if (orderLasttime != null ? !orderLasttime.equals(that.orderLasttime) : that.orderLasttime != null)
+            return false;
+        if (orderDelay != null ? !orderDelay.equals(that.orderDelay) : that.orderDelay != null) return false;
+        if (createAt != null ? !createAt.equals(that.createAt) : that.createAt != null) return false;
+        if (updateAt != null ? !updateAt.equals(that.updateAt) : that.updateAt != null) return false;
+        if (orderAddress != null ? !orderAddress.equals(that.orderAddress) : that.orderAddress != null) return false;
+        if (orderAddressphone != null ? !orderAddressphone.equals(that.orderAddressphone) : that.orderAddressphone != null)
+            return false;
+        if (orderAddressusername != null ? !orderAddressusername.equals(that.orderAddressusername) : that.orderAddressusername != null)
+            return false;
+        if (orderStatus != null ? !orderStatus.equals(that.orderStatus) : that.orderStatus != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(orderId, orderUserid, orderTotalprice, orderNumber, orderLasttime, orderDelay, createAt, updateAt, orderAddress, orderAddressphone, orderAddressusername, orderStatus);
+        int result = orderId != null ? orderId.hashCode() : 0;
+        result = 31 * result + (orderUserid != null ? orderUserid.hashCode() : 0);
+        result = 31 * result + (orderStoreid != null ? orderStoreid.hashCode() : 0);
+        result = 31 * result + (orderTotalprice != null ? orderTotalprice.hashCode() : 0);
+        result = 31 * result + (orderNumber != null ? orderNumber.hashCode() : 0);
+        result = 31 * result + (orderLasttime != null ? orderLasttime.hashCode() : 0);
+        result = 31 * result + (orderDelay != null ? orderDelay.hashCode() : 0);
+        result = 31 * result + (createAt != null ? createAt.hashCode() : 0);
+        result = 31 * result + (updateAt != null ? updateAt.hashCode() : 0);
+        result = 31 * result + (orderAddress != null ? orderAddress.hashCode() : 0);
+        result = 31 * result + (orderAddressphone != null ? orderAddressphone.hashCode() : 0);
+        result = 31 * result + (orderAddressusername != null ? orderAddressusername.hashCode() : 0);
+        result = 31 * result + (orderStatus != null ? orderStatus.hashCode() : 0);
+        return result;
     }
 }

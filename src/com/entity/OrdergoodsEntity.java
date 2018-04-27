@@ -2,15 +2,14 @@ package com.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 /**
- * @author:李连芸
- * @date:18/4/20 22 04
- * @description
+ * @Description:
+ * @author:20155852郭志伟
+ * @date： 2018/4/26 上午11:26
  */
 @Entity
-@Table(name = "ordergoods", schema = "hxtaobaocom")
+@Table(name = "ordergoods", schema = "hxtaobaocom", catalog = "")
 public class OrdergoodsEntity {
     private String ordergoodsId;
     private String ordergoodsName;
@@ -24,7 +23,7 @@ public class OrdergoodsEntity {
     private Timestamp updateAt;
 
     @Id
-    @Column(name = "ordergoods_id", nullable = false, length = 128)
+    @Column(name = "ordergoods_id")
     public String getOrdergoodsId() {
         return ordergoodsId;
     }
@@ -34,7 +33,7 @@ public class OrdergoodsEntity {
     }
 
     @Basic
-    @Column(name = "ordergoods_name", nullable = true, length = 50)
+    @Column(name = "ordergoods_name")
     public String getOrdergoodsName() {
         return ordergoodsName;
     }
@@ -44,7 +43,7 @@ public class OrdergoodsEntity {
     }
 
     @Basic
-    @Column(name = "ordergoods_picture", nullable = true, length = 20)
+    @Column(name = "ordergoods_picture")
     public String getOrdergoodsPicture() {
         return ordergoodsPicture;
     }
@@ -54,7 +53,7 @@ public class OrdergoodsEntity {
     }
 
     @Basic
-    @Column(name = "ordergoods_num", nullable = true)
+    @Column(name = "ordergoods_num")
     public Integer getOrdergoodsNum() {
         return ordergoodsNum;
     }
@@ -64,7 +63,7 @@ public class OrdergoodsEntity {
     }
 
     @Basic
-    @Column(name = "ordergoods_style", nullable = true, length = 20)
+    @Column(name = "ordergoods_style")
     public String getOrdergoodsStyle() {
         return ordergoodsStyle;
     }
@@ -74,7 +73,7 @@ public class OrdergoodsEntity {
     }
 
     @Basic
-    @Column(name = "ordergoods_price", nullable = true)
+    @Column(name = "ordergoods_price")
     public Integer getOrdergoodsPrice() {
         return ordergoodsPrice;
     }
@@ -84,7 +83,7 @@ public class OrdergoodsEntity {
     }
 
     @Basic
-    @Column(name = "ordergoods_ordernum", nullable = true, length = 128)
+    @Column(name = "ordergoods_ordernum")
     public String getOrdergoodsOrdernum() {
         return ordergoodsOrdernum;
     }
@@ -94,7 +93,7 @@ public class OrdergoodsEntity {
     }
 
     @Basic
-    @Column(name = "ordergoods_merchant", nullable = true, length = 128)
+    @Column(name = "ordergoods_merchant")
     public String getOrdergoodsMerchant() {
         return ordergoodsMerchant;
     }
@@ -104,7 +103,7 @@ public class OrdergoodsEntity {
     }
 
     @Basic
-    @Column(name = "createAt", nullable = true)
+    @Column(name = "createAt")
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -114,7 +113,7 @@ public class OrdergoodsEntity {
     }
 
     @Basic
-    @Column(name = "updateAt", nullable = true)
+    @Column(name = "updateAt")
     public Timestamp getUpdateAt() {
         return updateAt;
     }
@@ -127,38 +126,42 @@ public class OrdergoodsEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         OrdergoodsEntity that = (OrdergoodsEntity) o;
-        return Objects.equals(ordergoodsId, that.ordergoodsId) &&
-                Objects.equals(ordergoodsName, that.ordergoodsName) &&
-                Objects.equals(ordergoodsPicture, that.ordergoodsPicture) &&
-                Objects.equals(ordergoodsNum, that.ordergoodsNum) &&
-                Objects.equals(ordergoodsStyle, that.ordergoodsStyle) &&
-                Objects.equals(ordergoodsPrice, that.ordergoodsPrice) &&
-                Objects.equals(ordergoodsOrdernum, that.ordergoodsOrdernum) &&
-                Objects.equals(ordergoodsMerchant, that.ordergoodsMerchant) &&
-                Objects.equals(createAt, that.createAt) &&
-                Objects.equals(updateAt, that.updateAt);
+
+        if (ordergoodsId != null ? !ordergoodsId.equals(that.ordergoodsId) : that.ordergoodsId != null) return false;
+        if (ordergoodsName != null ? !ordergoodsName.equals(that.ordergoodsName) : that.ordergoodsName != null)
+            return false;
+        if (ordergoodsPicture != null ? !ordergoodsPicture.equals(that.ordergoodsPicture) : that.ordergoodsPicture != null)
+            return false;
+        if (ordergoodsNum != null ? !ordergoodsNum.equals(that.ordergoodsNum) : that.ordergoodsNum != null)
+            return false;
+        if (ordergoodsStyle != null ? !ordergoodsStyle.equals(that.ordergoodsStyle) : that.ordergoodsStyle != null)
+            return false;
+        if (ordergoodsPrice != null ? !ordergoodsPrice.equals(that.ordergoodsPrice) : that.ordergoodsPrice != null)
+            return false;
+        if (ordergoodsOrdernum != null ? !ordergoodsOrdernum.equals(that.ordergoodsOrdernum) : that.ordergoodsOrdernum != null)
+            return false;
+        if (ordergoodsMerchant != null ? !ordergoodsMerchant.equals(that.ordergoodsMerchant) : that.ordergoodsMerchant != null)
+            return false;
+        if (createAt != null ? !createAt.equals(that.createAt) : that.createAt != null) return false;
+        if (updateAt != null ? !updateAt.equals(that.updateAt) : that.updateAt != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(ordergoodsId, ordergoodsName, ordergoodsPicture, ordergoodsNum, ordergoodsStyle, ordergoodsPrice, ordergoodsOrdernum, ordergoodsMerchant, createAt, updateAt);
-    }
-
-    @Override
-    public String toString() {
-        return "OrdergoodsEntity{" +
-                "ordergoodsId='" + ordergoodsId + '\'' +
-                ", ordergoodsName='" + ordergoodsName + '\'' +
-                ", ordergoodsPicture='" + ordergoodsPicture + '\'' +
-                ", ordergoodsNum=" + ordergoodsNum +
-                ", ordergoodsStyle='" + ordergoodsStyle + '\'' +
-                ", ordergoodsPrice=" + ordergoodsPrice +
-                ", ordergoodsOrdernum='" + ordergoodsOrdernum + '\'' +
-                ", ordergoodsMerchant='" + ordergoodsMerchant + '\'' +
-                ", createAt=" + createAt +
-                ", updateAt=" + updateAt +
-                '}';
+        int result = ordergoodsId != null ? ordergoodsId.hashCode() : 0;
+        result = 31 * result + (ordergoodsName != null ? ordergoodsName.hashCode() : 0);
+        result = 31 * result + (ordergoodsPicture != null ? ordergoodsPicture.hashCode() : 0);
+        result = 31 * result + (ordergoodsNum != null ? ordergoodsNum.hashCode() : 0);
+        result = 31 * result + (ordergoodsStyle != null ? ordergoodsStyle.hashCode() : 0);
+        result = 31 * result + (ordergoodsPrice != null ? ordergoodsPrice.hashCode() : 0);
+        result = 31 * result + (ordergoodsOrdernum != null ? ordergoodsOrdernum.hashCode() : 0);
+        result = 31 * result + (ordergoodsMerchant != null ? ordergoodsMerchant.hashCode() : 0);
+        result = 31 * result + (createAt != null ? createAt.hashCode() : 0);
+        result = 31 * result + (updateAt != null ? updateAt.hashCode() : 0);
+        return result;
     }
 }

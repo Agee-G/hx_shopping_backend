@@ -2,7 +2,10 @@ package com.biz;
 
 import com.Utils.Page;
 import com.dao.BackendDao;
+import com.dao.StoreDao;
 import com.dao.UserDao;
+import com.entity.StoreConditions;
+import com.entity.StoreEntity;
 import com.entity.UserConditions;
 import com.entity.UserEntity;
 import org.hibernate.HibernateException;
@@ -18,6 +21,7 @@ import java.util.List;
  */
 public class BackendBiz {
     private UserDao userDao = new UserDao();
+    private StoreDao storeDao = new StoreDao();
 
     public List<UserEntity> adminLogin(UserConditions userConditions){
         Transaction transaction = null;
@@ -72,6 +76,37 @@ public class BackendBiz {
             }
         }
         page.setPageList(userEntityList);
+    }
+
+    public void findStoresByConditionByPage(Page<StoreEntity> page, StoreConditions storeConditions){
+        Transaction transaction = null;
+        Session session = userDao.currentSession();
+        List<StoreEntity> storeEntityList = null;
+        try{
+            transaction = session.beginTransaction();
+            StringBuilder hql = new StringBuilder("from StoreEntity as store where 1=1");
+            if (storeConditions.getStore_account() != null && storeConditions.getStore_account().length() > 0){
+                hql.append(" and store.storeAccount = :store_account");
+            }
+            if (storeConditions.getStore_name() != null && storeConditions.getStore_name().length() > 0){
+                hql.append(" and store.storeName like :store_name");
+            }
+
+            if (storeConditions.getStore_status() != null && storeConditions.getStore_account().length() > 0){
+                hql.append(" and store.storeStatus = :store_status");
+            }
+            page.setCount(storeDao.obtainCount(hql.toString(),storeConditions).intValue());
+            storeEntityList = storeDao.search(page,hql.toString(),storeConditions);
+            transaction.commit();
+        }catch (HibernateException e){
+            e.printStackTrace();
+            if (transaction != null){
+                transaction.rollback();
+            }
+        }
+        page.setPageList(storeEntityList);
+
+
     }
 
 }

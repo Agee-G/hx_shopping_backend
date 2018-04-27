@@ -4,9 +4,9 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * @author 汤新苗-20155864
- * @Description:${todo}
- * @date 22/04/201820:24
+ * @Description:
+ * @author:20155852郭志伟
+ * @date： 2018/4/26 上午11:26
  */
 @Entity
 @Table(name = "favourite", schema = "hxtaobaocom", catalog = "")
@@ -18,7 +18,7 @@ public class FavouriteEntity {
     private Timestamp updateAt;
 
     @Id
-    @Column(name = "favourite_id", nullable = false, length = 128)
+    @Column(name = "favourite_id")
     public String getFavouriteId() {
         return favouriteId;
     }
@@ -28,7 +28,7 @@ public class FavouriteEntity {
     }
 
     @Basic
-    @Column(name = "favourite_goods", nullable = true, length = 128)
+    @Column(name = "favourite_goods")
     public String getFavouriteGoods() {
         return favouriteGoods;
     }
@@ -38,7 +38,7 @@ public class FavouriteEntity {
     }
 
     @Basic
-    @Column(name = "favourite_user", nullable = true, length = 128)
+    @Column(name = "favourite_user")
     public String getFavouriteUser() {
         return favouriteUser;
     }
@@ -48,7 +48,7 @@ public class FavouriteEntity {
     }
 
     @Basic
-    @Column(name = "createAt", nullable = true)
+    @Column(name = "createAt")
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -58,7 +58,7 @@ public class FavouriteEntity {
     }
 
     @Basic
-    @Column(name = "updateAt", nullable = true)
+    @Column(name = "updateAt")
     public Timestamp getUpdateAt() {
         return updateAt;
     }

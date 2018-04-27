@@ -4,9 +4,9 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * @author 汤新苗-20155864
- * @Description:${todo}
- * @date 22/04/201820:24
+ * @Description:
+ * @author:20155852郭志伟
+ * @date： 2018/4/26 上午11:26
  */
 @Entity
 @Table(name = "storeapply", schema = "hxtaobaocom", catalog = "")
@@ -16,10 +16,10 @@ public class StoreapplyEntity {
     private String storeapplyDetail;
     private Timestamp createAt;
     private Timestamp updateAt;
-    private Integer storeapplyStatus = 2;
+    private Integer storeapplyStatus;
 
     @Id
-    @Column(name = "storeapply_id", nullable = false, length = 128)
+    @Column(name = "storeapply_id")
     public String getStoreapplyId() {
         return storeapplyId;
     }
@@ -29,7 +29,7 @@ public class StoreapplyEntity {
     }
 
     @Basic
-    @Column(name = "storeapply_storeid", nullable = true, length = 128)
+    @Column(name = "storeapply_storeid")
     public String getStoreapplyStoreid() {
         return storeapplyStoreid;
     }
@@ -39,7 +39,7 @@ public class StoreapplyEntity {
     }
 
     @Basic
-    @Column(name = "storeapply_detail", nullable = true, length = 50)
+    @Column(name = "storeapply_detail")
     public String getStoreapplyDetail() {
         return storeapplyDetail;
     }
@@ -49,7 +49,7 @@ public class StoreapplyEntity {
     }
 
     @Basic
-    @Column(name = "createAt", nullable = true)
+    @Column(name = "createAt")
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -59,7 +59,7 @@ public class StoreapplyEntity {
     }
 
     @Basic
-    @Column(name = "updateAt", nullable = true)
+    @Column(name = "updateAt")
     public Timestamp getUpdateAt() {
         return updateAt;
     }
@@ -69,7 +69,7 @@ public class StoreapplyEntity {
     }
 
     @Basic
-    @Column(name = "storeapply_status", nullable = true)
+    @Column(name = "storeapply_status")
     public Integer getStoreapplyStatus() {
         return storeapplyStatus;
     }

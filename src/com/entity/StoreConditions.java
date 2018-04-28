@@ -8,7 +8,7 @@ package com.entity;
 public class StoreConditions {
     private String store_account;
     private String store_name;
-    private Integer store_status;
+    private String store_status;
 
     public String getStore_account() {
         return store_account;
@@ -19,18 +19,18 @@ public class StoreConditions {
     }
 
     public String getStore_name() {
-        return store_name;
+        return "%" + store_name + "%";
     }
 
     public void setStore_name(String store_name) {
         this.store_name = store_name;
     }
 
-    public Integer getStore_status() {
+    public String getStore_status() {
         return store_status;
     }
 
-    public void setStore_status(Integer store_status) {
+    public void setStore_status(String store_status) {
         this.store_status = store_status;
     }
 }

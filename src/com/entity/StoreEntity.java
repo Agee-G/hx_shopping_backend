@@ -16,8 +16,8 @@ public class StoreEntity {
     private String storePassword;
     private String storeName;
     private String storePicture;
-    private Integer storeBalance;
-    private Integer storeStatus;
+    private Double storeBalance;
+    private String storeStatus;
     private Timestamp createAt;
     private Timestamp updateAt;
 
@@ -73,21 +73,21 @@ public class StoreEntity {
 
     @Basic
     @Column(name = "store_balance")
-    public Integer getStoreBalance() {
+    public Double getStoreBalance() {
         return storeBalance;
     }
 
-    public void setStoreBalance(Integer storeBalance) {
+    public void setStoreBalance(Double storeBalance) {
         this.storeBalance = storeBalance;
     }
 
     @Basic
     @Column(name = "store_status")
-    public Integer getStoreStatus() {
+    public String getStoreStatus() {
         return storeStatus;
     }
 
-    public void setStoreStatus(Integer storeStatus) {
+    public void setStoreStatus(String storeStatus) {
         this.storeStatus = storeStatus;
     }
 

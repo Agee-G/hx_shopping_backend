@@ -36,7 +36,7 @@ public class OrderBiz {
     }
 
     //直接购买
-    public void addOrder(String storeid,String goodsId,Integer goodsNum,String goodType,Integer orderTotalprice,String orderAddressId){
+    public void addOrder(String storeid,String goodsId,Integer goodsNum,String goodType,Double orderTotalprice,String orderAddressId){
         Transaction tran = null;
         Session session = orderDao.currentSession();
         try {
@@ -71,8 +71,8 @@ public class OrderBiz {
             ordersEntity.setOrderAddress(addressEntity.getAddress());
             ordersEntity.setOrderAddressphone(addressEntity.getAddressPhone());
             ordersEntity.setOrderAddressusername(addressEntity.getAddressUsername());
-            ordersEntity.setOrderDelay(0);
-            ordersEntity.setOrderStatus(0);
+            ordersEntity.setOrderDelay("0");
+            ordersEntity.setOrderStatus("0");
             ordersEntity.setOrderTotalprice(orderTotalprice);
             session.merge(ordersEntity);
 
@@ -103,7 +103,7 @@ public class OrderBiz {
                 if (ids.length == 0){
                     code =  212;//没有传来用户所购买的商家订单的购物车id
                 }
-                int totalPrice = 0;
+                Double totalPrice = 0.0;
                 for (String shoppingcart_id:ids) {
                     ShoppingcartEntity shoppingcartEntity = session.get(ShoppingcartEntity.class,shoppingcart_id);
                     if (shoppingcartEntity == null){
@@ -137,8 +137,8 @@ public class OrderBiz {
                 ordersEntity.setOrderAddress(addressEntity.getAddress());
                 ordersEntity.setOrderAddressphone(addressEntity.getAddressPhone());
                 ordersEntity.setOrderAddressusername(addressEntity.getAddressUsername());
-                ordersEntity.setOrderDelay(0);
-                ordersEntity.setOrderStatus(0);
+                ordersEntity.setOrderDelay("0");
+                ordersEntity.setOrderStatus("0");
                 ordersEntity.setOrderTotalprice(totalPrice);
                 session.merge(ordersEntity);
             }
@@ -222,7 +222,7 @@ public class OrderBiz {
     }
 
     //更新订单状态
-    public void updateOrder(String orderId,Integer orderStatus) {
+    public void updateOrder(String orderId,String orderStatus) {
         Transaction tran = null;
         Session session = orderDao.currentSession();
         try {

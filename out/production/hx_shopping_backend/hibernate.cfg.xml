@@ -13,13 +13,8 @@
             root
         </property>
         <!-- 密码 -->
-<<<<<<< HEAD
         <property name="connection.password">1984</property>
-=======
-        <property name="connection.password">
 
-        </property>
->>>>>>> origin/dev
         <!-- 每个数据库都有对应的方言（Dialect）以匹配其平台特性 -->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <!-- Session由当前执行的线程来跟踪管理 -->

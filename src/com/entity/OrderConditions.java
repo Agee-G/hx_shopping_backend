@@ -11,13 +11,13 @@ public class OrderConditions {
     private String  storeid;
     private String  orderNum;
     private String  orderGoodname;
-    private Integer orderStatus;
+    private String orderStatus;
 
     public OrderConditions() {
 
     }
 
-    public OrderConditions(String userid, String storeid, String orderNum, String orderGoodname, Integer orderStatus) {
+    public OrderConditions(String userid, String storeid, String orderNum, String orderGoodname, String orderStatus) {
         this.userid = userid;
         this.storeid = storeid;
         this.orderNum = orderNum;
@@ -57,11 +57,11 @@ public class OrderConditions {
         this.orderGoodname = orderGoodname;
     }
 
-    public Integer getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(Integer orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 }

@@ -42,9 +42,9 @@ public class OrderAction extends ActionSupport{
     private String goodsId;
     private Integer goodsNum;
     private String goodType;
-    private Integer orderTotalprice;
+    private Double orderTotalprice;
     private String orderAddressId;
-    private Integer orderStatus;
+    private String orderStatus;
     private HashMap<String,String[]> orderData = new HashMap<>();//返回的数据
 
     //setter、getter
@@ -129,8 +129,8 @@ public class OrderAction extends ActionSupport{
     public String getOrderStoreid() { return orderStoreid; }
     public void setOrderStoreid(String orderStoreid) { this.orderStoreid = orderStoreid; }
     @JSON(serialize=false)
-    public Integer getOrderStatus() { return orderStatus; }
-    public void setOrderStatus(Integer orderStatus) { this.orderStatus = orderStatus; }
+    public String getOrderStatus() { return orderStatus; }
+    public void setOrderStatus(String orderStatus) { this.orderStatus = orderStatus; }
     public String getGoodsId() {return goodsId;}
     public void setGoodsId(String goodsId) {this.goodsId = goodsId;}
     @JSON(serialize=false)
@@ -140,8 +140,8 @@ public class OrderAction extends ActionSupport{
     public String getGoodType() { return goodType; }
     public void setGoodType(String goodType) { this.goodType = goodType; }
     @JSON(serialize=false)
-    public Integer getOrderTotalprice() { return orderTotalprice; }
-    public void setOrderTotalprice(Integer orderTotalprice) { this.orderTotalprice = orderTotalprice; }
+    public Double getOrderTotalprice() { return orderTotalprice; }
+    public void setOrderTotalprice(Double orderTotalprice) { this.orderTotalprice = orderTotalprice; }
     @JSON(serialize=false)
     public String getOrderAddressId() { return orderAddressId; }
     public void setOrderAddressId(String orderAddressId) { this.orderAddressId = orderAddressId; }

@@ -10,8 +10,8 @@ public class UserConditions {
     private String user_password;
     private String user_nickname;
     private Integer user_totalscore;
-    private Integer user_level;
-    private Integer user_status;
+    private String user_level;
+    private String user_status;
 
     public String getUser_password() {
         return user_password;
@@ -45,19 +45,19 @@ public class UserConditions {
         this.user_totalscore = user_totalscore;
     }
 
-    public Integer getUser_level() {
+    public String getUser_level() {
         return user_level;
     }
 
-    public void setUser_level(Integer user_level) {
+    public void setUser_level(String user_level) {
         this.user_level = user_level;
     }
 
-    public Integer getUser_status() {
+    public String getUser_status() {
         return user_status;
     }
 
-    public void setUser_status(Integer user_status) {
+    public void setUser_status(String user_status) {
         this.user_status = user_status;
     }
 }

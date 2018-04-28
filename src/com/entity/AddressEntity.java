@@ -16,7 +16,7 @@ public class AddressEntity {
     private String addressUsername;
     private String addressPhone;
     private String addressUser;
-    private Integer addressLevel;
+    private String addressLevel;
     private Timestamp createAt;
     private Timestamp updateAt;
 
@@ -72,11 +72,11 @@ public class AddressEntity {
 
     @Basic
     @Column(name = "address_level")
-    public Integer getAddressLevel() {
+    public String getAddressLevel() {
         return addressLevel;
     }
 
-    public void setAddressLevel(Integer addressLevel) {
+    public void setAddressLevel(String addressLevel) {
         this.addressLevel = addressLevel;
     }
 

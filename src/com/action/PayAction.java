@@ -8,7 +8,12 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import java.util.HashMap;
-
+/**
+ * @description：
+ * @author：heyi
+ * @date：2018/4/29 2:25
+ * @version：v1.0
+ */
 @ParentPackage("json-default")
 public class PayAction extends ActionSupport {
     // 返回JSON数据
@@ -68,7 +73,7 @@ public class PayAction extends ActionSupport {
     public Integer getStatus() {return status; }
     public void setStatus(Integer status) {this.status = status; }
 
-    //用户充值和提现(status=0充值，status=1提现)
+    //用户充值和提现和支付和退款(status=0收钱【充值或退款】，status=1扣钱【提现或支付】)
     @Action(value = "updateUserBalance", results = {
             @Result(
                     type = "json", params = {

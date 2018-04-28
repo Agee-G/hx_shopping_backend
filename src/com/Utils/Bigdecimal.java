@@ -1,7 +1,12 @@
 package com.Utils;
 
 import java.math.BigDecimal;
-
+/**
+ * @description：
+ * @author：heyi
+ * @date：2018/4/29 2:26
+ * @version：v1.0
+ */
 public class Bigdecimal {
     public static Double add(Double d1, Double d2) {
         BigDecimal b1 = new BigDecimal(Double.toString(d1));

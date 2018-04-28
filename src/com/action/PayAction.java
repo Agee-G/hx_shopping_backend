@@ -20,13 +20,15 @@ public class PayAction extends ActionSupport {
     private PayBiz payBiz = new PayBiz();
 
     //用户信息
-    private Integer userBalance;
     private String userBankcard;
+    //状态位（收钱，扣钱）
+    private Integer status;
+    //金额
+    private Double money;
 
     public int getCode() {
         return code;
     }
-
     public void setCode(int code) {
         this.code = code;
         switch (code) {
@@ -39,6 +41,9 @@ public class PayAction extends ActionSupport {
             case 102:
                 message = "充值金额有问题";
                 break;
+            case 103:
+                message = "提现金额有问题";
+                break;
             case 120:
                 message = "传来的参数有空的";
                 break;
@@ -47,7 +52,6 @@ public class PayAction extends ActionSupport {
                 break;
         }
     }
-
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
     public HashMap getData() { return data; }
@@ -55,13 +59,16 @@ public class PayAction extends ActionSupport {
     public PayBiz getPayBiz() { return payBiz; }
     public void setPayBiz(PayBiz payBiz) { this.payBiz = payBiz; }
     @JSON(serialize = false)
-    public Integer getUserBalance() { return userBalance; }
-    public void setUserBalance(Integer userBalance) { this.userBalance = userBalance; }
+    public Double getMoney() { return money; }
+    public void setMoney(Double money) { this.money = money; }
     @JSON(serialize = false)
     public String getUserBankcard() { return userBankcard; }
     public void setUserBankcard(String userBankcard) { this.userBankcard = userBankcard; }
+    @JSON(serialize = false)
+    public Integer getStatus() {return status; }
+    public void setStatus(Integer status) {this.status = status; }
 
-    //用户充值
+    //用户充值和提现(status=0充值，status=1提现)
     @Action(value = "updateUserBalance", results = {
             @Result(
                     type = "json", params = {
@@ -71,10 +78,10 @@ public class PayAction extends ActionSupport {
             })
     })
     public String updateUserBalance() {
-        if (userBankcard == null || userBalance == null) {
+        if (userBankcard == null || money == null|| status == null) {
             code = 120;
         } else {
-            payBiz.updateUserBalance(userBankcard, userBalance);
+            payBiz.updateUserBalance(userBankcard, money, status);
             code = payBiz.getCode();
         }
         return SUCCESS;

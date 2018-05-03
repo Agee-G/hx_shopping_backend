@@ -16,7 +16,7 @@ public class StoreapplyEntity {
     private String storeapplyDetail;
     private Timestamp createAt;
     private Timestamp updateAt;
-    private Integer storeapplyStatus;
+    private String storeapplyStatus;
 
     @Id
     @Column(name = "storeapply_id")
@@ -70,11 +70,11 @@ public class StoreapplyEntity {
 
     @Basic
     @Column(name = "storeapply_status")
-    public Integer getStoreapplyStatus() {
+    public String getStoreapplyStatus() {
         return storeapplyStatus;
     }
 
-    public void setStoreapplyStatus(Integer storeapplyStatus) {
+    public void setStoreapplyStatus(String storeapplyStatus) {
         this.storeapplyStatus = storeapplyStatus;
     }
 

@@ -15,7 +15,7 @@ public class GoodsEntity {
     private String goodsName;
     private Integer goodsType;
     private String goodsDetails;
-    private Integer goodsPrice;
+    private Double goodsPrice;
     private String goodsStoreid;
     private Integer goodsKucun;
     private Integer goodsSell;
@@ -66,11 +66,11 @@ public class GoodsEntity {
 
     @Basic
     @Column(name = "goods_price")
-    public Integer getGoodsPrice() {
+    public Double getGoodsPrice() {
         return goodsPrice;
     }
 
-    public void setGoodsPrice(Integer goodsPrice) {
+    public void setGoodsPrice(Double goodsPrice) {
         this.goodsPrice = goodsPrice;
     }
 

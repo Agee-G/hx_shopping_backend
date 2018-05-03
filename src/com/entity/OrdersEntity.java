@@ -14,16 +14,16 @@ public class OrdersEntity {
     private String orderId;
     private String orderUserid;
     private String orderStoreid;
-    private Integer orderTotalprice;
+    private Double orderTotalprice;
     private String orderNumber;
     private Timestamp orderLasttime;
-    private Integer orderDelay;
+    private String orderDelay;
     private Timestamp createAt;
     private Timestamp updateAt;
     private String orderAddress;
     private String orderAddressphone;
     private String orderAddressusername;
-    private Integer orderStatus;
+    private String orderStatus;
 
     @Id
     @Column(name = "order_id")
@@ -57,11 +57,11 @@ public class OrdersEntity {
 
     @Basic
     @Column(name = "order_totalprice")
-    public Integer getOrderTotalprice() {
+    public Double getOrderTotalprice() {
         return orderTotalprice;
     }
 
-    public void setOrderTotalprice(Integer orderTotalprice) {
+    public void setOrderTotalprice(Double orderTotalprice) {
         this.orderTotalprice = orderTotalprice;
     }
 
@@ -87,11 +87,11 @@ public class OrdersEntity {
 
     @Basic
     @Column(name = "order_delay")
-    public Integer getOrderDelay() {
+    public String getOrderDelay() {
         return orderDelay;
     }
 
-    public void setOrderDelay(Integer orderDelay) {
+    public void setOrderDelay(String orderDelay) {
         this.orderDelay = orderDelay;
     }
 
@@ -147,11 +147,11 @@ public class OrdersEntity {
 
     @Basic
     @Column(name = "order_status")
-    public Integer getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(Integer orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 

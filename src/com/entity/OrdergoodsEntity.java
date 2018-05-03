@@ -16,7 +16,7 @@ public class OrdergoodsEntity {
     private String ordergoodsPicture;
     private Integer ordergoodsNum;
     private String ordergoodsStyle;
-    private Integer ordergoodsPrice;
+    private Double ordergoodsPrice;
     private String ordergoodsOrdernum;
     private String ordergoodsMerchant;
     private Timestamp createAt;
@@ -74,11 +74,11 @@ public class OrdergoodsEntity {
 
     @Basic
     @Column(name = "ordergoods_price")
-    public Integer getOrdergoodsPrice() {
+    public Double getOrdergoodsPrice() {
         return ordergoodsPrice;
     }
 
-    public void setOrdergoodsPrice(Integer ordergoodsPrice) {
+    public void setOrdergoodsPrice(Double ordergoodsPrice) {
         this.ordergoodsPrice = ordergoodsPrice;
     }
 

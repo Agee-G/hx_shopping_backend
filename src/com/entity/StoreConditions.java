@@ -8,6 +8,7 @@ package com.entity;
 public class StoreConditions {
     private String store_account;
     private String store_name;
+    private String store_password;
     private String store_status;
 
     public String getStore_account() {
@@ -32,5 +33,13 @@ public class StoreConditions {
 
     public void setStore_status(String store_status) {
         this.store_status = store_status;
+    }
+
+    public String getStore_password() {
+        return store_password;
+    }
+
+    public void setStore_password(String store_password) {
+        this.store_password = store_password;
     }
 }

@@ -23,6 +23,7 @@
         <property name="show_sql">true</property>
         <!-- 格式化sql语句 -->
         <property name="format_sql">true</property>
+
         <mapping class="com.entity.AddressEntity"/>
         <mapping class="com.entity.FavouriteEntity"/>
         <mapping class="com.entity.GoodsEntity"/>

@@ -94,5 +94,23 @@ public class UserBiz {
         }
 
     }
+
+    public String accountValid(String userAccount){
+        String valid = "no";
+        Transaction tran = null;
+        Session session = userDao.currentSession();
+        try{
+            tran = session.beginTransaction();
+            valid = userDao.accountValid(userAccount);
+
+            tran.commit();
+        }catch (HibernateException e){
+            if(tran != null){
+                tran.rollback();
+            }
+            e.printStackTrace();
+        }
+        return valid;
+    }
     //草拟吗
 }

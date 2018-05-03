@@ -60,6 +60,17 @@ public class UserDao extends BaseDaoImpl<UserEntity>{
         }
     }
 
-
+    public String accountValid(String userAccount){
+        List<UserEntity> list = null;
+        String hql = "from UserEntity where userAccount = :userAccount";
+        Query query = currentSession().createQuery(hql);
+        query.setString("userAccount",userAccount);
+        list = query.list();
+        if(list.size() == 0){
+            return "yes";
+        }else{
+            return "no";
+        }
+    }
 
 }

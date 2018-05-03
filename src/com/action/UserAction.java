@@ -152,6 +152,9 @@ public class UserAction extends ActionSupport{
             case 411:
                 message = "用户名和密码错误了诶~ 换一个试试咩(*^▽^*)";
                 break;
+            case 413:
+                message = "用户名被人注册了呢o(╥﹏╥)o,慢了一步 呜呜。";
+                break;
             case 420:
                 message = "您好，徐先生，您的传参有缺失哦~";
                 break;
@@ -177,7 +180,15 @@ public class UserAction extends ActionSupport{
             code = 420;
         }else{
             UserEntity userEntity = new UserEntity();
+            String valid = userBiz.accountValid(userAccount);
+            if(valid == "no"){
+                code = 413;
+                setMessageByCode();
+                return SUCCESS;
+            }
             userEntity.setUserAccount(userAccount);
+
+
             //MD5加密
             userPassword = MD5.string2MD5(userPassword);
             userEntity.setUserPassword(userPassword);

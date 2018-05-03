@@ -3,6 +3,10 @@ package com.test;
 import com.biz.BackendBiz;
 import com.biz.PayBiz;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @description：
  * @author：heyi
@@ -22,10 +26,18 @@ public class PayTest {
 
     @Test
     public void pay() throws Exception {
-        String userBankcard = "1";
         Double userBalance = 0.14;
-        payBiz.updateUserBalance(userBankcard, userBalance, 1);
+        payBiz.updateUserBalance(userBalance, 1);
         System.out.println(payBiz.getCode());
     }
+    @Test
+    public void pay1() throws Exception {
+        List<String> orderIdList = new ArrayList<String>();
+        orderIdList.add("1");
+        orderIdList.add("订单ID9999");
+        payBiz.userPayByOrder(orderIdList);
+        System.out.println(payBiz.getCode());
+    }
+
 
 }

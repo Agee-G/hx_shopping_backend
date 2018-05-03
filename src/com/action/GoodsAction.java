@@ -6,6 +6,7 @@ import com.entity.Goods;
 import com.entity.GoodsConditions;
 import com.entity.GoodsEntity;
 import com.opensymphony.xwork2.ActionContext;
+import net.sf.json.JSONArray;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -14,7 +15,10 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import javax.servlet.ServletContext;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
 /**
@@ -57,7 +61,7 @@ public class GoodsAction {
     private Integer sell;//1:销量降序 0:销量升序
 
     //setter、getter
-    @JSON(serialize=false)
+    @JSON()
     public int getCode() {
         return code;
     }
@@ -66,19 +70,16 @@ public class GoodsAction {
 
         switch(code) {
             case 0:
-                message = "订单添加成功！";
+                message = "成功！";
                 break;
             case 205:
-                message = "没有该查询条件下的订单。";
+                message = "没有该查询条件下的商品。";
                 break;
             case 206:
-                message = "订单没有对应的商店。";
+                message = "商品没有对应的商店。";
                 break;
             case 207:
-                message = "订单ID不存在。";
-                break;
-            case 211:
-                message = "没有传来购物车结算订单和商品信息。";
+                message = "商品ID不存在。";
                 break;
             case 212:
                 message = "没有传来用户所购买的商家订单的购物车id。";
@@ -106,75 +107,75 @@ public class GoodsAction {
     public void setData(HashMap data) {
         this.data = data;
     }
-    @JSON
+
+    @JSON(serialize=false)
     public GoodsBiz getGoodsBiz() { return goodsBiz; }
     public void setGoodsBiz(GoodsBiz goodsBiz) { this.goodsBiz = goodsBiz; }
-    @JSON
+    @JSON(serialize=false)
     public Page<GoodsEntity> getPage() { return page; }
     public void setPage(Page<GoodsEntity> page) { this.page = page; }
-    @JSON
+    @JSON(serialize=false)
     public File getUpfile() { return upfile; }
 
     public void setUpfile(File upfile) { this.upfile = upfile; }
-    @JSON
+    @JSON(serialize=false)
     public Integer getMinPrice() { return minPrice; }
 
     public void setMinPrice(Integer minPrice) { this.minPrice = minPrice; }
-    @JSON
+    @JSON(serialize=false)
     public Integer getMaxPrice() { return maxPrice; }
 
     public void setMaxPrice(Integer maxPrice) { this.maxPrice = maxPrice; }
-    @JSON
+    @JSON(serialize=false)
     public Integer getPrice() { return price; }
 
     public void setPrice(Integer price) { this.price = price; }
-    @JSON
+    @JSON(serialize=false)
     public Integer getSell() { return sell; }
 
     public void setSell(Integer sell) { this.sell = sell; }
-
-    @JSON
+    @JSON(serialize=false)
     public Integer getCurrentPage() { return currentPage; }
 
     public void setCurrentPage(Integer currentPage) { this.currentPage = currentPage; }
-    @JSON
+    @JSON(serialize=false)
     public Integer getPageSize() { return pageSize; }
 
     public void setPageSize(Integer pageSize) { this.pageSize = pageSize; }
 
-    @JSON
+    @JSON(serialize=false)
     public String getGoodsId() { return goodsId; }
 
     public void setGoodsId(String goodsId) { this.goodsId = goodsId; }
-    @JSON
+    @JSON(serialize=false)
     public String getGoodsName() { return goodsName; }
 
     public void setGoodsName(String goodsName) { this.goodsName = goodsName; }
-    @JSON
+    @JSON(serialize=false)
     public Integer getGoodsType() { return goodsType; }
 
     public void setGoodsType(Integer goodsType) { this.goodsType = goodsType; }
-    @JSON
+    @JSON(serialize=false)
     public String getGoodsDetails() { return goodsDetails; }
 
     public void setGoodsDetails(String goodsDetails) { this.goodsDetails = goodsDetails; }
-    @JSON
+    @JSON(serialize=false)
     public Integer getGoodsPrice() { return goodsPrice; }
 
     public void setGoodsPrice(Integer goodsPrice) { this.goodsPrice = goodsPrice; }
-    @JSON
+    @JSON(serialize=false)
     public String getGoodsStoreid() { return goodsStoreid; }
 
     public void setGoodsStoreid(String goodsStoreid) { this.goodsStoreid = goodsStoreid;}
-    @JSON
+    @JSON(serialize=false)
     public Integer getGoodsKucun() { return goodsKucun; }
 
     public void setGoodsKucun(Integer goodsKucun) { this.goodsKucun = goodsKucun; }
-    @JSON
+    @JSON(serialize=false)
     public String getUpfileFileName() { return upfileFileName; }
 
     public void setUpfileFileName(String upfileFileName) { this.upfileFileName = upfileFileName; }
-    @JSON
+    @JSON(serialize=false)
     public String getGoodsStyle() { return goodsStyle; }
 
     public void setGoodsStyle(String goodsStyle) { this.goodsStyle = goodsStyle; }
@@ -208,11 +209,10 @@ public class GoodsAction {
 
             goodsEntity.setGoodsPicture(url);
             goodsBiz.addGoods(goodsEntity);
-            code = goodsBiz.getCode();
+            this.setCode(goodsBiz.getCode());
         }else{
-            code = 220;
+            this.setCode(220);
         }
-        setCode(code);
         return SUCCESS;
     }
 
@@ -225,17 +225,18 @@ public class GoodsAction {
                     "data", "data"
             })
     })
+    //selectGoodsdetial.action?goodsId=3
     public String selectGoodsdetial() {
         if (goodsId != null) {
             Goods goods= goodsBiz.selectGoodsdetial(goodsId);
             if(goods != null){
-                data.put("goods",goods);
+                data.put("goodsdetial", goods);
+                this.setCode(goodsBiz.getCode());
             }else {
-                code = 210;//无查询结果
+                this.setCode(210);//无查询结果
             }
-            code = goodsBiz.getCode();
         }else{
-            code = 220;//传来的参数有空
+            this.setCode(220);//传来的参数有空
         }
 
         return SUCCESS;
@@ -250,16 +251,18 @@ public class GoodsAction {
                     "data", "data"
             })
     })
+    //selectGoods.action?pageSize=0&currentPage=0&goodsName,goodsType,goodsStyle,goodsStoreid,minPrice,maxPrice,price,sell
     public String selectGoods() {
         page.setPageSize(pageSize);
         page.setCurrentPage(currentPage);
         GoodsConditions goodsConditions = new GoodsConditions(goodsName,goodsType,goodsStyle,goodsStoreid,minPrice,maxPrice,price,sell);
         goodsBiz.selectGoodsByConditions(page,goodsConditions);
         if (page.getPageList() != null) {
+            data.put("count",page.getCount());
             data.put("goodsList",page.getPageList());
-            code = goodsBiz.getCode();
+            this.setCode(goodsBiz.getCode());
         }else{
-            code = 210;//无查询结果
+            this.setCode(210);//无查询结果
         }
         return SUCCESS;
     }
@@ -275,9 +278,9 @@ public class GoodsAction {
     public String deleteGoods() {
         if (goodsId != null) {
             goodsBiz.deleteGoods(goodsId);
-            goodsBiz.getCode();
+            this.setCode(goodsBiz.getCode());
         }else{
-            code = 220;//传来的参数有空
+            this.setCode(220);//传来的参数有空
         }
         return SUCCESS;
     }
@@ -310,11 +313,10 @@ public class GoodsAction {
 
             goodsEntity.setGoodsPicture(url);
             goodsBiz.editGoods(goodsEntity);
-            code = goodsBiz.getCode();
+            this.setCode(goodsBiz.getCode());
         }else{
-            code = 220;
+            this.setCode(220);
         }
-        setCode(code);
         return SUCCESS;
     }
 

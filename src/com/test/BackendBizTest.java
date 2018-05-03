@@ -60,5 +60,12 @@ public class BackendBizTest {
         List<StoreEntity> storeEntityList = page.getPageList();
         System.out.println("Size:"+storeEntityList.size());
     }
+    @Test
+    public void updateStoreStatus()throws Exception{
+        StoreEntity storeEntity = backendBiz.findStore("1");
+        storeEntity.setStoreStatus("1");
+        backendBiz.updateStoreStatus(storeEntity);
+
+    }
 
 }

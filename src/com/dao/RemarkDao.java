@@ -21,7 +21,7 @@ public class RemarkDao extends BaseDaoImpl<RemarkEntity>{
     public List<RemarkEntity> selectRemarkByLevel(String remarkGoodsid, Integer remarkLevel){
         List<RemarkEntity> list = null;
         //数据库操作
-        String hql = "from RemarkEntity where remarkStatus = 1 and remarkLevel = :remarkLevel and remarkGoodsid = :remarkGoodsid";
+        String hql = "from RemarkEntity where remarkStatus = '1' and remarkLevel = :remarkLevel and remarkGoodsid = :remarkGoodsid";
         Query query = currentSession().createQuery(hql);
         query.setInteger("remarkLevel",remarkLevel);
         query.setString("remarkGoodsid",remarkGoodsid);
@@ -31,7 +31,7 @@ public class RemarkDao extends BaseDaoImpl<RemarkEntity>{
 
     public List<RemarkEntity> selectRemarkByGoodsId(String remarkGoodsid){
         List<RemarkEntity> list = null;
-        String hql = "from RemarkEntity where remarkStatus = 1 and remarkGoodsid = :remarkGoodsid";
+        String hql = "from RemarkEntity where remarkStatus = '1' and remarkGoodsid = :remarkGoodsid";
         Query query = currentSession().createQuery(hql);
         query.setString("remarkGoodsid",remarkGoodsid);
         list = query.list();

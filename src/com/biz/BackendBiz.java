@@ -22,6 +22,25 @@ import java.util.List;
 public class BackendBiz {
     private UserDao userDao = new UserDao();
     private StoreDao storeDao = new StoreDao();
+
+    public StoreEntity findStore(String storeId){
+        Transaction transaction = null;
+        Session session = userDao.currentSession();
+        StoreEntity storeEntity = null;
+        try{
+            transaction = session.beginTransaction();
+            storeEntity = storeDao.get(storeId);
+            transaction.commit();
+        }catch (HibernateException e){
+            e.printStackTrace();
+            if (transaction != null){
+                transaction.rollback();
+            }
+        }
+        return storeEntity;
+    }
+
+
     //管理员登陆
     public List<UserEntity> adminLogin(UserConditions userConditions){
         Transaction transaction = null;

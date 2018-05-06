@@ -145,6 +145,16 @@ public class UserAction extends ActionSupport{
                 message = "注册成功";
                 code = 0;
                 break;
+            case 2:
+                message = "登录成功";
+                code = 0;
+                break;
+            case 411:
+                message = "用户名和密码错误了诶~ 换一个试试咩(*^▽^*)";
+                break;
+            case 413:
+                message = "用户名被人注册了呢o(╥﹏╥)o,慢了一步 呜呜。";
+                break;
             case 420:
                 message = "您好，徐先生，您的传参有缺失哦~";
                 break;
@@ -170,7 +180,15 @@ public class UserAction extends ActionSupport{
             code = 420;
         }else{
             UserEntity userEntity = new UserEntity();
+            String valid = userBiz.accountValid(userAccount);
+            if(valid == "no"){
+                code = 413;
+                setMessageByCode();
+                return SUCCESS;
+            }
             userEntity.setUserAccount(userAccount);
+
+
             //MD5加密
             userPassword = MD5.string2MD5(userPassword);
             userEntity.setUserPassword(userPassword);
@@ -183,6 +201,39 @@ public class UserAction extends ActionSupport{
             code = 1;
         }
         setMessageByCode();
+        return SUCCESS;
+
+    }
+    //用户登录
+    @Action(value = "userLogin",results = {
+            @Result(
+                    type = "json" , params = {
+                    "code","code",
+                    "message","message",
+                    "data","data"
+            })
+    })
+    public String userLogin() throws Exception{
+        UserBiz userBiz = new UserBiz();
+
+        if(userAccount == null || userPassword == null ){
+            code = 420;
+        }else{
+            UserEntity userEntity = new UserEntity();
+
+            //MD5加密
+            userPassword = MD5.string2MD5(userPassword);
+
+            userBiz.userLogin(userAccount,userPassword);
+            if(userBiz.getCode() == 411){
+                code = 411;
+            }else{
+                code = 2;
+            }
+
+        }
+        setMessageByCode();
+
         return SUCCESS;
 
     }

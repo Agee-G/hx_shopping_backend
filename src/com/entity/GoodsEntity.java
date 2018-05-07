@@ -1,23 +1,21 @@
 package com.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 /**
- * @author:lily
- * @date:18/4/20 22 04
- * @description
+ * @Description:
+ * @author:20155852郭志伟
+ * @date： 2018/4/26 上午11:26
  */
 @Entity
-@Table(name = "goods", schema = "hxtaobaocom")
-public class GoodsEntity{
+@Table(name = "goods", schema = "hxtaobaocom", catalog = "")
+public class GoodsEntity {
     private String goodsId;
     private String goodsName;
     private Integer goodsType;
     private String goodsDetails;
-    private Integer goodsPrice;
+    private Double goodsPrice;
     private String goodsStoreid;
     private Integer goodsKucun;
     private Integer goodsSell;
@@ -25,33 +23,9 @@ public class GoodsEntity{
     private String goodsStyle;
     private Timestamp createAt;
     private Timestamp updateAt;
-    public GoodsEntity() {
-
-    }
-    //上传商品时用的构造方法，没有图片
-    public GoodsEntity(String goodsName, Integer goodsType, String goodsDetails, Integer goodsPrice, String goodsStoreid, Integer goodsKucun, String goodsStyle) {
-        this.goodsName = goodsName;
-        this.goodsType = goodsType;
-        this.goodsDetails = goodsDetails;
-        this.goodsPrice = goodsPrice;
-        this.goodsStoreid = goodsStoreid;
-        this.goodsKucun = goodsKucun;
-        this.goodsStyle = goodsStyle;
-    }
-
-    //商品简要信息的构造方法，条件查询时使用
-    public GoodsEntity(String goodsId, String goodsName, Integer goodsType, Integer goodsPrice,Integer goodsKucun, Integer goodsSell, String goodsPicture) {
-        this.goodsId = goodsId;
-        this.goodsName = goodsName;
-        this.goodsType = goodsType;
-        this.goodsPrice = goodsPrice;
-        this.goodsKucun = goodsKucun;
-        this.goodsSell = goodsSell;
-        this.goodsPicture = goodsPicture;
-    }
 
     @Id
-    @Column(name = "goods_id", nullable = false, length = 128)
+    @Column(name = "goods_id")
     public String getGoodsId() {
         return goodsId;
     }
@@ -61,7 +35,7 @@ public class GoodsEntity{
     }
 
     @Basic
-    @Column(name = "goods_name", nullable = true, length = 100)
+    @Column(name = "goods_name")
     public String getGoodsName() {
         return goodsName;
     }
@@ -71,7 +45,7 @@ public class GoodsEntity{
     }
 
     @Basic
-    @Column(name = "goods_type", nullable = true)
+    @Column(name = "goods_type")
     public Integer getGoodsType() {
         return goodsType;
     }
@@ -81,7 +55,7 @@ public class GoodsEntity{
     }
 
     @Basic
-    @Column(name = "goods_details", nullable = true, length = 128)
+    @Column(name = "goods_details")
     public String getGoodsDetails() {
         return goodsDetails;
     }
@@ -91,17 +65,17 @@ public class GoodsEntity{
     }
 
     @Basic
-    @Column(name = "goods_price", nullable = true)
-    public Integer getGoodsPrice() {
+    @Column(name = "goods_price")
+    public Double getGoodsPrice() {
         return goodsPrice;
     }
 
-    public void setGoodsPrice(Integer goodsPrice) {
+    public void setGoodsPrice(Double goodsPrice) {
         this.goodsPrice = goodsPrice;
     }
 
     @Basic
-    @Column(name = "goods_storeid", nullable = true, length = 128)
+    @Column(name = "goods_storeid")
     public String getGoodsStoreid() {
         return goodsStoreid;
     }
@@ -111,7 +85,7 @@ public class GoodsEntity{
     }
 
     @Basic
-    @Column(name = "goods_kucun", nullable = true)
+    @Column(name = "goods_kucun")
     public Integer getGoodsKucun() {
         return goodsKucun;
     }
@@ -121,7 +95,7 @@ public class GoodsEntity{
     }
 
     @Basic
-    @Column(name = "goods_sell", nullable = true)
+    @Column(name = "goods_sell")
     public Integer getGoodsSell() {
         return goodsSell;
     }
@@ -131,7 +105,7 @@ public class GoodsEntity{
     }
 
     @Basic
-    @Column(name = "goods_picture", nullable = true, length = 128)
+    @Column(name = "goods_picture")
     public String getGoodsPicture() {
         return goodsPicture;
     }
@@ -141,7 +115,7 @@ public class GoodsEntity{
     }
 
     @Basic
-    @Column(name = "goods_style", nullable = true, length = 80)
+    @Column(name = "goods_style")
     public String getGoodsStyle() {
         return goodsStyle;
     }
@@ -151,7 +125,7 @@ public class GoodsEntity{
     }
 
     @Basic
-    @Column(name = "createAt", nullable = true)
+    @Column(name = "createAt")
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -161,7 +135,7 @@ public class GoodsEntity{
     }
 
     @Basic
-    @Column(name = "updateAt", nullable = true)
+    @Column(name = "updateAt")
     public Timestamp getUpdateAt() {
         return updateAt;
     }
@@ -174,42 +148,39 @@ public class GoodsEntity{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         GoodsEntity that = (GoodsEntity) o;
-        return Objects.equals(goodsId, that.goodsId) &&
-                Objects.equals(goodsName, that.goodsName) &&
-                Objects.equals(goodsType, that.goodsType) &&
-                Objects.equals(goodsDetails, that.goodsDetails) &&
-                Objects.equals(goodsPrice, that.goodsPrice) &&
-                Objects.equals(goodsStoreid, that.goodsStoreid) &&
-                Objects.equals(goodsKucun, that.goodsKucun) &&
-                Objects.equals(goodsSell, that.goodsSell) &&
-                Objects.equals(goodsPicture, that.goodsPicture) &&
-                Objects.equals(goodsStyle, that.goodsStyle) &&
-                Objects.equals(createAt, that.createAt) &&
-                Objects.equals(updateAt, that.updateAt);
+
+        if (goodsId != null ? !goodsId.equals(that.goodsId) : that.goodsId != null) return false;
+        if (goodsName != null ? !goodsName.equals(that.goodsName) : that.goodsName != null) return false;
+        if (goodsType != null ? !goodsType.equals(that.goodsType) : that.goodsType != null) return false;
+        if (goodsDetails != null ? !goodsDetails.equals(that.goodsDetails) : that.goodsDetails != null) return false;
+        if (goodsPrice != null ? !goodsPrice.equals(that.goodsPrice) : that.goodsPrice != null) return false;
+        if (goodsStoreid != null ? !goodsStoreid.equals(that.goodsStoreid) : that.goodsStoreid != null) return false;
+        if (goodsKucun != null ? !goodsKucun.equals(that.goodsKucun) : that.goodsKucun != null) return false;
+        if (goodsSell != null ? !goodsSell.equals(that.goodsSell) : that.goodsSell != null) return false;
+        if (goodsPicture != null ? !goodsPicture.equals(that.goodsPicture) : that.goodsPicture != null) return false;
+        if (goodsStyle != null ? !goodsStyle.equals(that.goodsStyle) : that.goodsStyle != null) return false;
+        if (createAt != null ? !createAt.equals(that.createAt) : that.createAt != null) return false;
+        if (updateAt != null ? !updateAt.equals(that.updateAt) : that.updateAt != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(goodsId, goodsName, goodsType, goodsDetails, goodsPrice, goodsStoreid, goodsKucun, goodsSell, goodsPicture, goodsStyle, createAt, updateAt);
-    }
-
-    @Override
-    public String toString() {
-        return "GoodsEntity{" +
-                "goodsId='" + goodsId + '\'' +
-                ", goodsName='" + goodsName + '\'' +
-                ", goodsType=" + goodsType +
-                ", goodsDetails='" + goodsDetails + '\'' +
-                ", goodsPrice=" + goodsPrice +
-                ", goodsStoreid='" + goodsStoreid + '\'' +
-                ", goodsKucun=" + goodsKucun +
-                ", goodsSell=" + goodsSell +
-                ", goodsPicture='" + goodsPicture + '\'' +
-                ", goodsStyle='" + goodsStyle + '\'' +
-                ", createAt=" + createAt +
-                ", updateAt=" + updateAt +
-                '}';
+        int result = goodsId != null ? goodsId.hashCode() : 0;
+        result = 31 * result + (goodsName != null ? goodsName.hashCode() : 0);
+        result = 31 * result + (goodsType != null ? goodsType.hashCode() : 0);
+        result = 31 * result + (goodsDetails != null ? goodsDetails.hashCode() : 0);
+        result = 31 * result + (goodsPrice != null ? goodsPrice.hashCode() : 0);
+        result = 31 * result + (goodsStoreid != null ? goodsStoreid.hashCode() : 0);
+        result = 31 * result + (goodsKucun != null ? goodsKucun.hashCode() : 0);
+        result = 31 * result + (goodsSell != null ? goodsSell.hashCode() : 0);
+        result = 31 * result + (goodsPicture != null ? goodsPicture.hashCode() : 0);
+        result = 31 * result + (goodsStyle != null ? goodsStyle.hashCode() : 0);
+        result = 31 * result + (createAt != null ? createAt.hashCode() : 0);
+        result = 31 * result + (updateAt != null ? updateAt.hashCode() : 0);
+        return result;
     }
 }

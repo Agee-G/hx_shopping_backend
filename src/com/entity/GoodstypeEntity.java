@@ -2,15 +2,14 @@ package com.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 /**
- * @author:lily
- * @date:18/4/20 22 04
- * @description
+ * @Description:
+ * @author:20155852郭志伟
+ * @date： 2018/4/26 上午11:26
  */
 @Entity
-@Table(name = "goodstype", schema = "hxtaobaocom")
+@Table(name = "goodstype", schema = "hxtaobaocom", catalog = "")
 public class GoodstypeEntity {
     private int typeId;
     private String typeName;
@@ -19,7 +18,7 @@ public class GoodstypeEntity {
     private Timestamp updateAt;
 
     @Id
-    @Column(name = "type_id", nullable = false)
+    @Column(name = "type_id")
     public int getTypeId() {
         return typeId;
     }
@@ -29,7 +28,7 @@ public class GoodstypeEntity {
     }
 
     @Basic
-    @Column(name = "type_name", nullable = true, length = 20)
+    @Column(name = "type_name")
     public String getTypeName() {
         return typeName;
     }
@@ -39,7 +38,7 @@ public class GoodstypeEntity {
     }
 
     @Basic
-    @Column(name = "type_parentid", nullable = true)
+    @Column(name = "type_parentid")
     public Integer getTypeParentid() {
         return typeParentid;
     }
@@ -49,7 +48,7 @@ public class GoodstypeEntity {
     }
 
     @Basic
-    @Column(name = "createAt", nullable = true)
+    @Column(name = "createAt")
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -59,7 +58,7 @@ public class GoodstypeEntity {
     }
 
     @Basic
-    @Column(name = "updateAt", nullable = true)
+    @Column(name = "updateAt")
     public Timestamp getUpdateAt() {
         return updateAt;
     }
@@ -72,17 +71,25 @@ public class GoodstypeEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         GoodstypeEntity that = (GoodstypeEntity) o;
-        return typeId == that.typeId &&
-                Objects.equals(typeName, that.typeName) &&
-                Objects.equals(typeParentid, that.typeParentid) &&
-                Objects.equals(createAt, that.createAt) &&
-                Objects.equals(updateAt, that.updateAt);
+
+        if (typeId != that.typeId) return false;
+        if (typeName != null ? !typeName.equals(that.typeName) : that.typeName != null) return false;
+        if (typeParentid != null ? !typeParentid.equals(that.typeParentid) : that.typeParentid != null) return false;
+        if (createAt != null ? !createAt.equals(that.createAt) : that.createAt != null) return false;
+        if (updateAt != null ? !updateAt.equals(that.updateAt) : that.updateAt != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(typeId, typeName, typeParentid, createAt, updateAt);
+        int result = typeId;
+        result = 31 * result + (typeName != null ? typeName.hashCode() : 0);
+        result = 31 * result + (typeParentid != null ? typeParentid.hashCode() : 0);
+        result = 31 * result + (createAt != null ? createAt.hashCode() : 0);
+        result = 31 * result + (updateAt != null ? updateAt.hashCode() : 0);
+        return result;
     }
 }

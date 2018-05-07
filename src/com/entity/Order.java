@@ -15,7 +15,7 @@ public class Order {
     private String orderNum;
     private String storeId;
     private Integer totalPrice;
-    private Integer orderStatus;
+    private String orderStatus;
     private String address;
     private String addressPhone;
     private String addressUserName;
@@ -25,7 +25,7 @@ public class Order {
 
     public Order() {
     }
-    public Order( String orderNum, String storeId, Integer totalPrice, Integer orderStatus, String address, String addressPhone, String addressUserName) {
+    public Order( String orderNum, String storeId, Integer totalPrice, String orderStatus, String address, String addressPhone, String addressUserName) {
         this.orderNum = orderNum;
         this.storeId = storeId;
         this.totalPrice = totalPrice;
@@ -34,7 +34,7 @@ public class Order {
         this.addressPhone = addressPhone;
         this.addressUserName = addressUserName;
     }
-    public Order(Timestamp orderTime, String orderNum, String storeId, Integer totalPrice, Integer orderStatus, String address, String addressPhone, String addressUserName) {
+    public Order(Timestamp orderTime, String orderNum, String storeId, Integer totalPrice, String orderStatus, String address, String addressPhone, String addressUserName) {
         this.orderTime = orderTime;
         this.orderNum = orderNum;
         this.storeId = storeId;
@@ -77,11 +77,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Integer getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(Integer orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 

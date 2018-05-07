@@ -191,7 +191,7 @@ public class GoodsAction {
     })
     public String addGoods()throws Exception{
         if(upfileFileName != null && goodsName != null && goodsType != null && goodsDetails != null && goodsPrice != null && goodsStoreid != null && goodsKucun != null && goodsStyle != null){
-            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
+//            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
 
 
             //确定文件存放的路径
@@ -207,9 +207,15 @@ public class GoodsAction {
             String url = "upload/"+upfileFileName;
             ActionContext.getContext().getSession().put("file", "/upload/"+upfileFileName);
 
+<<<<<<< HEAD
             goodsEntity.setGoodsPicture(url);
             goodsBiz.addGoods(goodsEntity);
             this.setCode(goodsBiz.getCode());
+=======
+//            goodsEntity.setGoodsPicture(url);
+//            goodsBiz.addGoods(goodsEntity);
+            code = goodsBiz.getCode();
+>>>>>>> 2600d4aa21d9e39d5fb60079557369791707e10f
         }else{
             this.setCode(220);
         }
@@ -296,7 +302,7 @@ public class GoodsAction {
     })
     public String editGoods() throws IOException{
         if(goodsId != null && upfileFileName != null && goodsName != null && goodsType != null && goodsDetails != null && goodsPrice != null && goodsStoreid != null && goodsKucun != null && goodsStyle != null){
-            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
+//            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
 
             //确定文件存放的路径
             //1.获取当前web程序在容器中的物理路径
@@ -311,9 +317,15 @@ public class GoodsAction {
             String url = "upload/"+upfileFileName;
             ActionContext.getContext().getSession().put("file", "/upload/"+upfileFileName);
 
+<<<<<<< HEAD
             goodsEntity.setGoodsPicture(url);
             goodsBiz.editGoods(goodsEntity);
             this.setCode(goodsBiz.getCode());
+=======
+//            goodsEntity.setGoodsPicture(url);
+//            goodsBiz.editGoods(goodsEntity);
+            code = goodsBiz.getCode();
+>>>>>>> 2600d4aa21d9e39d5fb60079557369791707e10f
         }else{
             this.setCode(220);
         }

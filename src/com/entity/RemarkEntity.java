@@ -4,9 +4,9 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * @author 汤新苗-20155864
- * @Description:${todo}
- * @date 22/04/201820:24
+ * @Description:
+ * @author:20155852郭志伟
+ * @date： 2018/4/26 上午11:26
  */
 @Entity
 @Table(name = "remark", schema = "hxtaobaocom", catalog = "")
@@ -15,13 +15,28 @@ public class RemarkEntity {
     private Integer remarkLevel;
     private String remarkDetail;
     private String remarkGoodsid;
-    private Integer remarkStatus;
+    private String remarkStatus;
     private String remarkUserid;
     private Timestamp createAt;
     private Timestamp updateAt;
 
+    public RemarkEntity() {
+    }
+
+    public RemarkEntity(Integer remarkLevel, String remarkDetail, String remarkGoodsid, String remarkStatus, String remarkUserid) {
+
+
+        this.remarkLevel = remarkLevel;
+        this.remarkDetail = remarkDetail;
+        this.remarkGoodsid = remarkGoodsid;
+        this.remarkStatus = remarkStatus;
+        this.remarkUserid = remarkUserid;
+    }
+
+
+
     @Id
-    @Column(name = "remark_id", nullable = false, length = 128)
+    @Column(name = "remark_id")
     public String getRemarkId() {
         return remarkId;
     }
@@ -31,7 +46,7 @@ public class RemarkEntity {
     }
 
     @Basic
-    @Column(name = "remark_level", nullable = true)
+    @Column(name = "remark_level")
     public Integer getRemarkLevel() {
         return remarkLevel;
     }
@@ -41,7 +56,7 @@ public class RemarkEntity {
     }
 
     @Basic
-    @Column(name = "remark_detail", nullable = true, length = 128)
+    @Column(name = "remark_detail")
     public String getRemarkDetail() {
         return remarkDetail;
     }
@@ -51,7 +66,7 @@ public class RemarkEntity {
     }
 
     @Basic
-    @Column(name = "remark_goodsid", nullable = true, length = 128)
+    @Column(name = "remark_goodsid")
     public String getRemarkGoodsid() {
         return remarkGoodsid;
     }
@@ -61,17 +76,17 @@ public class RemarkEntity {
     }
 
     @Basic
-    @Column(name = "remark_status", nullable = true)
-    public Integer getRemarkStatus() {
+    @Column(name = "remark_status")
+    public String getRemarkStatus() {
         return remarkStatus;
     }
 
-    public void setRemarkStatus(Integer remarkStatus) {
+    public void setRemarkStatus(String remarkStatus) {
         this.remarkStatus = remarkStatus;
     }
 
     @Basic
-    @Column(name = "remark_userid", nullable = true, length = 128)
+    @Column(name = "remark_userid")
     public String getRemarkUserid() {
         return remarkUserid;
     }
@@ -81,7 +96,7 @@ public class RemarkEntity {
     }
 
     @Basic
-    @Column(name = "createAt", nullable = true)
+    @Column(name = "createAt")
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -91,7 +106,7 @@ public class RemarkEntity {
     }
 
     @Basic
-    @Column(name = "updateAt", nullable = true)
+    @Column(name = "updateAt")
     public Timestamp getUpdateAt() {
         return updateAt;
     }
@@ -131,16 +146,5 @@ public class RemarkEntity {
         result = 31 * result + (createAt != null ? createAt.hashCode() : 0);
         result = 31 * result + (updateAt != null ? updateAt.hashCode() : 0);
         return result;
-    }
-
-    public RemarkEntity() {
-    }
-
-    public RemarkEntity(Integer remarkLevel, String remarkDetail, String remarkGoodsid, Integer remarkStatus, String remarkUserid) {
-        this.remarkLevel = remarkLevel;
-        this.remarkDetail = remarkDetail;
-        this.remarkGoodsid = remarkGoodsid;
-        this.remarkStatus = remarkStatus;
-        this.remarkUserid = remarkUserid;
     }
 }

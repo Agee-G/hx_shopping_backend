@@ -1,5 +1,6 @@
 package com.action;
 
+import com.Utils.MD5;
 import com.Utils.NicknameRandom;
 import com.biz.UserBiz;
 import com.entity.UserEntity;
@@ -25,10 +26,10 @@ public class UserAction extends ActionSupport{
     private String userNickname;
     private Integer userTotalscore;
     private Integer userScore;
-    private Integer userBalance;
+    private Double userBalance;
     private String userBankcard;
-    private Integer userLevel;
-    private Integer userStatus;
+    private String userLevel;
+    private String userStatus;
     private int code = 0;//code=0 :成功 ；code=xxx :错误码
     private String message;//用户看的错误信息
     private HashMap data = new HashMap();//返回的数据
@@ -82,11 +83,11 @@ public class UserAction extends ActionSupport{
         this.userScore = userScore;
     }
     @JSON(serialize=false)
-    public Integer getUserBalance() {
+    public Double getUserBalance() {
         return userBalance;
     }
 
-    public void setUserBalance(Integer userBalance) {
+    public void setUserBalance(Double userBalance) {
         this.userBalance = userBalance;
     }
     @JSON(serialize=false)
@@ -98,19 +99,19 @@ public class UserAction extends ActionSupport{
         this.userBankcard = userBankcard;
     }
     @JSON(serialize=false)
-    public Integer getUserLevel() {
+    public String getUserLevel() {
         return userLevel;
     }
 
-    public void setUserLevel(Integer userLevel) {
+    public void setUserLevel(String userLevel) {
         this.userLevel = userLevel;
     }
     @JSON(serialize=false)
-    public Integer getUserStatus() {
+    public String getUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(Integer userStatus) {
+    public void setUserStatus(String userStatus) {
         this.userStatus = userStatus;
     }
 
@@ -141,8 +142,18 @@ public class UserAction extends ActionSupport{
     public void setMessageByCode(){
         switch (code){
             case 1:
-                message = "添加成功";
+                message = "注册成功";
                 code = 0;
+                break;
+            case 2:
+                message = "登录成功";
+                code = 0;
+                break;
+            case 411:
+                message = "用户名和密码错误了诶~ 换一个试试咩(*^▽^*)";
+                break;
+            case 413:
+                message = "用户名被人注册了呢o(╥﹏╥)o,慢了一步 呜呜。";
                 break;
             case 420:
                 message = "您好，徐先生，您的传参有缺失哦~";
@@ -169,7 +180,17 @@ public class UserAction extends ActionSupport{
             code = 420;
         }else{
             UserEntity userEntity = new UserEntity();
+            String valid = userBiz.accountValid(userAccount);
+            if(valid == "no"){
+                code = 413;
+                setMessageByCode();
+                return SUCCESS;
+            }
             userEntity.setUserAccount(userAccount);
+
+
+            //MD5加密
+            userPassword = MD5.string2MD5(userPassword);
             userEntity.setUserPassword(userPassword);
             userEntity.setUserId(UUID.randomUUID().toString());
             if(userNickname == null){
@@ -180,6 +201,39 @@ public class UserAction extends ActionSupport{
             code = 1;
         }
         setMessageByCode();
+        return SUCCESS;
+
+    }
+    //用户登录
+    @Action(value = "userLogin",results = {
+            @Result(
+                    type = "json" , params = {
+                    "code","code",
+                    "message","message",
+                    "data","data"
+            })
+    })
+    public String userLogin() throws Exception{
+        UserBiz userBiz = new UserBiz();
+
+        if(userAccount == null || userPassword == null ){
+            code = 420;
+        }else{
+            UserEntity userEntity = new UserEntity();
+
+            //MD5加密
+            userPassword = MD5.string2MD5(userPassword);
+
+            userBiz.userLogin(userAccount,userPassword);
+            if(userBiz.getCode() == 411){
+                code = 411;
+            }else{
+                code = 2;
+            }
+
+        }
+        setMessageByCode();
+
         return SUCCESS;
 
     }

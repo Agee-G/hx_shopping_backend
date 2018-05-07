@@ -1,27 +1,27 @@
 package com.entity;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 /**
- * @author:lily
- * @date:18/4/20 22 04
- * @description
+ * @Description:
+ * @author:20155852郭志伟
+ * @date： 2018/4/26 上午11:26
  */
 @Entity
-@Table(name = "address", schema = "hxtaobaocom")
+@Table(name = "address", schema = "hxtaobaocom", catalog = "")
 public class AddressEntity {
     private String addressId;
     private String address;
     private String addressUsername;
     private String addressPhone;
     private String addressUser;
-    private Integer addressLevel;
+    private String addressLevel;
     private Timestamp createAt;
     private Timestamp updateAt;
 
     @Id
-    @Column(name = "address_id", nullable = false, length = 128)
+    @Column(name = "address_id")
     public String getAddressId() {
         return addressId;
     }
@@ -31,7 +31,7 @@ public class AddressEntity {
     }
 
     @Basic
-    @Column(name = "address", nullable = true, length = 128)
+    @Column(name = "address")
     public String getAddress() {
         return address;
     }
@@ -41,7 +41,7 @@ public class AddressEntity {
     }
 
     @Basic
-    @Column(name = "address_username", nullable = true, length = 15)
+    @Column(name = "address_username")
     public String getAddressUsername() {
         return addressUsername;
     }
@@ -51,7 +51,7 @@ public class AddressEntity {
     }
 
     @Basic
-    @Column(name = "address_phone", nullable = true, length = 15)
+    @Column(name = "address_phone")
     public String getAddressPhone() {
         return addressPhone;
     }
@@ -61,7 +61,7 @@ public class AddressEntity {
     }
 
     @Basic
-    @Column(name = "address_user", nullable = true, length = 128)
+    @Column(name = "address_user")
     public String getAddressUser() {
         return addressUser;
     }
@@ -71,17 +71,17 @@ public class AddressEntity {
     }
 
     @Basic
-    @Column(name = "address_level", nullable = true)
-    public Integer getAddressLevel() {
+    @Column(name = "address_level")
+    public String getAddressLevel() {
         return addressLevel;
     }
 
-    public void setAddressLevel(Integer addressLevel) {
+    public void setAddressLevel(String addressLevel) {
         this.addressLevel = addressLevel;
     }
 
     @Basic
-    @Column(name = "createAt", nullable = true)
+    @Column(name = "createAt")
     public Timestamp getCreateAt() {
         return createAt;
     }
@@ -91,7 +91,7 @@ public class AddressEntity {
     }
 
     @Basic
-    @Column(name = "updateAt", nullable = true)
+    @Column(name = "updateAt")
     public Timestamp getUpdateAt() {
         return updateAt;
     }
@@ -104,20 +104,32 @@ public class AddressEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         AddressEntity that = (AddressEntity) o;
-        return Objects.equals(addressId, that.addressId) &&
-                Objects.equals(address, that.address) &&
-                Objects.equals(addressUsername, that.addressUsername) &&
-                Objects.equals(addressPhone, that.addressPhone) &&
-                Objects.equals(addressUser, that.addressUser) &&
-                Objects.equals(addressLevel, that.addressLevel) &&
-                Objects.equals(createAt, that.createAt) &&
-                Objects.equals(updateAt, that.updateAt);
+
+        if (addressId != null ? !addressId.equals(that.addressId) : that.addressId != null) return false;
+        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        if (addressUsername != null ? !addressUsername.equals(that.addressUsername) : that.addressUsername != null)
+            return false;
+        if (addressPhone != null ? !addressPhone.equals(that.addressPhone) : that.addressPhone != null) return false;
+        if (addressUser != null ? !addressUser.equals(that.addressUser) : that.addressUser != null) return false;
+        if (addressLevel != null ? !addressLevel.equals(that.addressLevel) : that.addressLevel != null) return false;
+        if (createAt != null ? !createAt.equals(that.createAt) : that.createAt != null) return false;
+        if (updateAt != null ? !updateAt.equals(that.updateAt) : that.updateAt != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(addressId, address, addressUsername, addressPhone, addressUser, addressLevel, createAt, updateAt);
+        int result = addressId != null ? addressId.hashCode() : 0;
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (addressUsername != null ? addressUsername.hashCode() : 0);
+        result = 31 * result + (addressPhone != null ? addressPhone.hashCode() : 0);
+        result = 31 * result + (addressUser != null ? addressUser.hashCode() : 0);
+        result = 31 * result + (addressLevel != null ? addressLevel.hashCode() : 0);
+        result = 31 * result + (createAt != null ? createAt.hashCode() : 0);
+        result = 31 * result + (updateAt != null ? updateAt.hashCode() : 0);
+        return result;
     }
 }

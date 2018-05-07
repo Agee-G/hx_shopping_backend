@@ -26,7 +26,7 @@ public class RemarkAction extends ActionSupport{
     private Integer remarkLevel;
     private String remarkDetail;
     private String remarkGoodsid;
-    private Integer remarkStatus;
+    private String remarkStatus;
     private String remarkUserid;
     private int code = 0;//code=0 :成功 ；code=xxx :错误码
     private String message;//用户看的错误信息
@@ -95,11 +95,11 @@ public class RemarkAction extends ActionSupport{
         this.remarkGoodsid = remarkGoodsid;
     }
     @JSON(serialize=false)
-    public Integer getRemarkStatus() {
+    public String getRemarkStatus() {
         return remarkStatus;
     }
 
-    public void setRemarkStatus(Integer remarkStatus) {
+    public void setRemarkStatus(String remarkStatus) {
         this.remarkStatus = remarkStatus;
     }
     @JSON(serialize=false)

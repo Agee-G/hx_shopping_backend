@@ -1,7 +1,9 @@
 package com.dao;
 
 import com.Utils.Page;
+import com.entity.RemarkEntity;
 import com.entity.UserEntity;
+import org.hibernate.Query;
 
 import java.util.List;
 
@@ -32,9 +34,43 @@ public class UserDao extends BaseDaoImpl<UserEntity>{
 
         return super.search(page, hql, conditions);
     }
-    @Override
-    public void add(UserEntity entity) {
-        super.add(entity);
+
+    public void addUser(UserEntity userEntity){
+        String sql = "insert into user (user_id,user_account,user_password,user_nickname)  values(?,?,?,?)";
+        Query query = currentSession().createSQLQuery(sql);
+        query.setString(0,userEntity.getUserId());
+        query.setString(1,userEntity.getUserAccount());
+        query.setString(2,userEntity.getUserPassword());
+        query.setString(3,userEntity.getUserNickname());
+        query.executeUpdate();
+
+    }
+
+    public String loginValid(String userAccount,String userPassword){
+        List<UserEntity> list = null;
+        String hql = "from UserEntity where userAccount = :userAccount and userPassword = :userPassword";
+        Query query = currentSession().createQuery(hql);
+        query.setString("userAccount",userAccount);
+        query.setString("userPassword",userPassword);
+        list = query.list();
+        if(list.size() == 0){
+            return "no";
+        }else{
+            return "yes";
+        }
+    }
+
+    public String accountValid(String userAccount){
+        List<UserEntity> list = null;
+        String hql = "from UserEntity where userAccount = :userAccount";
+        Query query = currentSession().createQuery(hql);
+        query.setString("userAccount",userAccount);
+        list = query.list();
+        if(list.size() == 0){
+            return "yes";
+        }else{
+            return "no";
+        }
     }
 
 }

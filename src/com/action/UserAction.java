@@ -150,9 +150,11 @@ public class UserAction extends ActionSupport{
                 code = 0;
                 break;
             case 411:
+                //登录
                 message = "用户名和密码错误了诶~ 换一个试试咩(*^▽^*)";
                 break;
             case 413:
+                //注册
                 message = "用户名被人注册了呢o(╥﹏╥)o,慢了一步 呜呜。";
                 break;
             case 420:

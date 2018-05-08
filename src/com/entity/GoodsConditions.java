@@ -1,7 +1,5 @@
 package com.entity;
 
-import java.sql.Timestamp;
-
 /**
  * @author:lily
  * @date:18/4/23 17 25

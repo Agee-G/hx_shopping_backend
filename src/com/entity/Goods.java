@@ -12,7 +12,7 @@ public class Goods implements Serializable{
     private String goodsId;
     private String goodsName;
     private String goodsDetails;
-    private Integer goodsPrice;
+    private Double goodsPrice;
     private String goodsStoreid;
     private Integer goodsKucun;
     private Integer goodsSell;
@@ -25,6 +25,7 @@ public class Goods implements Serializable{
     }
 
     //商品详情的构造方法,有"商家名"
+
     public Goods(String goodsStoreid,String goodsId) {
         this.goodsStoreid = goodsStoreid;
         this.goodsId = goodsId;
@@ -32,7 +33,7 @@ public class Goods implements Serializable{
     }
 
     //商品详情的构造方法,有"商家名"
-    public Goods(String goodsStoreid,String storeName,String goodsId,String goodsName,String goodsDetails, Integer goodsPrice, Integer goodsKucun, Integer goodsSell, String goodsStyle, String goodsPicture) {
+    public Goods(String goodsStoreid,String storeName,String goodsId,String goodsName,String goodsDetails, Double goodsPrice, Integer goodsKucun, Integer goodsSell, String goodsStyle, String goodsPicture) {
         this.goodsStoreid = goodsStoreid;
         this.goodsId = goodsId;
         this.storeName = storeName;
@@ -70,11 +71,11 @@ public class Goods implements Serializable{
         this.goodsDetails = goodsDetails;
     }
 
-    public Integer getGoodsPrice() {
+    public Double getGoodsPrice() {
         return goodsPrice;
     }
 
-    public void setGoodsPrice(Integer goodsPrice) {
+    public void setGoodsPrice(Double goodsPrice) {
         this.goodsPrice = goodsPrice;
     }
 

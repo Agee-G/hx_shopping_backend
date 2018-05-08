@@ -13,9 +13,8 @@
             root
         </property>
         <!-- 密码 -->
-        <property name="connection.password">
+        <property name="connection.password"></property>
 
-        </property>
         <!-- 每个数据库都有对应的方言（Dialect）以匹配其平台特性 -->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <!-- Session由当前执行的线程来跟踪管理 -->
@@ -24,6 +23,7 @@
         <property name="show_sql">true</property>
         <!-- 格式化sql语句 -->
         <property name="format_sql">true</property>
+
         <mapping class="com.entity.AddressEntity"/>
         <mapping class="com.entity.FavouriteEntity"/>
         <mapping class="com.entity.GoodsEntity"/>

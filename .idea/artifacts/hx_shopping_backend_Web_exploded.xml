@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="hx_shopping_backend:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/hx_shopping_backend_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="hx_shopping_backend/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="hx_shopping_backend" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Hibernate" />
+          <element id="library" level="project" name="Struts2" />
+          <element id="library" level="project" name="junit-4.12" />
+          <element id="library" level="project" name="mysql-connector-java-5.1.40-bin" />
+          <element id="library" level="application" name="Hibernate" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

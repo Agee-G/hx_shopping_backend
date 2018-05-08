@@ -61,7 +61,7 @@ public class PayAction extends ActionSupport {
     public void setMessageByCode(int code){
         switch (code) {
             case 0:
-                message = "订单添加成功！";
+                message = "成功！";
                 break;
             case 101:
                 message = "用户绑定银行卡有问题";
@@ -73,10 +73,10 @@ public class PayAction extends ActionSupport {
                 message = "提现金额有问题";
                 break;
             case 104:
-                message = "要支付的订单为空";
+                message = "订单为空";
                 break;
             case 105:
-                message = "用户余额不足";
+                message = "余额不足";
                 break;
             case 120:
                 message = "传来的参数有空的";
@@ -106,6 +106,23 @@ public class PayAction extends ActionSupport {
         return SUCCESS;
     }
 
+    //http://localhost:8080/hx_shopping_backend/searchUserBalance.action
+    //查询用户可取金额
+    @Action(value = "searchUserBalance", results = {
+            @Result(
+                    type = "json", params = {
+                    "code", "code",
+                    "message", "message",
+                    "data", "data"
+            })
+    })
+    public String searchUserBalance() {
+        Double userBalance = payBiz.searchUserBalance();
+        data.put("userBalance",userBalance);
+        setMessageByCode(code);
+        return SUCCESS;
+    }
+
     //http://localhost:8080/hx_shopping_backend/userPayByOrder.action?orderIdList=1
     //用户支付
     @Action(value = "userPayByOrder", results = {
@@ -121,6 +138,46 @@ public class PayAction extends ActionSupport {
             code = 120;
         } else {
             payBiz.userPayByOrder(orderIdList);
+            setMessageByCode(code);
+        }
+        return SUCCESS;
+    }
+
+    //http://localhost:8080/hx_shopping_backend/userRefundByOrder.action?orderIdList=1
+    //用户支付
+    @Action(value = "userRefundByOrder", results = {
+            @Result(
+                    type = "json", params = {
+                    "code", "code",
+                    "message", "message",
+                    "data", "data"
+            })
+    })
+    public String userRefundByOrder() {
+        if (orderIdList == null) {
+            code = 120;
+        } else {
+            payBiz.userPayByOrder(orderIdList);
+            setMessageByCode(code);
+        }
+        return SUCCESS;
+    }
+
+    //http://localhost:8080/hx_shopping_backend/RefundByOrder.action?orderIdList=1
+    //商家退款（第三方给用户）
+    @Action(value = "RefundByOrder", results = {
+            @Result(
+                    type = "json", params = {
+                    "code", "code",
+                    "message", "message",
+                    "data", "data"
+            })
+    })
+    public String RefundByOrder() {
+        if (orderIdList == null) {
+            code = 120;
+        } else {
+            payBiz.RefundByOrder(orderIdList);
             setMessageByCode(code);
         }
         return SUCCESS;

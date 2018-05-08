@@ -39,5 +39,19 @@ public class PayTest {
         System.out.println(payBiz.getCode());
     }
 
+    @Test
+    public void pay2() throws Exception {
+        List<String> orderIdList = new ArrayList<String>();
+        orderIdList.add("1");
+        orderIdList.add("订单ID9999");
+        payBiz.RefundByOrder(orderIdList);
+        System.out.println(payBiz.getCode());
+    }
+    @Test
+    public void pay3() throws Exception {
+        payBiz.searchUserBalance();
+        System.out.println(payBiz.getCode());
+    }
+
 
 }

@@ -26,7 +26,7 @@ public class Page<T> {
     }
 
     public void setPageSize(Integer pageSize) {
-        this.pageSize = (pageSize == 0) ? 1000:pageSize;
+        this.pageSize = ((pageSize == 0 )|| (pageSize==null)) ? 1000:pageSize;
     }
 
     public Integer getCurrentPage() {
@@ -36,7 +36,7 @@ public class Page<T> {
 
     public void setCurrentPage(Integer currentPage) {
 
-        this.currentPage = (currentPage == 0) ? 1:currentPage;
+        this.currentPage = ((currentPage == 0) || (currentPage == null)) ? 1:currentPage;
     }
 
     public Integer getCount() {

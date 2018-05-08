@@ -48,6 +48,7 @@ public class OrderAction extends ActionSupport{
     private HashMap<String,String[]> orderData = new HashMap<>();//返回的数据
 
     //setter、getter
+    @JSON()
     public int getCode() {
         return code;
     }
@@ -94,20 +95,22 @@ public class OrderAction extends ActionSupport{
         }
 
     }
+    @JSON()
     public String getMessage() {
         return message;
     }
     public void setMessage(String message) {
         this.message = message;
     }
+    @JSON()
     public HashMap getData() {
         return data;
     }
     public void setData(HashMap data) {
         this.data = data;
     }
-    public OrderBiz getOrderBiz() { return orderBiz; }
     public void setOrderBiz(OrderBiz orderBiz) { this.orderBiz = orderBiz; }
+    @JSON(serialize=false)
     public Page<Order> getOrderPage() { return orderPage; }
     public void setOrderPage(Page<Order> orderPage) { this.orderPage = orderPage; }
     @JSON(serialize=false)
@@ -129,8 +132,10 @@ public class OrderAction extends ActionSupport{
     public String getOrderStoreid() { return orderStoreid; }
     public void setOrderStoreid(String orderStoreid) { this.orderStoreid = orderStoreid; }
     @JSON(serialize=false)
+
     public String getOrderStatus() { return orderStatus; }
     public void setOrderStatus(String orderStatus) { this.orderStatus = orderStatus; }
+
     public String getGoodsId() {return goodsId;}
     public void setGoodsId(String goodsId) {this.goodsId = goodsId;}
     @JSON(serialize=false)
@@ -161,12 +166,13 @@ public class OrderAction extends ActionSupport{
                     "data", "data"
             })
     })
+    //addOrder.action?orderStoreid=&goodsId=&goodsNum=&goodType=&orderTotalprice=&orderAddressId=
     public String addOrder(){
         if(orderStoreid == null || goodsId == null || goodsNum == null || goodType == null || orderTotalprice == null || orderAddressId == null){
-            code = 220;
+            this.setCode(220);
         }else {
             orderBiz.addOrder(orderStoreid,goodsId,goodsNum,goodType,orderTotalprice,orderAddressId);
-            code = orderBiz.getCode();
+            this.setCode(orderBiz.getCode());
         }
         return SUCCESS;
     }
@@ -180,12 +186,13 @@ public class OrderAction extends ActionSupport{
                     "data", "data"
             })
     })
+    //addOrders.action?orderData=&&orderAddressId=
     public String addOrders(){
         if (orderData == null || orderAddressId == null){
-            code = 220;
+            this.setCode(220);
         }else{
             orderBiz.addOrders(orderData,orderAddressId);
-            code = orderBiz.getCode();
+            this.setCode(orderBiz.getCode());
         }
         return SUCCESS;
     }
@@ -199,6 +206,7 @@ public class OrderAction extends ActionSupport{
                     "data", "data"
             })
     })
+    //searchOrders.action?pageSize=0&currentPage=0&orderUserid=&orderStoreid=&orderNum=&orderGoodname=&orderStatus=
     public String searchOrders(){
         //如果传来的pageSize为0，则查询所有记录
         orderPage.setPageSize(pageSize);
@@ -209,8 +217,9 @@ public class OrderAction extends ActionSupport{
         //调接口，执行查询操作
         orderBiz.searchOrders(orderPage,orderConditions);
         //将数据返回给前端
+        data.put("count",orderPage.getCount());
         data.put("orderList",orderPage.getPageList());
-        code = orderBiz.getCode();
+        this.setCode(orderBiz.getCode());
         return SUCCESS;
     }
 
@@ -223,12 +232,13 @@ public class OrderAction extends ActionSupport{
                     "data", "data"
             })
     })
+    //deleteOrder.action?orderId=
     public String deleteOrder(){
         if (orderId == null){
-            code = 220;
+            this.setCode(220);
         }else{
             orderBiz.deleteOrder(orderId);
-            code = orderBiz.getCode();
+            this.setCode(orderBiz.getCode());
         }
         return SUCCESS;
     }
@@ -242,12 +252,13 @@ public class OrderAction extends ActionSupport{
                     "data", "data"
             })
     })
+    //updateOrder.action?orderId=&orderStatus=
     public String updateOrder(){
         if(orderId == null || orderStatus == null){
-            code = 220;
+            this.setCode(220);
         }else{
             orderBiz.updateOrder(orderId,orderStatus);
-            code = orderBiz.getCode();
+            this.setCode(orderBiz.getCode());
         }
         return SUCCESS;
     }

@@ -80,13 +80,13 @@ public class GoodsBiz {
 
             page.setCount(goodsDao.obtainCount(hql.toString(), goodsConditions).intValue());
 
-            if (goodsConditions.getPrice() == 0) {
+            if (goodsConditions.getPrice() != null && goodsConditions.getPrice() == 0) {
                 hql.append(" order by g.goodsPrice asc");
-            } else if (goodsConditions.getPrice() == 1) {
+            } else if (goodsConditions.getPrice() != null && goodsConditions.getPrice() == 1) {
                 hql.append(" order by g.goodsPrice desc");
-            } else if (goodsConditions.getSell() == 0) {
+            } else if (goodsConditions.getPrice() != null && goodsConditions.getSell() == 0) {
                 hql.append(" order by g.goodsSell asc");
-            } else if (goodsConditions.getSell() == 1) {
+            } else if (goodsConditions.getPrice() != null && goodsConditions.getSell() == 1) {
                 hql.append(" order by g.goodsSell desc");
             }
             page.setPageList(goodsDao.search(page,hql.toString(), goodsConditions));
@@ -102,7 +102,7 @@ public class GoodsBiz {
 
     //查询商品详情
     public Goods selectGoodsdetial(String goodsId){
-        Goods goods = null;
+        Goods goods = new Goods();
         Transaction tran = null;
         Session session = goodsDao.currentSession();
         try {

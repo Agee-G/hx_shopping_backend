@@ -132,14 +132,10 @@ public class OrderAction extends ActionSupport{
     public String getOrderStoreid() { return orderStoreid; }
     public void setOrderStoreid(String orderStoreid) { this.orderStoreid = orderStoreid; }
     @JSON(serialize=false)
-<<<<<<< HEAD
-    public Integer getOrderStatus() { return orderStatus; }
-    public void setOrderStatus(Integer orderStatus) { this.orderStatus = orderStatus; }
-    @JSON(serialize=false)
-=======
+
     public String getOrderStatus() { return orderStatus; }
     public void setOrderStatus(String orderStatus) { this.orderStatus = orderStatus; }
->>>>>>> 2600d4aa21d9e39d5fb60079557369791707e10f
+
     public String getGoodsId() {return goodsId;}
     public void setGoodsId(String goodsId) {this.goodsId = goodsId;}
     @JSON(serialize=false)

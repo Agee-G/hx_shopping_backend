@@ -207,15 +207,11 @@ public class GoodsAction {
             String url = "upload/"+upfileFileName;
             ActionContext.getContext().getSession().put("file", "/upload/"+upfileFileName);
 
-<<<<<<< HEAD
-            goodsEntity.setGoodsPicture(url);
-            goodsBiz.addGoods(goodsEntity);
-            this.setCode(goodsBiz.getCode());
-=======
+
 //            goodsEntity.setGoodsPicture(url);
 //            goodsBiz.addGoods(goodsEntity);
             code = goodsBiz.getCode();
->>>>>>> 2600d4aa21d9e39d5fb60079557369791707e10f
+
         }else{
             this.setCode(220);
         }
@@ -317,15 +313,11 @@ public class GoodsAction {
             String url = "upload/"+upfileFileName;
             ActionContext.getContext().getSession().put("file", "/upload/"+upfileFileName);
 
-<<<<<<< HEAD
-            goodsEntity.setGoodsPicture(url);
-            goodsBiz.editGoods(goodsEntity);
-            this.setCode(goodsBiz.getCode());
-=======
+
 //            goodsEntity.setGoodsPicture(url);
 //            goodsBiz.editGoods(goodsEntity);
             code = goodsBiz.getCode();
->>>>>>> 2600d4aa21d9e39d5fb60079557369791707e10f
+
         }else{
             this.setCode(220);
         }

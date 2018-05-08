@@ -130,6 +130,7 @@ public class RemarkAction extends ActionSupport{
                 message = "您好，徐先生，您的传参有缺失哦~";
                 break;
             case 401:
+
                 message = "未查询出相应数据，请您换个条件试试呢O(∩_∩)O";
                 break;
             default:
@@ -152,9 +153,12 @@ public class RemarkAction extends ActionSupport{
 
         RemarkBiz remarkBiz = new RemarkBiz();
 
-        if(remarkLevel == null || remarkDetail == null || remarkGoodsid == null || remarkStatus == null || remarkUserid == null){
+        if(remarkLevel == null || remarkDetail == null || remarkGoodsid == null || remarkUserid == null){
             code = 420;
         }else{
+            if(remarkStatus == null){
+                remarkStatus = "1";
+            }
             RemarkEntity remarkEntity = new RemarkEntity(remarkLevel,remarkDetail,remarkGoodsid,remarkStatus,remarkUserid);
             remarkBiz.addRemark(remarkEntity);
             code = 1;
@@ -217,7 +221,7 @@ public class RemarkAction extends ActionSupport{
         return SUCCESS;
     }
 
-    //添加评论
+    //删除评论
     @Action(value = "deleteRemark",results = {
             @Result(
                     type = "json" , params = {

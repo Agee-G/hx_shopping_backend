@@ -49,6 +49,7 @@ public class BackendBiz {
         try{
             transaction = session.beginTransaction();
             StringBuilder hql = new StringBuilder("from UserEntity as user where 1=1");
+            hql.append(" and user.userLevel = 2");
             if (userConditions.getUser_account() != null && userConditions.getUser_account().length() > 0){
                 hql.append(" and user.userAccount = :user_account");
             }

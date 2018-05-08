@@ -214,6 +214,7 @@ public class UserAction extends ActionSupport{
             })
     })
     public String userLogin() throws Exception{
+        System.out.println("????????????/");
         UserBiz userBiz = new UserBiz();
 
         if(userAccount == null || userPassword == null ){
@@ -232,6 +233,7 @@ public class UserAction extends ActionSupport{
             }
 
         }
+
         setMessageByCode();
 
         return SUCCESS;

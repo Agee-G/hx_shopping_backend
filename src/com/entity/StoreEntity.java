@@ -83,6 +83,7 @@ public class StoreEntity {
 
     @Basic
     @Column(name = "store_status")
+
     public String getStoreStatus() {
         return storeStatus;
     }

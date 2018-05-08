@@ -1,5 +1,6 @@
 package com.test;
 
+import com.Utils.MD5;
 import com.Utils.Page;
 import com.biz.BackendBiz;
 import com.entity.StoreConditions;
@@ -24,8 +25,8 @@ public class BackendBizTest {
     @Test
     public void adminLogin() throws Exception {
         UserConditions userConditions = new UserConditions();
-        userConditions.setUser_account("1");
-        userConditions.setUser_password("133");
+        userConditions.setUser_account("admin");
+        userConditions.setUser_password(MD5.string2MD5("admin"));
         List<UserEntity> userEntityList = backendBiz.adminLogin(userConditions);
         System.out.println("Size:" + userEntityList.size());
     }

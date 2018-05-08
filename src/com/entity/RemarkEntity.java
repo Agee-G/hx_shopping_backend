@@ -16,6 +16,9 @@ public class RemarkEntity {
     private String remarkDetail;
     private String remarkGoodsid;
     private String remarkStatus;
+    private String remarkUserid;
+    private Timestamp createAt;
+    private Timestamp updateAt;
 
     public RemarkEntity() {
     }
@@ -30,9 +33,7 @@ public class RemarkEntity {
         this.remarkUserid = remarkUserid;
     }
 
-    private String remarkUserid;
-    private Timestamp createAt;
-    private Timestamp updateAt;
+
 
     @Id
     @Column(name = "remark_id")

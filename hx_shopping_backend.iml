@@ -39,8 +39,8 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Hibernate" level="application" />
-    <orderEntry type="library" name="Struts2" level="application" />
+    <orderEntry type="library" name="Hibernate" level="project" />
+    <orderEntry type="library" name="Struts2" level="project" />
     <orderEntry type="library" name="servlet-api" level="project" />
     <orderEntry type="library" name="junit-4.12" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.1.40-bin" level="project" />

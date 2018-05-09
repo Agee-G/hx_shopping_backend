@@ -101,8 +101,9 @@ public class PayBiz {
         return userBalance;
     }
 
-    //用户支付
-    public void userPayByOrder(List<String> orderIdList) {
+    //用户支付并获得积分（取金额的整数）
+    public int userPayByOrder(List<String> orderIdList) {
+        int score = 0;
         Transaction tran = null;
         Session session = payDao.currentSession();
         try {
@@ -120,6 +121,8 @@ public class PayBiz {
                 OrdersEntity ordersEntity = orderDao.get(orderId);
                 allOrderTotalPrice = Bigdecimal.add(allOrderTotalPrice,ordersEntity.getOrderTotalprice());
             }
+            //所得积分
+            score =allOrderTotalPrice.intValue();
 
             if (orderIdList.isEmpty()||orderIdList==null) {
                 code = 104;//订单为空
@@ -140,7 +143,10 @@ public class PayBiz {
 
                 //用户给第三方
                 userEntity.setUserBalance(Bigdecimal.subtract(userBalance,allOrderTotalPrice));
+                userEntity.setUserTotalscore(userEntity.getUserTotalscore()+score);
+                userEntity.setUserScore(userEntity.getUserScore()+score);
                 userEntity.setUpdateAt(new Timestamp(new Date().getTime()));
+
 
                 session.merge(userEntity);
                 session.merge(admin);
@@ -152,6 +158,7 @@ public class PayBiz {
             }
             e.printStackTrace();
         }
+        return  score;
     }
 
     //商家退款

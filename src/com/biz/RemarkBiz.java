@@ -87,4 +87,22 @@ public class RemarkBiz {
         }
         return list;
     }
+
+    public void deleteRemark(String remarkId){
+        Transaction tran = null;
+        Session session = remarkDao.currentSession();
+        try {
+            //开启事务
+            tran = session.beginTransaction();
+
+            remarkDao.delete2(remarkId);
+            //提交事务
+            tran.commit();
+        }catch (HibernateException e){
+            if(tran != null){
+                tran.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
 }

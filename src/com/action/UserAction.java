@@ -5,11 +5,13 @@ import com.Utils.NicknameRandom;
 import com.biz.UserBiz;
 import com.entity.UserEntity;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -178,7 +180,7 @@ public class UserAction extends ActionSupport{
 
         UserBiz userBiz = new UserBiz();
 
-        if(userAccount == null || userPassword == null ){
+        if(userAccount == null || userPassword == null || userAccount.equals("") || userPassword.equals("")){
             code = 420;
         }else{
             UserEntity userEntity = new UserEntity();
@@ -195,7 +197,7 @@ public class UserAction extends ActionSupport{
             userPassword = MD5.string2MD5(userPassword);
             userEntity.setUserPassword(userPassword);
             userEntity.setUserId(UUID.randomUUID().toString());
-            if(userNickname == null){
+            if(userNickname == null || userNickname.equals("")){
                 userNickname = NicknameRandom.nickname();
             }
             userEntity.setUserNickname(userNickname);
@@ -203,6 +205,7 @@ public class UserAction extends ActionSupport{
             code = 1;
         }
         setMessageByCode();
+
         return SUCCESS;
 
     }
@@ -219,7 +222,7 @@ public class UserAction extends ActionSupport{
         System.out.println("????????????/");
         UserBiz userBiz = new UserBiz();
 
-        if(userAccount == null || userPassword == null ){
+        if(userAccount == null || userPassword == null || userAccount.equals("") || userPassword.equals("")){
             code = 420;
         }else{
             UserEntity userEntity = new UserEntity();

@@ -41,6 +41,11 @@ public class StoreDao extends BaseDaoImpl<StoreEntity>{
     }
 
     @Override
+    public void merge(StoreEntity entity) {
+        super.merge(entity);
+    }
+
+    @Override
     public List search(Page page, String hql, Object conditions) {
         return super.search(page, hql, conditions);
     }

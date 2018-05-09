@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -80,7 +81,7 @@ public class UserBiz {
         try{
             tran = session.beginTransaction();
             String valid = userDao.loginValid(userAccount,userPassword);
-            if(valid == "no"){
+            if(valid.equals("no")){
                 code = 411;
             }else{
                 code = 1;
@@ -113,4 +114,56 @@ public class UserBiz {
         return valid;
     }
     //草拟吗
+
+    public void editUserinfo(Map<String,String> userinfo){
+        Transaction tran = null;
+        Session session = userDao.currentSession();
+        try{
+            tran = session.beginTransaction();
+            String editString = userDao.editUserinfo(userinfo);
+            switch (editString){
+                case "password edit":
+                    code = 4;
+                    break;
+                case "nickname edit":
+                    code = 5;
+                    break;
+                case "userbankcard edit":
+                    code = 6;
+                    break;
+                case "none":
+                    code = 414;
+                    break;
+                default:
+                    code = 415;
+                    break;
+            }
+            tran.commit();
+        }catch (HibernateException e){
+            if(tran != null){
+                tran.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+    public UserEntity selectUserwithlogin(String userAccount){
+        Transaction tran = null;
+        List<UserEntity> list = null;
+        UserEntity userEntity = new UserEntity();
+        Session session = userDao.currentSession();
+        try{
+            tran = session.beginTransaction();
+            list = userDao.selectUserwithlogin(userAccount);
+            userEntity = list.get(0);
+            tran.commit();
+        }catch (HibernateException e){
+            if(tran != null){
+                tran.rollback();
+            }
+            e.printStackTrace();
+        }
+        return userEntity;
+    }
+
+
 }

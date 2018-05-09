@@ -164,6 +164,56 @@ public class UserBiz {
         }
         return userEntity;
     }
-
+    /**
+     * @description：查询用户等级
+     * @author：heyi
+     * @date：2018/5/9 21:10
+     * @version：v1.0
+     */
+    public String searchUserlevel() {
+        String userLevel = "";
+        Transaction tran = null;
+        Session session = userDao.currentSession();
+        try {
+            tran = session.beginTransaction();
+            //String userid = (String)dataSession.get("userid");
+            String userid = "1";
+            UserEntity userEntity = session.get(UserEntity.class, userid);
+            int score  = userEntity.getUserTotalscore();
+            switch (score/2000){
+                case 0:
+                    userLevel = "普通用户";
+                    break;
+                case 1:
+                    userLevel = "1级会员";
+                    break;
+                case 2:
+                    userLevel = "2级会员";
+                    break;
+                case 3:
+                    userLevel = "3级会员";
+                    break;
+                case 4:
+                    userLevel = "4级会员";
+                    break;
+                case 5:
+                    userLevel = "5级会员";
+                    break;
+                case 6:
+                    userLevel = "6级会员";
+                    break;
+                default:
+                    userLevel = "至尊会员";
+                    break;
+            }
+            tran.commit();
+        } catch (Exception e) {
+            if (tran != null) {
+                tran.rollback();
+            }
+            e.printStackTrace();
+        }
+        return userLevel;
+    }
 
 }

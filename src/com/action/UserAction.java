@@ -183,6 +183,10 @@ public class UserAction extends ActionSupport{
             case 6:
                 message = "银行卡已修改";
                 break;
+            case 7:
+                message = "查询成功";
+                code = 0;
+                break;
             case 400:
                 message = "用户未登录";
                 break;
@@ -346,6 +350,29 @@ public class UserAction extends ActionSupport{
         return SUCCESS;
 
     }
-
+    /**
+     * @description：查询用户等级
+     * @author：heyi
+     * @date：2018/5/9 20:55
+     * @version：v1.0
+     */
+    //http://localhost:8080/hx_shopping_backend/searchUserlevel.action
+    //查询用户等级
+    @Action(value = "searchUserlevel", results = {
+            @Result(
+                    type = "json", params = {
+                    "code", "code",
+                    "message", "message",
+                    "data", "data"
+            })
+    })
+    public String searchUserlevel() {
+        UserBiz userBiz = new UserBiz();
+        String userlevel = userBiz.searchUserlevel();
+        data.put("userlevel", userlevel);
+        code = 7;
+        setMessageByCode();
+        return SUCCESS;
+    }
 
 }

@@ -11,6 +11,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -117,6 +118,13 @@ public class AddressAction extends ActionSupport {
                 message = "添加地址成功";
                 code = 0;
                 break;
+            case 2:
+                message = "获取地址成功";
+                code = 0;
+                break;
+            case 416:
+                message = "地址为空呢，亲亲还需要先添加地址呢~";
+                break;
             case 420:
                 message = "您好，徐先生，您的传参有缺失哦~";
                 break;
@@ -165,6 +173,20 @@ public class AddressAction extends ActionSupport {
             })
     })
     public String selectAddress() throws Exception{
+        List<AddressEntity> list = null;
+        AddressBiz addressBiz = new AddressBiz();
+        if(addressUser == null || addressUser.equals("")){
+            code = 420;
+        }else{
+            list = addressBiz.selectAddress(addressUser);
+            if(list == null){
+                code = 416;
+            }else{
+                data.put("addresslist",list);
+                code = 2;
+            }
+        }
+        setMessageByCode();
         return SUCCESS;
     }
 

@@ -37,4 +37,7 @@ public class AddressDao extends BaseDaoImpl<AddressEntity>{
         list = query.list();
         return list;
     }
+    public void editAddressinfo(AddressEntity addressEntity){
+
+    }
 }

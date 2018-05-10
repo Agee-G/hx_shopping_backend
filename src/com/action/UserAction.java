@@ -278,7 +278,7 @@ public class UserAction extends ActionSupport{
                 code = 411;
             }else{
                 code = 2;
-                if(loginStatus == 0){
+                if(loginStatus == 1){
                     ServletActionContext.getRequest().getSession().setMaxInactiveInterval(-1);
                 }else{
                     ServletActionContext.getRequest().getSession().setMaxInactiveInterval(3600);
@@ -305,10 +305,16 @@ public class UserAction extends ActionSupport{
             })
     })
     public String isLogin() throws Exception{
-
+        UserBiz userBiz = new UserBiz();
+        UserEntity userEntity = new UserEntity();
         if(ServletActionContext.getRequest().getSession().getAttribute("login") == null){
             code = 400;
         }else{
+            userEntity = userBiz.selectUserwithlogin(userAccount);
+            System.out.println(userEntity.getUserPassword());
+            data.put("userinfo",userEntity);
+            ShoppingcartBiz shoppingcartBiz = new ShoppingcartBiz();
+            data.put("shoppingcartcount",shoppingcartBiz.userShoppingcartCount(userEntity.getUserId()));
             code = 3;
         }
         setMessageByCode();

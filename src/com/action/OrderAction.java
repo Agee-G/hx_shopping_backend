@@ -34,6 +34,7 @@ public class OrderAction extends ActionSupport{
     private Integer pageSize;
 
     //订单信息
+    private String userScore;
     private String orderId;
     private String orderUserid;
     private String orderStoreid;
@@ -118,6 +119,13 @@ public class OrderAction extends ActionSupport{
     public void setCurrentPage(Integer currentPage) { this.currentPage = currentPage; }
     @JSON(serialize=false)
     public Integer getPageSize() { return pageSize; }
+    @JSON(serialize=false)
+    public String getUserScore() {
+        return userScore;
+    }
+    public void setUserScore(String userScore) {
+        this.userScore = userScore;
+    }
     public void setPageSize(Integer pageSize) { this.pageSize = pageSize; }
     @JSON(serialize=false)
     public String getOrderId() { return orderId; }
@@ -132,14 +140,8 @@ public class OrderAction extends ActionSupport{
     public String getOrderStoreid() { return orderStoreid; }
     public void setOrderStoreid(String orderStoreid) { this.orderStoreid = orderStoreid; }
     @JSON(serialize=false)
-<<<<<<< HEAD
-    public Integer getOrderStatus() { return orderStatus; }
-    public void setOrderStatus(Integer orderStatus) { this.orderStatus = orderStatus; }
-    @JSON(serialize=false)
-=======
     public String getOrderStatus() { return orderStatus; }
     public void setOrderStatus(String orderStatus) { this.orderStatus = orderStatus; }
->>>>>>> 2600d4aa21d9e39d5fb60079557369791707e10f
     public String getGoodsId() {return goodsId;}
     public void setGoodsId(String goodsId) {this.goodsId = goodsId;}
     @JSON(serialize=false)
@@ -217,7 +219,7 @@ public class OrderAction extends ActionSupport{
         //如果传来的当前页数为0，则从第一条记录开始查
         orderPage.setCurrentPage(currentPage);
         //设置查询条件
-        OrderConditions orderConditions = new OrderConditions(orderUserid,orderStoreid,orderNum,orderGoodname,orderStatus);
+        OrderConditions orderConditions = new OrderConditions(userScore,orderUserid,orderStoreid,orderNum,orderGoodname,orderStatus);
         //调接口，执行查询操作
         orderBiz.searchOrders(orderPage,orderConditions);
         //将数据返回给前端

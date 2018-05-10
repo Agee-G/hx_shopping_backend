@@ -23,6 +23,20 @@ public class GoodsEntity {
     private String goodsStyle;
     private Timestamp createAt;
     private Timestamp updateAt;
+    public GoodsEntity() {
+
+    }
+
+
+    public GoodsEntity(String goodsName, Integer goodsType, String goodsDetails, Double goodsPrice, String goodsStoreid, Integer goodsKucun, String goodsStyle) {
+        this.goodsName = goodsName;
+        this.goodsType = goodsType;
+        this.goodsDetails = goodsDetails;
+        this.goodsPrice = goodsPrice;
+        this.goodsStoreid = goodsStoreid;
+        this.goodsKucun = goodsKucun;
+        this.goodsStyle = goodsStyle;
+    }
 
     @Id
     @Column(name = "goods_id")

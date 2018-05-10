@@ -6,7 +6,6 @@ import com.entity.Goods;
 import com.entity.GoodsConditions;
 import com.entity.GoodsEntity;
 import com.opensymphony.xwork2.ActionContext;
-import net.sf.json.JSONArray;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -15,9 +14,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import javax.servlet.ServletContext;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
@@ -46,10 +43,11 @@ public class GoodsAction {
     private String goodsName;
     private Integer goodsType;
     private String goodsDetails;
-    private Integer goodsPrice;
+    private Double goodsPrice;
     private String goodsStoreid;
     private Integer goodsKucun;
     private String goodsStyle;
+
     //图片上传
     private File upfile;
     private String upfileFileName;
@@ -160,9 +158,9 @@ public class GoodsAction {
 
     public void setGoodsDetails(String goodsDetails) { this.goodsDetails = goodsDetails; }
     @JSON(serialize=false)
-    public Integer getGoodsPrice() { return goodsPrice; }
+    public Double getGoodsPrice() { return goodsPrice; }
 
-    public void setGoodsPrice(Integer goodsPrice) { this.goodsPrice = goodsPrice; }
+    public void setGoodsPrice(Double goodsPrice) { this.goodsPrice = goodsPrice; }
     @JSON(serialize=false)
     public String getGoodsStoreid() { return goodsStoreid; }
 
@@ -191,8 +189,7 @@ public class GoodsAction {
     })
     public String addGoods()throws Exception{
         if(upfileFileName != null && goodsName != null && goodsType != null && goodsDetails != null && goodsPrice != null && goodsStoreid != null && goodsKucun != null && goodsStyle != null){
-//            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
-
+            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
 
             //确定文件存放的路径
             //1.获取当前web程序在容器中的物理路径
@@ -207,15 +204,10 @@ public class GoodsAction {
             String url = "upload/"+upfileFileName;
             ActionContext.getContext().getSession().put("file", "/upload/"+upfileFileName);
 
-<<<<<<< HEAD
             goodsEntity.setGoodsPicture(url);
             goodsBiz.addGoods(goodsEntity);
             this.setCode(goodsBiz.getCode());
-=======
-//            goodsEntity.setGoodsPicture(url);
-//            goodsBiz.addGoods(goodsEntity);
-            code = goodsBiz.getCode();
->>>>>>> 2600d4aa21d9e39d5fb60079557369791707e10f
+
         }else{
             this.setCode(220);
         }
@@ -302,7 +294,7 @@ public class GoodsAction {
     })
     public String editGoods() throws IOException{
         if(goodsId != null && upfileFileName != null && goodsName != null && goodsType != null && goodsDetails != null && goodsPrice != null && goodsStoreid != null && goodsKucun != null && goodsStyle != null){
-//            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
+            GoodsEntity goodsEntity = new GoodsEntity(goodsName,goodsType,goodsDetails, goodsPrice, goodsStoreid, goodsKucun,goodsStyle);
 
             //确定文件存放的路径
             //1.获取当前web程序在容器中的物理路径
@@ -317,15 +309,10 @@ public class GoodsAction {
             String url = "upload/"+upfileFileName;
             ActionContext.getContext().getSession().put("file", "/upload/"+upfileFileName);
 
-<<<<<<< HEAD
             goodsEntity.setGoodsPicture(url);
             goodsBiz.editGoods(goodsEntity);
             this.setCode(goodsBiz.getCode());
-=======
-//            goodsEntity.setGoodsPicture(url);
-//            goodsBiz.editGoods(goodsEntity);
-            code = goodsBiz.getCode();
->>>>>>> 2600d4aa21d9e39d5fb60079557369791707e10f
+
         }else{
             this.setCode(220);
         }

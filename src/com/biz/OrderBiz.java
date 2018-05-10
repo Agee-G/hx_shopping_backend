@@ -158,7 +158,14 @@ public class OrderBiz {
         try {
             tran = session.beginTransaction();
             //查询符合条件的订单
-            StringBuffer hql=new StringBuffer("from OrdersEntity o where 1=1 ");
+            StringBuffer hql=new StringBuffer();
+
+            //商家订单查询，根据按用户积分
+            if(orderConditions.getUserScore() != null){
+                hql.append("from OrdersEntity o ,user u where o.orderUserid=u.userId ");
+            }else{
+                hql.append("from OrdersEntity o where 1=1 ");
+            }
             //待解决：查不到createAt
             //StringBuffer hql=new StringBuffer("select new com.entity.Order( o.createAt,o.orderNumber,o.orderStoreid,o.orderTotalprice,o.orderStatus,o.orderAddress,o.orderAddressphone,o.orderAddressusername)");
             if(orderConditions.getUserid() != null && orderConditions.getUserid().length()>0){
@@ -179,6 +186,12 @@ public class OrderBiz {
                 orderConditions.setOrderNum("%"+orderConditions.getOrderNum()+"%");
                 hql.append(" and o.orderNumber like :orderNum ");
             }
+            //按用户积分降序排列
+            if(orderConditions.getUserScore() != null){
+                hql.append("  order by u.userTotalscore");
+            }
+
+
             //设置总页数
             orderPage.setCount(orderDao.obtainCount(hql.toString(), orderConditions).intValue());
             List<Order> orders = orderDao.search(orderPage,hql.toString(),orderConditions);

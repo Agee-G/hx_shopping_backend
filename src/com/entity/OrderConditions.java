@@ -11,18 +11,28 @@ public class OrderConditions {
     private String  storeid;
     private String  orderNum;
     private String  orderGoodname;
-    private String orderStatus;
+    private String  orderStatus;
+    private String  userScore;
 
     public OrderConditions() {
 
     }
 
-    public OrderConditions(String userid, String storeid, String orderNum, String orderGoodname, String orderStatus) {
+    public OrderConditions(String  userScore,String userid, String storeid, String orderNum, String orderGoodname, String orderStatus) {
+        this.userScore = userScore;
         this.userid = userid;
         this.storeid = storeid;
         this.orderNum = orderNum;
         this.orderGoodname = orderGoodname;
         this.orderStatus = orderStatus;
+    }
+
+    public String getUserScore() {
+        return userScore;
+    }
+
+    public void setUserScore(String userScore) {
+        this.userScore = userScore;
     }
 
     public String getUserid() {

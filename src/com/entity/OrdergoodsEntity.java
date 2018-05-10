@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @Table(name = "ordergoods", schema = "hxtaobaocom", catalog = "")
 public class OrdergoodsEntity {
     private String ordergoodsId;
+    private String goodsid;
     private String ordergoodsName;
     private String ordergoodsPicture;
     private Integer ordergoodsNum;
@@ -21,6 +22,15 @@ public class OrdergoodsEntity {
     private String ordergoodsMerchant;
     private Timestamp createAt;
     private Timestamp updateAt;
+    @Id
+    @Column(name = "goods_id")
+    public String getGoodsid() {
+        return goodsid;
+    }
+
+    public void setGoodsid(String goodsid) {
+        this.goodsid = goodsid;
+    }
 
     @Id
     @Column(name = "ordergoods_id")

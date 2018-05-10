@@ -115,6 +115,7 @@ public class OrderBiz {
                     }
                     OrdergoodsEntity ordergoodsEntity = new OrdergoodsEntity();
                     ordergoodsEntity.setOrdergoodsId(UUID.randomUUID().toString());
+                    ordergoodsEntity.setGoodsid(goodsEntity.getGoodsId());
                     ordergoodsEntity.setOrdergoodsName(goodsEntity.getGoodsName());
                     ordergoodsEntity.setOrdergoodsPicture(goodsEntity.getGoodsPicture());
                     ordergoodsEntity.setOrdergoodsPrice(goodsEntity.getGoodsPrice());
@@ -256,7 +257,7 @@ public class OrderBiz {
             e.printStackTrace();
         }
     }
-    //删除订单
+    //删除订单：非物理删除
     public void deleteOrder(String orderId){
 
         Transaction tran = null;
@@ -269,10 +270,11 @@ public class OrderBiz {
             if (ordersEntity == null){
                 code = 207;
             }else {
-                //删除订单
-                session.delete(ordersEntity);
-                //删除订单商品
-                orderDao.deleteOrderGoods(ordersEntity.getOrderNumber());
+                //订单状态改变为已删除
+                ordersEntity.setOrderStatus("8");
+                //更新订单状态
+                ordersEntity.setUpdateAt(Tool.currentTimestamp());
+                orderDao.merge(ordersEntity);
             }
             tran.commit();
         } catch (Exception e) {
@@ -306,7 +308,6 @@ public class OrderBiz {
             }
             e.printStackTrace();
         }
-
     }
 
 }

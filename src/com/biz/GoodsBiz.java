@@ -139,6 +139,7 @@ public class GoodsBiz {
             e.printStackTrace();
         }
     }
+
     public void editGoods(GoodsEntity goodsEntity){
         Transaction tran = null;
         Session session = goodsDao.currentSession();

@@ -10,6 +10,7 @@ import net.sf.json.JSONArray;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import javax.servlet.ServletContext;
@@ -25,6 +26,7 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
  * @date:18/4/23 15 22
  * @description
  */
+@ParentPackage("json-default")
 public class GoodsAction {
     // 返回JSON数据
     private int code;//code=0 :成功 ；code=xxx :错误码
@@ -210,6 +212,7 @@ public class GoodsAction {
 //            goodsEntity.setGoodsPicture(url);
 //            goodsBiz.addGoods(goodsEntity);
             code = goodsBiz.getCode();
+
         }else{
             this.setCode(220);
         }
@@ -315,6 +318,7 @@ public class GoodsAction {
 //            goodsEntity.setGoodsPicture(url);
 //            goodsBiz.editGoods(goodsEntity);
             code = goodsBiz.getCode();
+
         }else{
             this.setCode(220);
         }

@@ -9,9 +9,7 @@
         <!-- 数据库JDBC驱动  -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <!-- 用户名 -->
-        <property name="connection.username">
-            root
-        </property>
+        <property name="connection.username">root</property>
         <!-- 密码 -->
         <property name="connection.password">1984</property>
 

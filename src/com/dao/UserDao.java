@@ -73,4 +73,12 @@ public class UserDao extends BaseDaoImpl<UserEntity>{
         }
     }
 
+    public void  updateUserStatus(UserEntity userEntity){
+        String hql = "update UserEntity u set u.userStatus = :status where u.userId = :id";
+        Query query = currentSession().createQuery(hql);
+        query.setString("status",userEntity.getUserStatus());
+        query.setString("id",userEntity.getUserId());
+        query.executeUpdate();
+    }
+
 }

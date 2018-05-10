@@ -53,7 +53,7 @@ public class StoreBiz {
         return count;
     }
 
-
+    //商家申诉
     public void addNewStoreApply(StoreapplyEntity storeapplyEntity){
         Transaction transaction = null;
         Session session = storeDao.currentSession();
@@ -112,6 +112,7 @@ public class StoreBiz {
         return storeEntityList;
     }
 
+    //更新商家信息
     public void updateStore(StoreEntity storeEntity){
         Transaction tran = null;
         Session session = storeDao.currentSession();

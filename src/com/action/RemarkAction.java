@@ -112,6 +112,7 @@ public class RemarkAction extends ActionSupport{
             case 420:
                 message = "您好，徐先生，您的传参有缺失哦~";
             case 401:
+
                 message = "未查询出相应数据，请您换个条件试试呢O(∩_∩)O";
             default:
                 message = "出现了未知错误咩~哭兮兮o(╥﹏╥)o";
@@ -128,9 +129,14 @@ public class RemarkAction extends ActionSupport{
     })
     public String addRemark(){
         RemarkBiz remarkBiz = new RemarkBiz();
-        if(remarkLevel == null || remarkDetail == null || remarkGoodsid == null || remarkStatus == null || remarkUserid == null){
+
+        if(remarkLevel == null || remarkDetail == null || remarkGoodsid == null || remarkUserid == null){
+
             code = 420;
         }else{
+            if(remarkStatus == null){
+                remarkStatus = "1";
+            }
             RemarkEntity remarkEntity = new RemarkEntity(remarkLevel,remarkDetail,remarkGoodsid,remarkStatus,remarkUserid);
             remarkBiz.addRemark(remarkEntity);
         }
@@ -185,6 +191,26 @@ public class RemarkAction extends ActionSupport{
             }else{
                 data.put("remarklist",list);
 
+
+//    //删除评论
+//    @Action(value = "deleteRemark",results = {
+//            @Result(
+//                    type = "json" , params = {
+//                    "code","code",
+//                    "message","message",
+//                    "data","data"
+//            })
+//    })
+//    public String deleteRemark() throws Exception{
+//        request.setCharacterEncoding("utf-8");
+//
+//        if(remarkId == null || remarkId == ""){
+//            code = 420;
+//        }else{
+//            RemarkBiz remarkBiz = new RemarkBiz();
+//            remarkBiz.deleteRemark(remarkId);
+//            code = 3;
+//=======
             }
         }
         setMessageByCode();

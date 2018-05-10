@@ -23,19 +23,27 @@ import java.util.List;
  */
 @ParentPackage("json-default")
 public class BackendAction extends ActionSupport{
+    private String storeId;
+    private String userId;
     private String adminId;
+
     private String adminAccount;
-    private String adminPassword;
     private String userAccount;
+    private String storeAccount;
+
+    private String adminPassword;
+
     private String userNickname;
+    private String storeName;
+
     private Integer userTotalscore;
-    private String userStatus;
+
     private Integer pageSize;
     private Integer currentPage;
-    private String storeAccount;
-    private String storeName;
+
+    private String userStatus;
     private String storeStatus;
-    private String storeId;
+
 
 
 
@@ -141,13 +149,21 @@ public class BackendAction extends ActionSupport{
     public void setCurrentPage(Integer currentPage) {
         this.currentPage = currentPage;
     }
-
+    @JSON(serialize=false)
     public String getStoreId() {
         return storeId;
     }
-    @JSON(serialize=false)
+
     public void setStoreId(String storeId) {
         this.storeId = storeId;
+    }
+    @JSON(serialize=false)
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public int getCode() {
@@ -185,16 +201,22 @@ public class BackendAction extends ActionSupport{
                 code = 0;
                 break;
             case 311:
-                message = "用户名和密码错误了诶~ 换一个试试咩(*^▽^*)";
+                message = "用户名和密码错误";
+                break;
+            case 312:
+                message = "用户名已经注册。";
                 break;
             case 313:
-                message = "用户名被人注册了呢o(╥﹏╥)o,慢了一步 呜呜。";
+                message = "传参有缺失";
                 break;
             case 320:
-                message = "您好，徐先生，您的传参有缺失哦~";
+                message = "修改成功";
+                break;
+            case 321:
+                message = "查询成功";
                 break;
             default:
-                message = "出现了未知错误咩~哭兮兮o(╥﹏╥)o";
+                message = "出现了未知错误";
                 break;
         }
     }
@@ -209,7 +231,7 @@ public class BackendAction extends ActionSupport{
     public String adminLogin()throws Exception{
         BackendBiz backendBiz = new BackendBiz();
         if (adminAccount == null || adminPassword == null){
-            code = 320;
+            code = 313;
         }else {
             UserConditions userConditions = new UserConditions();
             adminPassword = MD5.string2MD5(adminPassword);
@@ -256,8 +278,9 @@ public class BackendAction extends ActionSupport{
             backendBiz.findUsersByConditionsByPage(page,userConditions);
             List<UserEntity> userEntityList = page.getPageList();
             data.put("users",userEntityList);
+            code = 321;
         }else {
-            code = 320;
+            code = 313;
         }
         setMessageByCode();
         return SUCCESS;
@@ -289,8 +312,9 @@ public class BackendAction extends ActionSupport{
             backendBiz.findStoresByConditionByPage(page,storeConditions);
             List<StoreEntity> storeEntityList = page.getPageList();
             data.put("stores",storeEntityList);
+            code = 321;
         }else {
-            code = 320;
+            code = 313;
         }
         setMessageByCode();
         return SUCCESS;
@@ -311,8 +335,32 @@ public class BackendAction extends ActionSupport{
             storeStatus = (storeStatus.equals("1") ? "0":"1");
             storeEntity.setStoreStatus(storeStatus);
             backendBiz.updateStoreStatus(storeEntity);
-        }else {
             code = 320;
+        }else {
+            code = 313;
+        }
+        setMessageByCode();
+        return SUCCESS;
+    }
+
+    @Action(value = "updateUserStatus",results = {
+            @Result(
+                    type = "json" , params = {
+                    "code","code",
+                    "message","message",
+                    "data","data"
+            })
+    })
+    public String updateUserStatus()throws Exception{
+        BackendBiz backendBiz = new BackendBiz();
+        if (userId != null){
+            UserEntity userEntity = backendBiz.findUser(userId);
+            userStatus = (userStatus.equals("1") ? "0":"1");
+            userEntity.setUserStatus(userStatus);
+            backendBiz.updateUserStatus(userEntity);
+            code = 320;
+        }else {
+            code = 313;
         }
         setMessageByCode();
         return SUCCESS;

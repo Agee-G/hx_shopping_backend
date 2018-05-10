@@ -58,6 +58,7 @@ public class GoodsAction {
     private Integer sell;//1:销量降序 0:销量升序
 
     //setter、getter
+
     @JSON()
     public int getCode() {
         return code;
@@ -90,20 +91,20 @@ public class GoodsAction {
         }
 
     }
-    @JSON
+
     public String getMessage() {
         return message;
     }
     public void setMessage(String message) {
         this.message = message;
     }
-    @JSON
     public HashMap getData() {
         return data;
     }
     public void setData(HashMap data) {
         this.data = data;
     }
+
 
     @JSON(serialize=false)
     public GoodsBiz getGoodsBiz() { return goodsBiz; }
@@ -206,6 +207,7 @@ public class GoodsAction {
             goodsEntity.setGoodsPicture(url);
             goodsBiz.addGoods(goodsEntity);
             this.setCode(goodsBiz.getCode());
+
 
         }else{
             this.setCode(220);

@@ -24,6 +24,7 @@ public class Goods implements Serializable{
     }
 
     //商品详情的构造方法,有"商家名"
+
     public Goods(String goodsStoreid,String goodsId) {
         this.goodsStoreid = goodsStoreid;
         this.goodsId = goodsId;

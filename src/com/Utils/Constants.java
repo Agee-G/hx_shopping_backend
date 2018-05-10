@@ -10,4 +10,7 @@ package com.Utils;
 public class Constants {
     //管理员id
     public final static String ADMIN_ID = "admin";
+
+    //抽一次奖扣除的积分
+    public final static int ONE_LOTTERT_SCORE = 20;
 }

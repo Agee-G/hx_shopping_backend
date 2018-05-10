@@ -87,14 +87,15 @@ public class RemarkBiz {
         }
         return list;
     }
+
     public void deleteRemark(String remarkId){
-        //事务初始化
         Transaction tran = null;
         Session session = remarkDao.currentSession();
         try {
             //开启事务
             tran = session.beginTransaction();
-            remarkDao.deleteRemark(remarkId);
+
+            remarkDao.delete2(remarkId);
             //提交事务
             tran.commit();
         }catch (HibernateException e){

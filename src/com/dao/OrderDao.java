@@ -7,7 +7,11 @@ import java.util.List;
  * @author:20155808李连芸
  * @date:18/4/20 09 28
  * @description
+<<<<<<< HEAD
  * orderStatus - 0:待付款 1:待发货 2:待收货 3:已收货 4:已评价 5:等待用户退款同意中 6:等待商家退款同意中 7：已退款(退款货物到达) 8:已删除
+=======
+ * orderStatus - 0:待付款 1:待发货 2:待收货 3:已收货 4:已评价 5:等待用户退款/退货同意中（商家发出） 6:等待商家款/退货同意中（用户发出）7：已退款(退款货物到达)
+>>>>>>> origin/dev
  */
 public class OrderDao extends BaseDaoImpl<OrdersEntity>{
     @Override

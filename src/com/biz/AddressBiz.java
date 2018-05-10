@@ -78,4 +78,32 @@ public class AddressBiz {
         }
         return list;
     }
+    public void editAddressinfo(AddressEntity addressEntity){
+        Transaction tran = null;
+        Session session = addressDao.currentSession();
+        try{
+            tran = session.beginTransaction();
+            addressDao.editAddressinfo(addressEntity);
+            tran.commit();
+        }catch (HibernateException e){
+            if(tran != null){
+                tran.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+    public void deleteAddress(String addressId){
+        Transaction tran = null;
+        Session session = addressDao.currentSession();
+        try{
+            tran = session.beginTransaction();
+            addressDao.deleteAddress(addressId);
+            tran.commit();
+        }catch (HibernateException e){
+            if(tran != null){
+                tran.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
 }

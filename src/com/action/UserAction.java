@@ -295,7 +295,21 @@ public class UserAction extends ActionSupport{
         setMessageByCode();
         return SUCCESS;
     }
-
+    //退出登录
+    @Action(value = "userLogout",results = {
+            @Result(
+                    type = "json" , params = {
+                    "code","code",
+                    "message","message",
+                    "data","data"
+            })
+    })
+    public String userLogout() throws Exception{
+        ServletActionContext.getRequest().getSession().removeAttribute("login");
+        code = 8;
+        setMessageByCode();
+        return SUCCESS;
+    }
     @Action(value = "isLogin",results = {
             @Result(
                     type = "json" , params = {

@@ -122,6 +122,14 @@ public class AddressAction extends ActionSupport {
                 message = "获取地址成功";
                 code = 0;
                 break;
+            case 3:
+                message = "修改地址成功";
+                code = 0;
+                break;
+            case 4:
+                message = "删除地址成功";
+                code = 0;
+                break;
             case 416:
                 message = "地址为空呢，亲亲还需要先添加地址呢~";
                 break;
@@ -185,6 +193,50 @@ public class AddressAction extends ActionSupport {
                 data.put("addresslist",list);
                 code = 2;
             }
+        }
+        setMessageByCode();
+        return SUCCESS;
+    }
+    @Action(value = "editAddressinfo",results = {
+            @Result(
+                    type = "json" , params = {
+                    "code","code",
+                    "message","message",
+                    "data","data"
+            })
+    })
+    public String editAddressinfo() throws Exception{
+        AddressBiz addressBiz = new AddressBiz();
+        if(addressId == null ||address == null || addressUsername == null || addressPhone == null || addressUser == null || addressId.equals("") ||address.equals("") || addressUsername.equals("") || addressPhone.equals("") || addressUser.equals("")){
+            code = 420;
+        }else{
+            AddressEntity addressEntity = new AddressEntity();
+            addressEntity.setAddressId(addressId);
+            addressEntity.setAddress(address);
+            addressEntity.setAddressUsername(addressUsername);
+            addressEntity.setAddressUser(addressUser);
+            addressEntity.setAddressPhone(addressPhone);
+            addressBiz.editAddressinfo(addressEntity);
+            code = 3;
+        }
+        setMessageByCode();
+        return SUCCESS;
+    }
+    @Action(value = "deleteAddress",results = {
+            @Result(
+                    type = "json" , params = {
+                    "code","code",
+                    "message","message",
+                    "data","data"
+            })
+    })
+    public String deleteAddress() throws Exception{
+        AddressBiz addressBiz = new AddressBiz();
+        if(addressId == null || addressId.equals("")){
+            code = 420;
+        }else{
+            addressBiz.deleteAddress(addressId);
+            code = 4;
         }
         setMessageByCode();
         return SUCCESS;

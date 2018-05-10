@@ -38,6 +38,19 @@ public class AddressDao extends BaseDaoImpl<AddressEntity>{
         return list;
     }
     public void editAddressinfo(AddressEntity addressEntity){
-
+        String hql = "update AddressEntity a set a.address = :address,a.addressUsername = :addressUsername,a.addressPhone = :addressPhone where a.addressId = :addressId";
+        Query query = currentSession().createQuery(hql);
+        query.setString("address",addressEntity.getAddress());
+        query.setString("addressUsername",addressEntity.getAddressUsername());
+        query.setString("addressPhone",addressEntity.getAddressPhone());
+        query.setString("addressId",addressEntity.getAddressId());
+        query.executeUpdate();
     }
+    public void deleteAddress(String addressId){
+        String hql = "delete AddressEntity a where a.addressId = :addressId";
+        Query query = currentSession().createQuery(hql);
+        query.setString("addressId",addressId);
+        query.executeUpdate();
+    }
+
 }

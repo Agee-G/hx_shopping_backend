@@ -6,6 +6,7 @@ import com.entity.UserEntity;
 import org.hibernate.Query;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 汤新苗-20155864
@@ -73,6 +74,7 @@ public class UserDao extends BaseDaoImpl<UserEntity>{
         }
     }
 
+<<<<<<< HEAD
     public void  updateUserStatus(UserEntity userEntity){
         String hql = "update UserEntity u set u.userStatus = :status where u.userId = :id";
         Query query = currentSession().createQuery(hql);
@@ -81,4 +83,49 @@ public class UserDao extends BaseDaoImpl<UserEntity>{
         query.executeUpdate();
     }
 
+=======
+    public String editUserinfo(Map<String,String> userinfo){
+        if(userinfo.get("userPassword") != null){
+            String hql = "update UserEntity u set u.userPassword = :userPassword  where u.userId = :user_id";
+            Query query = currentSession().createQuery(hql);
+            query.setString("userPassword",userinfo.get("userPassword"));
+            query.setString("user_id",userinfo.get("user_id"));
+            query.executeUpdate();
+            return "password edit";
+        }else{
+            if(userinfo.get("userNickname") != null){
+                String hql = "update UserEntity u set u.userNickname = :userNickname  where u.userId = :user_id";
+                Query query = currentSession().createQuery(hql);
+                query.setString("userNickname",userinfo.get("userNickname"));
+                query.setString("user_id",userinfo.get("user_id"));
+                query.executeUpdate();
+                return "nickname edit";
+            }else {
+                if(userinfo.get("userbankcard") != null){
+                    String hql = "update UserEntity u set u.userBankcard = :userBankcard  where u.userId = :user_id";
+                    Query query = currentSession().createQuery(hql);
+                    query.setString("userBankcard",userinfo.get("userBankcard"));
+                    query.setString("user_id",userinfo.get("user_id"));
+                    query.executeUpdate();
+                    return "userbankcard edit";
+                }else{
+                    return "none";
+                }
+            }
+        }
+
+    }
+    public List<UserEntity> selectUserwithlogin(String userAccount){
+        List<UserEntity> list = null;
+        String hql = "from UserEntity where userAccount = :userAccount";
+        Query query = currentSession().createQuery(hql);
+        query.setString("userAccount",userAccount);
+        list = query.list();
+
+        return list;
+    }
+
+
+
+>>>>>>> origin/dev
 }

@@ -38,4 +38,8 @@ public class RemarkDao extends BaseDaoImpl<RemarkEntity>{
         return list;
     }
 
+    @Override
+    public void delete2(String id) {
+        super.delete2(id);
+    }
 }

@@ -80,9 +80,30 @@ public class PayBiz {
         }
     }
 
+    //查询用户可取金额
+    public Double searchUserBalance() {
+        Double userBalance = null;
+        Transaction tran = null;
+        Session session = payDao.currentSession();
+        try {
+            tran = session.beginTransaction();
+            //String userid = (String)dataSession.get("userid");
+            String userid = "1";
+            UserEntity userEntity = session.get(UserEntity.class, userid);
+            userBalance = userEntity.getUserBalance();
+            tran.commit();
+        } catch (Exception e) {
+            if (tran != null) {
+                tran.rollback();
+            }
+            e.printStackTrace();
+        }
+        return userBalance;
+    }
 
-    //用户支付
-    public void userPayByOrder(List<String> orderIdList) {
+    //用户支付并获得积分（取金额的整数）
+    public int userPayByOrder(List<String> orderIdList) {
+        int score = 0;
         Transaction tran = null;
         Session session = payDao.currentSession();
         try {
@@ -100,18 +121,21 @@ public class PayBiz {
                 OrdersEntity ordersEntity = orderDao.get(orderId);
                 allOrderTotalPrice = Bigdecimal.add(allOrderTotalPrice,ordersEntity.getOrderTotalprice());
             }
+            //所得积分
+            score =allOrderTotalPrice.intValue();
 
             if (orderIdList.isEmpty()||orderIdList==null) {
-                code = 104;//要支付的订单为空
+                code = 104;//订单为空
             }
             else if (userBalance < allOrderTotalPrice) {
-                code = 105;//用户余额不足
+                code = 105;//余额不足
             }
             else{
                 for (String orderId:orderIdList) {
                     OrdersEntity ordersEntity = orderDao.get(orderId);
                     //更改订单状态为代发货
                     ordersEntity.setOrderStatus("1");
+                    ordersEntity.setUpdateAt(new Timestamp(new Date().getTime()));
                 }
                 //第三方收款
                 admin.setUserBalance(Bigdecimal.add(adminBalance,allOrderTotalPrice));
@@ -119,6 +143,64 @@ public class PayBiz {
 
                 //用户给第三方
                 userEntity.setUserBalance(Bigdecimal.subtract(userBalance,allOrderTotalPrice));
+                userEntity.setUserTotalscore(userEntity.getUserTotalscore()+score);
+                userEntity.setUserScore(userEntity.getUserScore()+score);
+                userEntity.setUpdateAt(new Timestamp(new Date().getTime()));
+
+
+                session.merge(userEntity);
+                session.merge(admin);
+            }
+            tran.commit();
+        } catch (Exception e) {
+            if (tran != null) {
+                tran.rollback();
+            }
+            e.printStackTrace();
+        }
+        return  score;
+    }
+
+    //商家退款
+    public void RefundByOrder(List<String> orderIdList) {
+        Transaction tran = null;
+        Session session = payDao.currentSession();
+        try {
+            tran = session.beginTransaction();
+            //String userid = (String)dataSession.get("userid");
+            String userid = "1";
+            UserEntity userEntity = session.get(UserEntity.class, userid);
+            UserEntity admin = session.get(UserEntity.class, Constants.ADMIN_ID);
+
+            Double userBalance = userEntity.getUserBalance();
+            Double adminBalance = admin.getUserBalance();
+
+            //所有订单总金额
+            Double allOrderTotalPrice = 0.0;
+            for (String orderId:orderIdList) {
+                OrdersEntity ordersEntity = orderDao.get(orderId);
+                allOrderTotalPrice = Bigdecimal.add(allOrderTotalPrice,ordersEntity.getOrderTotalprice());
+            }
+
+            if (orderIdList.isEmpty()||orderIdList==null) {
+                code = 104;//订单为空
+            }
+            else if (adminBalance < allOrderTotalPrice) {
+                code = 105;//余额不足
+            }
+            else{
+                for (String orderId:orderIdList) {
+                    OrdersEntity ordersEntity = orderDao.get(orderId);
+                    //更改订单状态为已退款
+                    ordersEntity.setOrderStatus("7");
+                    ordersEntity.setUpdateAt(new Timestamp(new Date().getTime()));
+                }
+                //第三方退款
+                admin.setUserBalance(Bigdecimal.subtract(adminBalance,allOrderTotalPrice));
+                admin.setUpdateAt(new Timestamp(new Date().getTime()));
+
+                //用户收第三方
+                userEntity.setUserBalance(Bigdecimal.add(userBalance,allOrderTotalPrice));
                 userEntity.setUpdateAt(new Timestamp(new Date().getTime()));
 
                 session.merge(userEntity);
@@ -132,4 +214,5 @@ public class PayBiz {
             e.printStackTrace();
         }
     }
+
 }

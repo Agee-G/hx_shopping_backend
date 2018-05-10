@@ -74,6 +74,16 @@ public class UserDao extends BaseDaoImpl<UserEntity>{
         }
     }
 
+<<<<<<< HEAD
+    public void  updateUserStatus(UserEntity userEntity){
+        String hql = "update UserEntity u set u.userStatus = :status where u.userId = :id";
+        Query query = currentSession().createQuery(hql);
+        query.setString("status",userEntity.getUserStatus());
+        query.setString("id",userEntity.getUserId());
+        query.executeUpdate();
+    }
+
+=======
     public String editUserinfo(Map<String,String> userinfo){
         if(userinfo.get("userPassword") != null){
             String hql = "update UserEntity u set u.userPassword = :userPassword  where u.userId = :user_id";
@@ -117,4 +127,5 @@ public class UserDao extends BaseDaoImpl<UserEntity>{
 
 
 
+>>>>>>> origin/dev
 }

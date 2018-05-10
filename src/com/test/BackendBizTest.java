@@ -3,10 +3,7 @@ package com.test;
 import com.Utils.MD5;
 import com.Utils.Page;
 import com.biz.BackendBiz;
-import com.entity.StoreConditions;
-import com.entity.StoreEntity;
-import com.entity.UserConditions;
-import com.entity.UserEntity;
+import com.entity.*;
 import org.junit.Test;
 
 import java.util.List;
@@ -66,7 +63,28 @@ public class BackendBizTest {
         StoreEntity storeEntity = backendBiz.findStore("1");
         storeEntity.setStoreStatus("1");
         backendBiz.updateStoreStatus(storeEntity);
-
+    }
+    @Test
+    public void updateUserStatus()throws Exception{
+        UserEntity userEntity = backendBiz.findUser("1");
+        userEntity.setUserStatus("0");
+        backendBiz.updateUserStatus(userEntity);
+    }
+    @Test
+    public void findAllApply()throws Exception{
+        List<StoreapplyEntity> storeapplyEntities = backendBiz.findAllApply();
+        System.out.println("Size:"+storeapplyEntities.size());
+    }
+    @Test
+    public void findApplyByStoreId()throws Exception{
+        List<StoreapplyEntity> storeapplyEntities = backendBiz.findApplyByStoreId("d7e7508e-962d-4f77-8a81-58c7a34fab82");
+        System.out.println("Size:"+storeapplyEntities.size());
+    }
+    @Test
+    public void updateAppleStatus()throws Exception{
+        StoreapplyEntity storeapplyEntity = backendBiz.findStoreApply("8586c12b-d802-4dc8-8aeb-a3cf7041f899");
+        storeapplyEntity.setStoreapplyStatus("1");
+        backendBiz.updateApplyStatus(storeapplyEntity);
     }
 
 }

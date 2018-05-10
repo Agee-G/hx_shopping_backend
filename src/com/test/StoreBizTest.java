@@ -1,5 +1,6 @@
 package com.test;
 
+import com.Utils.MD5;
 import com.biz.StoreBiz;
 import com.entity.StoreConditions;
 import com.entity.StoreEntity;
@@ -21,9 +22,8 @@ public class StoreBizTest {
     @Test
     public void addNewStore() throws Exception {
         StoreEntity storeEntity = new StoreEntity();
-        storeEntity.setStoreId("12344456");
         storeEntity.setStoreAccount("gzwdeidei");
-        storeEntity.setStorePassword("111");
+        storeEntity.setStorePassword(MD5.string2MD5("gzwdeidei"));
         storeEntity.setStoreName("郭志伟deidei");
         storeBiz.addNewStore(storeEntity);
 
@@ -32,13 +32,13 @@ public class StoreBizTest {
     public void storeLogin()throws Exception{
         StoreConditions storeConditions = new StoreConditions();
         storeConditions.setStore_account("gzwdeidei");
-        storeConditions.setStore_password("111");
+        storeConditions.setStore_password(MD5.string2MD5("gzwdeidei"));
         List<StoreEntity> storeEntityList = storeBiz.storeLogin(storeConditions);
         System.out.println("Size:"+storeEntityList.size());
     }
     @Test
     public void updateStore()throws Exception{
-        StoreEntity storeEntity = storeBiz.getStore("1");
+        StoreEntity storeEntity = storeBiz.getStore("d7e7508e-962d-4f77-8a81-58c7a34fab82");
         storeEntity.setStoreName("xmydiaozhale");
         storeBiz.updateStore(storeEntity);
     }
@@ -46,7 +46,7 @@ public class StoreBizTest {
     public void addNewStoreApply()throws Exception{
         StoreapplyEntity storeapplyEntity = new StoreapplyEntity();
         storeapplyEntity.setStoreapplyDetail("XMYmeidiao");
-        storeapplyEntity.setStoreapplyStoreid("1");
+        storeapplyEntity.setStoreapplyStoreid("d7e7508e-962d-4f77-8a81-58c7a34fab82");
         storeBiz.addNewStoreApply(storeapplyEntity);
     }
     @Test

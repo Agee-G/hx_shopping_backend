@@ -264,7 +264,6 @@ public class UserAction extends ActionSupport{
             })
     })
     public String userLogin() throws Exception{
-        System.out.println("????????????/");
         UserBiz userBiz = new UserBiz();
         String oldpassword = userPassword;
         if(userAccount == null || userPassword == null || userAccount.equals("") || userPassword.equals("")){
@@ -274,6 +273,7 @@ public class UserAction extends ActionSupport{
             //MD5加密
             userPassword = MD5.string2MD5(userPassword);
             userBiz.userLogin(userAccount,userPassword);
+            System.out.println("Code:"+userBiz.getCode());
             if(userBiz.getCode() == 411){
                 code = 411;
             }else{

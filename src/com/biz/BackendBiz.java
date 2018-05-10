@@ -2,12 +2,10 @@ package com.biz;
 
 import com.Utils.Page;
 import com.dao.BackendDao;
+import com.dao.StoreApplyDao;
 import com.dao.StoreDao;
 import com.dao.UserDao;
-import com.entity.StoreConditions;
-import com.entity.StoreEntity;
-import com.entity.UserConditions;
-import com.entity.UserEntity;
+import com.entity.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,10 +20,11 @@ import java.util.List;
 public class BackendBiz {
     private UserDao userDao = new UserDao();
     private StoreDao storeDao = new StoreDao();
+    private StoreApplyDao storeApplyDao = new StoreApplyDao();
 
     public StoreEntity findStore(String storeId){
         Transaction transaction = null;
-        Session session = userDao.currentSession();
+        Session session = storeDao.currentSession();
         StoreEntity storeEntity = null;
         try{
             transaction = session.beginTransaction();
@@ -38,6 +37,40 @@ public class BackendBiz {
             }
         }
         return storeEntity;
+    }
+    public UserEntity findUser(String userId){
+        Transaction transaction = null;
+        Session session = userDao.currentSession();
+        UserEntity userEntity = null;
+        try{
+            transaction = session.beginTransaction();
+            userEntity = userDao.get(userId);
+            transaction.commit();
+        }catch (HibernateException e){
+            e.printStackTrace();
+            if (transaction != null){
+                transaction.rollback();
+            }
+        }
+        return userEntity;
+
+    }
+    public StoreapplyEntity findStoreApply(String storeapplyId){
+        Transaction transaction = null;
+        Session session = storeApplyDao.currentSession();
+        StoreapplyEntity storeapplyEntity = null;
+        try{
+            transaction = session.beginTransaction();
+            storeapplyEntity = storeApplyDao.get(storeapplyId);
+            transaction.commit();
+        }catch (HibernateException e){
+            e.printStackTrace();
+            if (transaction != null){
+                transaction.rollback();
+            }
+        }
+        return storeapplyEntity;
+
     }
 
 
@@ -129,7 +162,7 @@ public class BackendBiz {
     //商家冻结和解冻
     public void updateStoreStatus(StoreEntity storeEntity){
         Transaction transaction = null;
-        Session session = userDao.currentSession();
+        Session session = storeDao.currentSession();
         try{
             transaction = session.beginTransaction();
             storeDao.updateStoreStatus(storeEntity);
@@ -141,5 +174,68 @@ public class BackendBiz {
             }
         }
     }
-
+    //用户冻结与解冻
+    public void updateUserStatus(UserEntity userEntity){
+        Transaction transaction = null;
+        Session session = userDao.currentSession();
+        try{
+            transaction = session.beginTransaction();
+            userDao.updateUserStatus(userEntity);
+            transaction.commit();
+        }catch (HibernateException e){
+            e.printStackTrace();
+            if (transaction != null){
+                transaction.rollback();
+            }
+        }
+    }
+    //查找所有申诉
+    public List<StoreapplyEntity> findAllApply(){
+        Transaction transaction = null;
+        Session session = storeApplyDao.currentSession();
+        List<StoreapplyEntity> storeapplyEntities = null;
+        try{
+            transaction = session.beginTransaction();
+            storeapplyEntities = storeApplyDao.findAllApply();
+            transaction.commit();
+        }catch (HibernateException e){
+            e.printStackTrace();
+            if (transaction != null){
+                transaction.rollback();
+            }
+        }
+        return storeapplyEntities;
+    }
+    //通过storeId查找申诉
+    public List<StoreapplyEntity> findApplyByStoreId(String storeId){
+        Transaction transaction = null;
+        Session session = storeApplyDao.currentSession();
+        List<StoreapplyEntity> storeapplyEntities = null;
+        try{
+            transaction = session.beginTransaction();
+            storeapplyEntities = storeApplyDao.findApplyByStoreId(storeId);
+            transaction.commit();
+        }catch (HibernateException e){
+            e.printStackTrace();
+            if (transaction != null){
+                transaction.rollback();
+            }
+        }
+        return storeapplyEntities;
+    }
+    //修改申诉状态
+    public void updateApplyStatus(StoreapplyEntity storeapplyEntity){
+        Transaction transaction = null;
+        Session session = storeApplyDao.currentSession();
+        try{
+            transaction = session.beginTransaction();
+            storeApplyDao.updateApplyStatus(storeapplyEntity);
+            transaction.commit();
+        }catch (HibernateException e){
+            e.printStackTrace();
+            if (transaction != null){
+                transaction.rollback();
+            }
+        }
+    }
 }
